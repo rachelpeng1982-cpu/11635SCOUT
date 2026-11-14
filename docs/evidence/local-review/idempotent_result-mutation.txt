@@ -1,0 +1,83 @@
+✔ T01 personal projection limited to own record (2.469976ms)
+✖ T02/03/04 single pass, idempotency, competing duplicate (0.66328ms)
+✖ idempotency payload conflict (0.590411ms)
+✔ T05 full team produces eight individual facts and one team station (0.962441ms)
+✔ T06 absent member is not stamped and snapshot retained (1.179419ms)
+✔ team conflict does not partially mutate (0.415006ms)
+✔ reject duplicate attendance, outsiders and pending policy (0.565123ms)
+✔ T08 cross station denied (0.190828ms)
+✔ T09 unauthenticated admin denied and staff denied (0.395746ms)
+✔ T10 closed or unapproved venue denied (0.551903ms)
+✔ T11 waiting calculation and missing/stale precedence (0.573344ms)
+✔ T14 CSV has 30 rows, units, timezone and sanitized cells (0.843012ms)
+✔ T15 reversal preserves immutable history and recomputes (0.242426ms)
+✔ T16 public response excludes private fields and medical detail (6.696381ms)
+✔ input formula/HTML injection, negative queues and locked station (0.442818ms)
+✔ seed has 30 unique exact IDs and safe defaults (1.017094ms)
+✔ honor policy not assumed at fifteen (0.227643ms)
+✔ pending policy cannot be set by event lead; admin changes audited (0.364359ms)
+✔ unapproved venue cannot open; measured capacity required (0.440624ms)
+✔ report interval excludes outside pass dates and rejects reversed range (1.097716ms)
+✔ FR41 only authorized team leader submits same-team draft without stamp (0.347064ms)
+✔ FR15 recommendations exclude unavailable stale and unapproved stations and sort safety announcements (0.341906ms)
+✔ FR43 event lead requests correction without mutating pass, admin reversal links and resolves request (0.309127ms)
+✔ dispatch only to active staff, internal text never enters public board (0.339432ms)
+✔ required stations affect honor and admin can assign same-team leader only (0.296437ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 23
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 89.316944
+
+✖ failing tests:
+
+test at tests/core.test.cjs:10:1
+✖ T02/03/04 single pass, idempotency, competing duplicate (0.66328ms)
+  Error: ALREADY_STAMPED
+      at fail (/workspace/work/srs/mutations/idempotent_result/src/core.js:18:28)
+      at Object.execute (/workspace/work/srs/mutations/idempotent_result/src/core.js:107:132)
+      at call (/workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:7:38)
+      at TestContext.<anonymous> (/workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:10:175)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'ALREADY_STAMPED'
+  }
+
+test at tests/core.test.cjs:11:1
+✖ idempotency payload conflict (0.590411ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: ALREADY_STAMPED
+      at error (/workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:8:28)
+      at TestContext.<anonymous> (/workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:11:99)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: ALREADY_STAMPED
+        at fail (/workspace/work/srs/mutations/idempotent_result/src/core.js:18:28)
+        at Object.execute (/workspace/work/srs/mutations/idempotent_result/src/core.js:107:132)
+        at call (/workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:7:38)
+        at /workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:11:109
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at error (/workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:8:28)
+        at TestContext.<anonymous> (/workspace/work/srs/mutations/idempotent_result/tests/core.test.cjs:11:99)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25),
+    operator: 'throws',
+    diff: 'simple'
+  }

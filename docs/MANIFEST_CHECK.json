@@ -1,0 +1,70 @@
+[
+  {
+    "file": "CODEX_INTEGRATION_NOTES.md",
+    "status": "MATCH"
+  },
+  {
+    "file": "CODEX_START_HERE.md",
+    "status": "MATCH"
+  },
+  {
+    "file": "NORTH_STAR.md",
+    "status": "MATCH"
+  },
+  {
+    "file": "README_HANDOFF.md",
+    "status": "MATCH"
+  },
+  {
+    "file": "STITCH_DESIGN_REFERENCE.md",
+    "status": "MATCH"
+  },
+  {
+    "file": "backlog/CODEX_BACKLOG_PROMPT.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "backlog/PRODUCT_BACKLOG.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "backlog/README.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "backlog/REFINEMENT_PROTOCOL.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "backlog/SRS_DRAFT.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "backlog/TICKETS.json",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "legacy-v2/Code.gs",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "legacy-v2/DESIGN.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "legacy-v2/Index.html",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "legacy-v2/README_\u0398\u00e2\u00bf\u03c4\u255c\u2593\u00b5\u00ee\u00e7\u03c3\u00ec\u00f9.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "legacy-v2/STITCH_PROMPT.md",
+    "status": "NOT_PROVIDED"
+  },
+  {
+    "file": "stations_seed.csv",
+    "status": "MATCH"
+  }
+]

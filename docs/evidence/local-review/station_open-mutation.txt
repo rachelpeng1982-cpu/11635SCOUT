@@ -1,0 +1,53 @@
+✔ T01 personal projection limited to own record (4.381178ms)
+✔ T02/03/04 single pass, idempotency, competing duplicate (1.348524ms)
+✔ idempotency payload conflict (0.488597ms)
+✔ T05 full team produces eight individual facts and one team station (1.415846ms)
+✔ T06 absent member is not stamped and snapshot retained (1.645742ms)
+✔ team conflict does not partially mutate (0.264038ms)
+✔ reject duplicate attendance, outsiders and pending policy (0.598753ms)
+✔ T08 cross station denied (0.207052ms)
+✔ T09 unauthenticated admin denied and staff denied (0.48447ms)
+✖ T10 closed or unapproved venue denied (0.965326ms)
+✔ T11 waiting calculation and missing/stale precedence (0.676721ms)
+✔ T14 CSV has 30 rows, units, timezone and sanitized cells (0.668919ms)
+✔ T15 reversal preserves immutable history and recomputes (0.267063ms)
+✔ T16 public response excludes private fields and medical detail (8.321492ms)
+✔ input formula/HTML injection, negative queues and locked station (0.893037ms)
+✔ seed has 30 unique exact IDs and safe defaults (0.976683ms)
+✔ honor policy not assumed at fifteen (0.287283ms)
+✔ pending policy cannot be set by event lead; admin changes audited (0.436699ms)
+✔ unapproved venue cannot open; measured capacity required (0.509569ms)
+✔ report interval excludes outside pass dates and rejects reversed range (1.84969ms)
+✔ FR41 only authorized team leader submits same-team draft without stamp (0.538963ms)
+✔ FR15 recommendations exclude unavailable stale and unapproved stations and sort safety announcements (0.625784ms)
+✔ FR43 event lead requests correction without mutating pass, admin reversal links and resolves request (0.545232ms)
+✔ dispatch only to active staff, internal text never enters public board (0.774128ms)
+✔ required stations affect honor and admin can assign same-team leader only (0.679295ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 24
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.137379
+
+✖ failing tests:
+
+test at tests/core.test.cjs:18:1
+✖ T10 closed or unapproved venue denied (0.965326ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at error (/workspace/work/srs/mutations/station_open/tests/core.test.cjs:8:28)
+      at TestContext.<anonymous> (/workspace/work/srs/mutations/station_open/tests/core.test.cjs:18:178)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

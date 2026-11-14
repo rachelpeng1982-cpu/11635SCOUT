@@ -1,0 +1,5820 @@
+{
+  "version": "0.2",
+  "status": "DRAFT_NOT_APPROVED",
+  "timezone": "Asia/Taipei",
+  "date": "2026-11-14",
+  "source_method": "06_Backlog工作分解與就緒管理_v0.1.md",
+  "requirements": [
+    {
+      "id": "FR-01",
+      "title": "表單匯入",
+      "source": [
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §9.2"
+      ],
+      "statement": "系統須從核准 Google Form 接收報名，驗證來源及欄位映射後建立名冊",
+      "acceptance": "Given 非配置表單事件，When 觸發匯入，Then 拒絕寫入；配置表單有效回覆則可建立名冊",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S03",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-02",
+      "title": "報名去重",
+      "source": [
+        "NORTH_STAR.md §8.1",
+        "NORTH_STAR.md §9.2"
+      ],
+      "statement": "系統須使用穩定外部識別碼去重，不以姓名合併",
+      "acceptance": "Given 同一 response ID 重送，When 再匯入，Then 不新增第二名參加者且可追溯原結果",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S03",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-03",
+      "title": "小隊名冊",
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §8.2"
+      ],
+      "statement": "每位小隊成員須有獨立 participant_id，關聯核准小隊；人數上下限可設定，預設8–10",
+      "acceptance": "Given 小隊超過核准上限，When 加入成員或核章，Then 拒絕並提示；個人成績不合併為隊伍單筆",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S04",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-04",
+      "title": "報到統計",
+      "source": [
+        "NORTH_STAR.md §6.D"
+      ],
+      "statement": "系統須分別記錄報名、有效狀態與實際報到，不以核章筆數代替報到人數",
+      "acceptance": "Given 同人重複報到，When 重送，Then 不重複計算 uniqueCheckedInParticipants",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S03",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-05",
+      "title": "私密QR發行",
+      "source": [
+        "NORTH_STAR.md §3.1",
+        "NORTH_STAR.md §8.1"
+      ],
+      "statement": "每位有效參加者須取得不可猜測的個人QR；資料庫僅保存核驗資訊",
+      "acceptance": "Given 授權發行，When 建立QR，Then QR不包含電話／健康資訊，且公開API及資料表無token原文",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S05",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-06",
+      "title": "本人登入與工作階段",
+      "source": [
+        "NORTH_STAR.md §3.1",
+        "NORTH_STAR.md §6.A"
+      ],
+      "statement": "系統須驗證個人憑證並建立短效工作階段，只允許讀取本人資料",
+      "acceptance": "Given A的有效session，When 攜帶B的公開編號要求進度，Then 不回傳B的資料；失效session拒絕",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S05",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-07",
+      "title": "憑證撤銷重發",
+      "source": [
+        "NORTH_STAR.md §3.1",
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "遺失QR須經受權管理流程撤銷舊憑證及相關session，再發新碼",
+      "acceptance": "Given 舊碼已重發，When 用舊碼或舊session查詢，Then 拒絕；新碼可登入",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S05",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-08",
+      "title": "個人通行證",
+      "source": [
+        "NORTH_STAR.md §6.A"
+      ],
+      "statement": "通行證須顯示本人有限識別、個人QR、n/30、分齡、最近同步及登入／離線狀態",
+      "acceptance": "Given 本人完成一站，When 同步成功，Then 護照只增加該人的有效站數；失敗時保留舊資料並標示",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S07",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-09",
+      "title": "小隊最少摘要",
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §6.A"
+      ],
+      "statement": "參加者只能讀同隊必要進度摘要，不可取得同隊完整敏感資料",
+      "acceptance": "Given 一般隊員，When 查同隊摘要，Then 回傳必要編號／進度，不回傳其他姓名、聯絡人、token或PIN",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S07",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-10",
+      "title": "徽章與榮譽",
+      "source": [
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §6.A"
+      ],
+      "statement": "六區各五站徽章須由有效核章衍生；榮譽門檻與必修規則可設定",
+      "acceptance": "Given honor_threshold未核定，When 顯示成就，Then 明示待核定且不授予；核定後依有效章及必修站判定",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S07",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-11",
+      "title": "完整30站地圖",
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §6.B"
+      ],
+      "statement": "地圖須列出S01–S30及F1/F2/G1/B1/B2/B3六區，以正式seed為待審站目",
+      "acceptance": "Given 未完成現勘，When 顯示站點，Then 明示待核准及區域示意，不生成真實坐標或逃生路線",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S08",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-12",
+      "title": "站點搜尋篩選",
+      "source": [
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §6.D"
+      ],
+      "statement": "參加者及管理端須支援站號／站名搜尋與場域篩選，管理端另可篩狀態",
+      "acceptance": "Given 依B2篩選，When 執行搜尋，Then 只顯示S21–S25且不遺漏任何該區站",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S08",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-13",
+      "title": "站況與過期",
+      "source": [
+        "NORTH_STAR.md §4.3",
+        "NORTH_STAR.md §6.B"
+      ],
+      "statement": "系統須區分OPEN/PAUSED/CLOSED及資料過期；暫停／過期優先於綠燈",
+      "acceptance": "Given 開站但排隊資料超過設定期限，When 查站況，Then 顯示STALE而非LOW，附更新時間",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S09",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-14",
+      "title": "等候估算",
+      "source": [
+        "NORTH_STAR.md §4.3"
+      ],
+      "statement": "系統須依排隊受理單位、分別耗時及服務線數估算等待；缺值顯示未知",
+      "acceptance": "Given 6隊、每隊5分鐘、2線，When 計算，Then 預估15分鐘；任一必要值缺失不得硬算0",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S09",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-15",
+      "title": "安全分流",
+      "source": [
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §6.B"
+      ],
+      "statement": "地圖須優先提示高風險告警及可用替代站；不推薦未核准／暫停／過期站",
+      "acceptance": "Given 某站HIGH，When 顯示分流，Then 提醒改往資料有效且已開放站；沒有可用站則明示無可靠建議",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S08",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-16",
+      "title": "工作人員身分",
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §7"
+      ],
+      "statement": "系統須由可信Google身分或經驗證的伺服器工作階段識別人員，身分為空預設拒絕",
+      "acceptance": "Given 前端偽造role/email，When 呼叫管理或核章，Then 不取得權限；Google身分為空須UNAUTHORIZED",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S06",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-17",
+      "title": "本站PIN解鎖",
+      "source": [
+        "NORTH_STAR.md §3"
+      ],
+      "statement": "核章須在授權身分之外驗證本站PIN，具限次、鎖定、期限、換碼及稽核",
+      "acceptance": "Given PIN錯誤超過限制，When 再嘗試，Then 限速；換碼後舊解鎖失效，公開端不含PIN或hash",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S06",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-18",
+      "title": "角色與站點權限",
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §9"
+      ],
+      "statement": "後端須逐請求驗證角色、active、站點／分區範圍，不以Tab隱藏代替安全",
+      "acceptance": "Given S01關主要求S02核章，When 送出，Then FORBIDDEN且不寫章，留下不含秘密的拒絕證據",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S06",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-19",
+      "title": "相機QR掃描",
+      "source": [
+        "NORTH_STAR.md §6.C"
+      ],
+      "statement": "關主須能取得相機授權掃描個人QR，並在掃描後預覽，不自動核章",
+      "acceptance": "Given 相機拒絕或瀏覽器不支援，When 開掃描，Then 提供可理解錯誤及手動身分核對流程",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S11",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-20",
+      "title": "手動查詢核身",
+      "source": [
+        "NORTH_STAR.md §6.C"
+      ],
+      "statement": "關主可依學員公開編號查詢，但須執行額外本人核對並取得最少資料",
+      "acceptance": "Given 未確認本人，When 以公開編號查詢／核章，Then 拒絕；授權核對後僅回必要識別與本站狀態",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S11",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-21",
+      "title": "個人核章",
+      "source": [
+        "NORTH_STAR.md §9.2"
+      ],
+      "statement": "個人核章須檢查授權、開站、場地、有效參加者及有效章唯一性",
+      "acceptance": "Given 本人首次合法通過S03，When 伺服器確認，Then 增一筆有效PASS；同站重複回ALREADY_STAMPED",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S11",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-22",
+      "title": "小隊實到核章",
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §9.2"
+      ],
+      "statement": "小隊核章須由關主勾選實到者、預覽並二次確認；每人各記一章",
+      "acceptance": "Given 8人小隊其中1人缺席，When 其餘7人核章，Then 缺席者無章，批次保存實到及缺席快照",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S12",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-23",
+      "title": "小隊完成口徑",
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §6.D"
+      ],
+      "statement": "隊站完成須依核准的要求成員快照計算，同隊同站不得重複計隊數",
+      "acceptance": "Given 已核准實到快照的所有成員有效通過，When 聚合，Then 隊站次+1；任一有效章撤銷須重算",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S12",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-24",
+      "title": "命令冪等",
+      "source": [
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "變更命令須有idempotencyKey、操作者及內容綁定，重送回原結果",
+      "acceptance": "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S11",
+      "related_story_ids": [
+        "S13"
+      ]
+    },
+    {
+      "id": "FR-25",
+      "title": "並行唯一性",
+      "source": [
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "同人同站有效PASS的檢查與提交須受伺服器鎖保護",
+      "acceptance": "Given 兩關主並發核同人同站，When 提交，Then 最多一筆有效PASS且兩方回饋可對帳",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S13",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-26",
+      "title": "批次失敗恢復",
+      "source": [
+        "NORTH_STAR.md §9.3"
+      ],
+      "statement": "小隊批次須完整提交才對外公布；中斷或結果不確定可安全查回／重試／補償",
+      "acceptance": "Given 批次第5名寫入故障或API拒絕，When 查進度，Then 不公布無復原狀態的部分完成",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S13",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-27",
+      "title": "撤銷補償",
+      "source": [
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.2"
+      ],
+      "statement": "成績撤銷須由特權人員附理由建立補償事件，不無痕刪除",
+      "acceptance": "Given 管理員撤銷一章，When 重算，Then 個人／小隊／地圖／報表一致且原PASS仍存在",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S14",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-28",
+      "title": "排隊回報",
+      "source": [
+        "NORTH_STAR.md §4.3",
+        "NORTH_STAR.md §9.2"
+      ],
+      "statement": "本站關主須分別回報個人與小隊非負排隊數，保存更新者及時間",
+      "acceptance": "Given 負值或非整數，When 更新，Then 拒絕；有效值成功後公開板及戰情中心一致",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S09",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-29",
+      "title": "站點維護",
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §8.3"
+      ],
+      "statement": "授權管理者須維護站名、位置、場地核准、任務、分齡、可及性、雨備、耗時及服務線數",
+      "acceptance": "Given 未核准場地或服務線數未知，When 嘗試開站，Then 拒絕並提示缺項；變更可追溯",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S10",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-30",
+      "title": "活動組長戰情",
+      "source": [
+        "NORTH_STAR.md §6.D"
+      ],
+      "statement": "管理端須顯示30站及報到人數、有效隊伍、個人組站次、隊員站次、隊站次與總有效章",
+      "acceptance": "Given 8人小隊同站通過，When 顯示KPI，Then 隊員站次+8、隊站次+1，不把8當8隊或8個報到新增",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S15",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-31",
+      "title": "異常建立",
+      "source": [
+        "NORTH_STAR.md §8.5",
+        "NORTH_STAR.md §9.2"
+      ],
+      "statement": "授權人員須能回報人潮、物資、醫療、廣播或其他異常及嚴重度",
+      "acceptance": "Given MEDICAL內部描述，When 公開查站況，Then 不回傳病患個資或內部醫療內容",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S16",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-32",
+      "title": "派工與結案",
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §8.5"
+      ],
+      "statement": "組長須可派工、處理及結案異常，記錄狀態、處理者及時間",
+      "acceptance": "Given PENDING異常，When 指派及結案，Then 狀態與處置軌跡可查，未授權關主不得全場派工",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S16",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-33",
+      "title": "公開安全公告",
+      "source": [
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §6.D"
+      ],
+      "statement": "組長須可發布與解除不含個資的安全指示，重大安全提示優先",
+      "acceptance": "Given 重大安全公告，When 參加者同步，Then 可見必要指示，不含內部細節；結案後不再當有效公告",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S16",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-34",
+      "title": "受控CSV報表",
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §9.1"
+      ],
+      "statement": "組長／管理員須能匯出30站有效成果，註明時間範圍、時區、口徑並防公式注入",
+      "acceptance": "Given 全站匯出，When 核對，Then 恰30站，個人站次／隊員站次／隊數分欄且無敏感名冊",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S17",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-35",
+      "title": "同步與退避",
+      "source": [
+        "NORTH_STAR.md §1.2",
+        "NORTH_STAR.md §6.D"
+      ],
+      "statement": "前端以20秒為預設輪詢目標，失敗退避、背景降頻並顯示最後成功時間",
+      "acceptance": "Given 連續API失敗，When 再同步，Then 不假裝即時成功，顯示過期／故障及最後同步時間",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S15",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-36",
+      "title": "離線保護",
+      "source": [
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "離線僅可讀最後成功資料；未經後端確認不得宣告過關",
+      "acceptance": "Given 核章提交斷線，When 畫面回饋，Then 顯示未確認並允許安全重試，不顯示綠色成功章",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S18",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-37",
+      "title": "資料表與種子遷移",
+      "source": [
+        "NORTH_STAR.md §8",
+        "NORTH_STAR.md §12"
+      ],
+      "statement": "系統須可建立／驗證七核心表及必要擴充表，安全重跑不覆寫正式成果",
+      "acceptance": "Given setup重跑，When 驗證，Then 不重複S01–S30、不覆寫既有章；不相容schema拒絕並列缺項",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S02",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-38",
+      "title": "稽核追溯",
+      "source": [
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §8.7"
+      ],
+      "statement": "核章、撤銷、權限、站況及敏感設定變更須保留人、時、對象、結果、理由及request關聯",
+      "acceptance": "Given 更正或越權，When 查稽核，Then 能定位事件與操作者而不含token／PIN原文",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S14",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-39",
+      "title": "輸入與輸出防護",
+      "source": [
+        "NORTH_STAR.md §8.8",
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "所有外部輸入須檢查型別、長度、範圍、公式／HTML注入並依角色投影輸出",
+      "acceptance": "Given 公式或script字串，When 寫入／顯示／匯出，Then 不執行、不洩露秘密且回可理解錯誤",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S19",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-40",
+      "title": "備份還原與封存",
+      "source": [
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §14"
+      ],
+      "statement": "須提供並演練備份、還原、人工對帳、活動結束封存與憑證失效流程",
+      "acceptance": "Given 備份還原演練，When 切換資料，Then 可驗證有效章與批次一致，舊已撤銷憑證不復活",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S20",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-41",
+      "title": "小隊長實到草稿",
+      "source": [
+        "NORTH_STAR.md §3"
+      ],
+      "statement": "授權小隊長可提交所屬隊伍實到候選名單供本站關主核對，不得自行核章",
+      "acceptance": "Given 小隊長送草稿，When 提交，Then 無PASS產生；其他隊伍不可被指定，關主仍需二次確認",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S04",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-42",
+      "title": "活動政策設定",
+      "source": [
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §13"
+      ],
+      "statement": "日期／場地／門檻／必修站／小隊完成政策須可設定且標明待核定；缺值採保守預設",
+      "acceptance": "Given 未核定，When 啟動功能，Then 不把15站、活動日期或全隊名冊自動當成已核准規則",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S01",
+      "related_story_ids": [
+        "S10"
+      ]
+    },
+    {
+      "id": "FR-43",
+      "title": "受控更正申請",
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §6.D"
+      ],
+      "statement": "活動組長可提出成績更正申請，實際補償由具權管理員執行並連結原因",
+      "acceptance": "Given 組長申請，When 流轉，Then 不直接刪改核章且有申請與執行的責任追溯",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S14",
+      "related_story_ids": []
+    },
+    {
+      "id": "FR-44",
+      "title": "系統運作告警",
+      "source": [
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "戰情中心須可辨識同步失敗、配額／鎖競爭、資料過期及設備故障，告警不可含秘密",
+      "acceptance": "Given API連續故障或容量保護，When 管理頁恢復，Then 可見故障時間／類別與處置提示",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S15",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-01",
+      "title": "戶外可用性",
+      "source": [
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §11"
+      ],
+      "statement": "介面須採Stitch野外童軍風格，390px無非表格橫向溢出，主要觸控至少48px，狀態不只靠顏色",
+      "acceptance": "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S07",
+      "related_story_ids": [
+        "S08"
+      ]
+    },
+    {
+      "id": "NFR-02",
+      "title": "憑證生命週期",
+      "source": [
+        "NORTH_STAR.md §3.1",
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "憑證須高熵、傳輸受保護、session短效、可撤銷，不放公開URL／持久前端儲存",
+      "acceptance": "Given QR或PIN輪替，When 舊session／解鎖重用，Then 無權繼續；來源碼／console／localStorage無秘密",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S05",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-03",
+      "title": "最小權限",
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §9"
+      ],
+      "statement": "角色限制須在後端強制，工作人員停權須生效，共用裝置有離開／登出流程",
+      "acceptance": "Given 停權人員仍持舊解鎖，When 下一請求，Then 拒絕；前端改Tab不得取得資料",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S06",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-04",
+      "title": "一致性與復原",
+      "source": [
+        "NORTH_STAR.md §1.2",
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.3"
+      ],
+      "statement": "有效章唯一、命令冪等、跨表提交與批次可恢復須在故障及並行情境維持",
+      "acceptance": "Given 重送／並行／回應遺失／中途故障，When 對帳，Then 有效章、Requests、批次與稽核一致",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S13",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-05",
+      "title": "容量與效能",
+      "source": [
+        "NORTH_STAR.md §1.2",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §12"
+      ],
+      "statement": "須依核准人數及GAS配額驗證輪詢與核章負載；20秒是排程目標，非SLA",
+      "acceptance": "Given 核定負載模型，When 壓測，Then 記錄吞吐、p95/p99、錯誤率、配額及鎖競爭，門檻需事前核定",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S15",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-06",
+      "title": "弱網與錯誤可理解性",
+      "source": [
+        "NORTH_STAR.md §6",
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "斷網、逾時、未授權、重複與未知狀態須明確區別，不能以假成功掩蓋",
+      "acceptance": "Given 服務未確認，When 回饋使用者，Then 可知道尚未完成及下一步，不丟棄原冪等關聯",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S18",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-07",
+      "title": "統計與報表正確性",
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §8.4"
+      ],
+      "statement": "全系統僅以有效核章為成果來源，明確區分人、隊、人站次、隊站次",
+      "acceptance": "Given 人工可核算測試集，When 比對護照／地圖／戰情／CSV，Then 同口徑數值完全一致",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S17",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-08",
+      "title": "資料完整性與可遷移性",
+      "source": [
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §8.8"
+      ],
+      "statement": "資料契約須有版本、型別與主外鍵驗證，正式／測試分離且可重建衍生快取",
+      "acceptance": "Given schema不符或seed重跑，When 遷移，Then 不破壞既有正式資料並留下錯誤證據",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S02",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-09",
+      "title": "兒少隱私與注入防護",
+      "source": [
+        "NORTH_STAR.md §0 第6項",
+        "NORTH_STAR.md §8.8",
+        "NORTH_STAR.md §10"
+      ],
+      "statement": "公開端不得出現兒少姓名、聯絡人、健康資料、QRtoken、PIN或權限表；輸入不得成可執行內容",
+      "acceptance": "Given 公開API／頁面／CSV檢查，When 搜尋敏感欄位或注入payload，Then 不洩露且不執行",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S19",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-10",
+      "title": "證據與可追溯性",
+      "source": [
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §8.7",
+        "NORTH_STAR.md §12"
+      ],
+      "statement": "需求、票、程式、測試與部署須可追溯，失敗不可刪除檢查或偽造成通過",
+      "acceptance": "Given 任一票，When 查證據，Then 可找到基準版本、輸入、預期／實際、結果與責任人",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S14",
+      "related_story_ids": [
+        "S19"
+      ]
+    },
+    {
+      "id": "NFR-11",
+      "title": "可維運與資料留存",
+      "source": [
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §13"
+      ],
+      "statement": "須有維運、紙本備援、備份還原、留存／刪除與主辦資源歸屬流程",
+      "acceptance": "Given 活動結束或服務故障，When 執行SOP，Then 受權人可完成對帳／封存；保留期限須由主辦核定",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S20",
+      "related_story_ids": []
+    },
+    {
+      "id": "NFR-12",
+      "title": "部署可重現性",
+      "source": [
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §14"
+      ],
+      "statement": "部署須有可重現建置、Google權限／表單／資料表／trigger設定與回復步驟",
+      "acceptance": "Given 新測試環境，When 依部署文件操作，Then 可重建閉環，不能以雙擊靜態HTML視為後端驗證",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S20",
+      "related_story_ids": []
+    },
+    {
+      "id": "PR-01",
+      "title": "規格與來源基線",
+      "source": [
+        "NORTH_STAR.md §0",
+        "NORTH_STAR.md §12 Phase 0"
+      ],
+      "statement": "所有需求與重大變更須對照NORTH_STAR，保留差異、未決與核准來源",
+      "acceptance": "Given 規格衝突，When 細化或實作，Then 北極星優先並記錄差異，不將既有程式自動升格為需求",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S01",
+      "related_story_ids": []
+    },
+    {
+      "id": "PR-02",
+      "title": "拆解與就緒管理",
+      "source": [
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §12"
+      ],
+      "statement": "工作須可追溯至Epic／Story／Task／票，具AC／DoR／DoD及相依；未就緒票不宣稱可派工",
+      "acceptance": "Given 未估算或缺Google環境票，When 做DoR，Then 明列缺項並保留未就緒狀態，不虛填執行者",
+      "priority": "MUST",
+      "baseline_status": "草案／待主辦基準確認",
+      "primary_story_id": "S01",
+      "related_story_ids": []
+    }
+  ],
+  "epics": [
+    {
+      "id": "E01",
+      "title": "規格與資料治理"
+    },
+    {
+      "id": "E02",
+      "title": "報名與小隊"
+    },
+    {
+      "id": "E03",
+      "title": "身分與憑證"
+    },
+    {
+      "id": "E04",
+      "title": "參加者體驗"
+    },
+    {
+      "id": "E05",
+      "title": "站況與場地"
+    },
+    {
+      "id": "E06",
+      "title": "核章操作"
+    },
+    {
+      "id": "E07",
+      "title": "一致性與稽核"
+    },
+    {
+      "id": "E08",
+      "title": "活動指揮"
+    },
+    {
+      "id": "E09",
+      "title": "報表與可靠操作"
+    },
+    {
+      "id": "E10",
+      "title": "安全與交付驗收"
+    }
+  ],
+  "stories": [
+    {
+      "id": "S01",
+      "epic_id": "E01",
+      "title": "規格與政策基線",
+      "requirement_ids": [
+        "PR-01",
+        "PR-02",
+        "FR-42"
+      ],
+      "phase_range": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "S02",
+      "epic_id": "E01",
+      "title": "資料表與30站安全遷移",
+      "requirement_ids": [
+        "FR-37",
+        "NFR-08"
+      ],
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "S03",
+      "epic_id": "E02",
+      "title": "表單報名與實際報到",
+      "requirement_ids": [
+        "FR-01",
+        "FR-02",
+        "FR-04"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "S04",
+      "epic_id": "E02",
+      "title": "小隊名冊與隊長實到草稿",
+      "requirement_ids": [
+        "FR-03",
+        "FR-41"
+      ],
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "S05",
+      "epic_id": "E03",
+      "title": "個人QR與工作階段",
+      "requirement_ids": [
+        "FR-05",
+        "FR-06",
+        "FR-07",
+        "NFR-02"
+      ],
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "S06",
+      "epic_id": "E03",
+      "title": "工作人員授權與本站解鎖",
+      "requirement_ids": [
+        "FR-16",
+        "FR-17",
+        "FR-18",
+        "NFR-03"
+      ],
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "S07",
+      "epic_id": "E04",
+      "title": "本人通行證與榮譽摘要",
+      "requirement_ids": [
+        "FR-08",
+        "FR-09",
+        "FR-10",
+        "NFR-01"
+      ],
+      "phase_range": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": "S08",
+      "epic_id": "E04",
+      "title": "六區地圖與安全分流",
+      "requirement_ids": [
+        "FR-11",
+        "FR-12",
+        "FR-15",
+        "NFR-01"
+      ],
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "S09",
+      "epic_id": "E05",
+      "title": "人隊排隊與等待估算",
+      "requirement_ids": [
+        "FR-13",
+        "FR-14",
+        "FR-28"
+      ],
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "S10",
+      "epic_id": "E05",
+      "title": "場地核准與站點設定",
+      "requirement_ids": [
+        "FR-29",
+        "FR-42"
+      ],
+      "phase_range": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "S11",
+      "epic_id": "E06",
+      "title": "關主查驗與個人核章",
+      "requirement_ids": [
+        "FR-19",
+        "FR-20",
+        "FR-21",
+        "FR-24"
+      ],
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "S12",
+      "epic_id": "E06",
+      "title": "小隊實到核章與隊站統計",
+      "requirement_ids": [
+        "FR-22",
+        "FR-23"
+      ],
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "S13",
+      "epic_id": "E07",
+      "title": "冪等、並行與批次復原",
+      "requirement_ids": [
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "NFR-04"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "S14",
+      "epic_id": "E07",
+      "title": "更正申請、補償與稽核",
+      "requirement_ids": [
+        "FR-27",
+        "FR-38",
+        "FR-43",
+        "NFR-10"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "S15",
+      "epic_id": "E08",
+      "title": "30站戰情與同步健康",
+      "requirement_ids": [
+        "FR-30",
+        "FR-35",
+        "FR-44",
+        "NFR-05"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "S16",
+      "epic_id": "E08",
+      "title": "異常派工與公開安全公告",
+      "requirement_ids": [
+        "FR-31",
+        "FR-32",
+        "FR-33"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "S17",
+      "epic_id": "E09",
+      "title": "受控報表與數據一致",
+      "requirement_ids": [
+        "FR-34",
+        "NFR-07"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "S18",
+      "epic_id": "E09",
+      "title": "弱網、離線與安全重試",
+      "requirement_ids": [
+        "FR-36",
+        "NFR-06"
+      ],
+      "phase_range": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": "S19",
+      "epic_id": "E10",
+      "title": "公開資料、輸入安全與證據",
+      "requirement_ids": [
+        "FR-39",
+        "NFR-09",
+        "NFR-10"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "S20",
+      "epic_id": "E10",
+      "title": "部署、復原與活動驗收",
+      "requirement_ids": [
+        "FR-40",
+        "NFR-11",
+        "NFR-12"
+      ],
+      "phase_range": [
+        2,
+        4
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TSK-01A",
+      "story_id": "S01",
+      "title": "規格與政策基線：資料／服務與功能實作",
+      "phase_range": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "TSK-01B",
+      "story_id": "S01",
+      "title": "規格與政策基線：操作整合／驗證與交付",
+      "phase_range": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "TSK-02A",
+      "story_id": "S02",
+      "title": "資料表與30站安全遷移：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-02B",
+      "story_id": "S02",
+      "title": "資料表與30站安全遷移：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-03A",
+      "story_id": "S03",
+      "title": "表單報名與實際報到：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-03B",
+      "story_id": "S03",
+      "title": "表單報名與實際報到：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-04A",
+      "story_id": "S04",
+      "title": "小隊名冊與隊長實到草稿：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-04B",
+      "story_id": "S04",
+      "title": "小隊名冊與隊長實到草稿：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-05A",
+      "story_id": "S05",
+      "title": "個人QR與工作階段：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-05B",
+      "story_id": "S05",
+      "title": "個人QR與工作階段：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-06A",
+      "story_id": "S06",
+      "title": "工作人員授權與本站解鎖：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-06B",
+      "story_id": "S06",
+      "title": "工作人員授權與本站解鎖：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-07A",
+      "story_id": "S07",
+      "title": "本人通行證與榮譽摘要：資料／服務與功能實作",
+      "phase_range": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": "TSK-07B",
+      "story_id": "S07",
+      "title": "本人通行證與榮譽摘要：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-08A",
+      "story_id": "S08",
+      "title": "六區地圖與安全分流：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "TSK-08B",
+      "story_id": "S08",
+      "title": "六區地圖與安全分流：操作整合／驗證與交付",
+      "phase_range": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "TSK-09A",
+      "story_id": "S09",
+      "title": "人隊排隊與等待估算：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-09B",
+      "story_id": "S09",
+      "title": "人隊排隊與等待估算：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-10A",
+      "story_id": "S10",
+      "title": "場地核准與站點設定：資料／服務與功能實作",
+      "phase_range": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "TSK-10B",
+      "story_id": "S10",
+      "title": "場地核准與站點設定：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-11A",
+      "story_id": "S11",
+      "title": "關主查驗與個人核章：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "TSK-11B",
+      "story_id": "S11",
+      "title": "關主查驗與個人核章：操作整合／驗證與交付",
+      "phase_range": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "TSK-12A",
+      "story_id": "S12",
+      "title": "小隊實到核章與隊站統計：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-12B",
+      "story_id": "S12",
+      "title": "小隊實到核章與隊站統計：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "TSK-13A",
+      "story_id": "S13",
+      "title": "冪等、並行與批次復原：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-13B",
+      "story_id": "S13",
+      "title": "冪等、並行與批次復原：操作整合／驗證與交付",
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "TSK-14A",
+      "story_id": "S14",
+      "title": "更正申請、補償與稽核：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-14B",
+      "story_id": "S14",
+      "title": "更正申請、補償與稽核：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-15A",
+      "story_id": "S15",
+      "title": "30站戰情與同步健康：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "TSK-15B",
+      "story_id": "S15",
+      "title": "30站戰情與同步健康：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-16A",
+      "story_id": "S16",
+      "title": "異常派工與公開安全公告：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "TSK-16B",
+      "story_id": "S16",
+      "title": "異常派工與公開安全公告：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-17A",
+      "story_id": "S17",
+      "title": "受控報表與數據一致：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-17B",
+      "story_id": "S17",
+      "title": "受控報表與數據一致：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-18A",
+      "story_id": "S18",
+      "title": "弱網、離線與安全重試：資料／服務與功能實作",
+      "phase_range": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": "TSK-18B",
+      "story_id": "S18",
+      "title": "弱網、離線與安全重試：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-19A",
+      "story_id": "S19",
+      "title": "公開資料、輸入安全與證據：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "TSK-19B",
+      "story_id": "S19",
+      "title": "公開資料、輸入安全與證據：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    },
+    {
+      "id": "TSK-20A",
+      "story_id": "S20",
+      "title": "部署、復原與活動驗收：資料／服務與功能實作",
+      "phase_range": [
+        2,
+        4
+      ]
+    },
+    {
+      "id": "TSK-20B",
+      "story_id": "S20",
+      "title": "部署、復原與活動驗收：操作整合／驗證與交付",
+      "phase_range": [
+        4,
+        4
+      ]
+    }
+  ],
+  "tickets": [
+    {
+      "id": "TKT-001",
+      "epic_id": "E01",
+      "story_id": "S01",
+      "parent_task_id": "TSK-01A",
+      "title": "建立有效規格、衝突與政策清單",
+      "requirement_ids": [
+        "PR-01",
+        "PR-02",
+        "FR-42"
+      ],
+      "source": [
+        "NORTH_STAR.md §0",
+        "NORTH_STAR.md §12 Phase 0",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §13"
+      ],
+      "objective": "規格與政策基線；本票交付：北極星逐條對照、政策待核定清單及決策紀錄",
+      "in_scope": "北極星逐條對照、政策待核定清單及決策紀錄",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 規格衝突，When 細化或實作，Then 北極星優先並記錄差異，不將既有程式自動升格為需求",
+        "Given 未估算或缺Google環境票，When 做DoR，Then 明列缺項並保留未就緒狀態，不虛填執行者",
+        "Given 未核定，When 啟動功能，Then 不把15站、活動日期或全隊名冊自動當成已核准規則"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-001/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "北極星逐條對照、政策待核定清單及決策紀錄",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 0,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦尚待核定：活動日期／人數／門檻／必修站／實到政策",
+        "未提供04票卡正式schema，本文識別碼為本專案提案"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 北極星與舊CSV／HTML衝突，When 建立基線，Then 每項衝突有來源、決策或待決，且北極星優先，原檔／雜湊保留。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-002",
+      "epic_id": "E01",
+      "story_id": "S01",
+      "parent_task_id": "TSK-01A",
+      "title": "定義可設定規則與安全預設",
+      "requirement_ids": [
+        "PR-01",
+        "PR-02",
+        "FR-42"
+      ],
+      "source": [
+        "NORTH_STAR.md §0",
+        "NORTH_STAR.md §12 Phase 0",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §13"
+      ],
+      "objective": "規格與政策基線；本票交付：榮譽門檻／必修站／實到政策／日期狀態的設定契約",
+      "in_scope": "榮譽門檻／必修站／實到政策／日期狀態的設定契約",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 規格衝突，When 細化或實作，Then 北極星優先並記錄差異，不將既有程式自動升格為需求",
+        "Given 未估算或缺Google環境票，When 做DoR，Then 明列缺項並保留未就緒狀態，不虛填執行者",
+        "Given 未核定，When 啟動功能，Then 不把15站、活動日期或全隊名冊自動當成已核准規則"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-002/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "榮譽門檻／必修站／實到政策／日期狀態的設定契約",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 0,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦尚待核定：活動日期／人數／門檻／必修站／實到政策",
+        "未提供04票卡正式schema，本文識別碼為本專案提案"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 未核定門檻／必修站／實到政策，When 載入設定，Then 不自動採用15站或全隊通過；非法門檻與站號遭拒絕。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-003",
+      "epic_id": "E01",
+      "story_id": "S01",
+      "parent_task_id": "TSK-01B",
+      "title": "審查追溯與DoR門檻",
+      "requirement_ids": [
+        "PR-01",
+        "PR-02",
+        "FR-42"
+      ],
+      "source": [
+        "NORTH_STAR.md §0",
+        "NORTH_STAR.md §12 Phase 0",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §13"
+      ],
+      "objective": "規格與政策基線；本票交付：逐項檢查來源、AC、相依與缺項，不代替PO核准",
+      "in_scope": "逐項檢查來源、AC、相依與缺項，不代替PO核准",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 規格衝突，When 細化或實作，Then 北極星優先並記錄差異，不將既有程式自動升格為需求",
+        "Given 未估算或缺Google環境票，When 做DoR，Then 明列缺項並保留未就緒狀態，不虛填執行者",
+        "Given 未核定，When 啟動功能，Then 不把15站、活動日期或全隊名冊自動當成已核准規則"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-003/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001",
+        "TKT-002"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "逐項檢查來源、AC、相依與缺項，不代替PO核准",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 0,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦尚待核定：活動日期／人數／門檻／必修站／實到政策",
+        "未提供04票卡正式schema，本文識別碼為本專案提案"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 任一票，When 跑追溯／DoR檢查，Then 可定位有效需求與父Task；缺估算／環境不可標READY，缺證據不可標DONE。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-004",
+      "epic_id": "E01",
+      "story_id": "S02",
+      "parent_task_id": "TSK-02A",
+      "title": "建立資料契約與schema版本",
+      "requirement_ids": [
+        "FR-37",
+        "NFR-08"
+      ],
+      "source": [
+        "NORTH_STAR.md §8",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §8.8"
+      ],
+      "objective": "資料表與30站安全遷移；本票交付：七核心表、必要擴充表、型別、主外鍵與schema驗證",
+      "in_scope": "七核心表、必要擴充表、型別、主外鍵與schema驗證",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given setup重跑，When 驗證，Then 不重複S01–S30、不覆寫既有章；不相容schema拒絕並列缺項",
+        "Given schema不符或seed重跑，When 遷移，Then 不破壞既有正式資料並留下錯誤證據"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-004/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001",
+        "TKT-002"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "七核心表、必要擴充表、型別、主外鍵與schema驗證",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "legacy-v2程式未提供，僅可採安全新表方案",
+        "真實測試Google試算表未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given schema錯欄、重複PK、斷裂FK或錯型別測試集，When 驗證，Then 分別指出錯誤，不默默轉型或刪列。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-005",
+      "epic_id": "E01",
+      "story_id": "S02",
+      "parent_task_id": "TSK-02A",
+      "title": "實作安全建表與30站seed",
+      "requirement_ids": [
+        "FR-37",
+        "NFR-08"
+      ],
+      "source": [
+        "NORTH_STAR.md §8",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §8.8"
+      ],
+      "objective": "資料表與30站安全遷移；本票交付：重跑不覆寫、S01–S30完整性、F1–B3 mapping與來源雜湊",
+      "in_scope": "重跑不覆寫、S01–S30完整性、F1–B3 mapping與來源雜湊",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given setup重跑，When 驗證，Then 不重複S01–S30、不覆寫既有章；不相容schema拒絕並列缺項",
+        "Given schema不符或seed重跑，When 遷移，Then 不破壞既有正式資料並留下錯誤證據"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-005/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "重跑不覆寫、S01–S30完整性、F1–B3 mapping與來源雜湊",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "legacy-v2程式未提供，僅可採安全新表方案",
+        "真實測試Google試算表未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 空測試表，When setup連跑兩次，Then 恰30個唯一站ID、六區各五站，既有人員／章不變，初始CLOSED／PENDING／未知排隊。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-006",
+      "epic_id": "E01",
+      "story_id": "S02",
+      "parent_task_id": "TSK-02B",
+      "title": "驗證遷移重跑及舊資料隔離",
+      "requirement_ids": [
+        "FR-37",
+        "NFR-08"
+      ],
+      "source": [
+        "NORTH_STAR.md §8",
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §8.8"
+      ],
+      "objective": "資料表與30站安全遷移；本票交付：欄位不符拒絕、重跑不重複、示範PIN／成績不匯入",
+      "in_scope": "欄位不符拒絕、重跑不重複、示範PIN／成績不匯入",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given setup重跑，When 驗證，Then 不重複S01–S30、不覆寫既有章；不相容schema拒絕並列缺項",
+        "Given schema不符或seed重跑，When 遷移，Then 不破壞既有正式資料並留下錯誤證據"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-006/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-005"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "欄位不符拒絕、重跑不重複、示範PIN／成績不匯入",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "legacy-v2程式未提供，僅可採安全新表方案",
+        "真實測試Google試算表未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 含明碼PIN與示範成績的舊檔，When 嘗試遷入，Then 不帶入正式憑證或成績；不相容表頭停止且原資料完整。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-007",
+      "epic_id": "E02",
+      "story_id": "S03",
+      "parent_task_id": "TSK-03A",
+      "title": "定義Forms欄位映射與去重鍵",
+      "requirement_ids": [
+        "FR-01",
+        "FR-02",
+        "FR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §8.1",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "表單報名與實際報到；本票交付：核准Form ID、item ID映射、response ID及資料驗證",
+      "in_scope": "核准Form ID、item ID映射、response ID及資料驗證",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 非配置表單事件，When 觸發匯入，Then 拒絕寫入；配置表單有效回覆則可建立名冊",
+        "Given 同一 response ID 重送，When 再匯入，Then 不新增第二名參加者且可追溯原結果",
+        "Given 同人重複報到，When 重送，Then 不重複計算 uniqueCheckedInParticipants"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-007/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "核准Form ID、item ID映射、response ID及資料驗證",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "核准Form ID／item ID mapping／trigger持有人未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 核准Form與題目item IDs，When 變更題目標題或缺必要映射，Then 以穩定item ID辨識；缺欄拒絕，response ID為去重鍵。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-008",
+      "epic_id": "E02",
+      "story_id": "S03",
+      "parent_task_id": "TSK-03A",
+      "title": "串接報名trigger與報到命令",
+      "requirement_ids": [
+        "FR-01",
+        "FR-02",
+        "FR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §8.1",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "表單報名與實際報到；本票交付：有效回覆建檔、重送安全、實際報到獨立記錄",
+      "in_scope": "有效回覆建檔、重送安全、實際報到獨立記錄",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 非配置表單事件，When 觸發匯入，Then 拒絕寫入；配置表單有效回覆則可建立名冊",
+        "Given 同一 response ID 重送，When 再匯入，Then 不新增第二名參加者且可追溯原結果",
+        "Given 同人重複報到，When 重送，Then 不重複計算 uniqueCheckedInParticipants"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-008/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-005",
+        "TKT-007",
+        "TKT-010",
+        "TKT-016",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "有效回覆建檔、重送安全、實際報到獨立記錄",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "核准Form ID／item ID mapping／trigger持有人未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 有效表單回覆與同人兩次報到，When 匯入／報到，Then 名冊只一人、報到不重複；報名不自動算已報到。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-009",
+      "epic_id": "E02",
+      "story_id": "S03",
+      "parent_task_id": "TSK-03B",
+      "title": "執行Forms與重送整合驗證",
+      "requirement_ids": [
+        "FR-01",
+        "FR-02",
+        "FR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §8.1",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "表單報名與實際報到；本票交付：錯表單、缺欄、同名異人、response重送與報到去重",
+      "in_scope": "錯表單、缺欄、同名異人、response重送與報到去重",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 非配置表單事件，When 觸發匯入，Then 拒絕寫入；配置表單有效回覆則可建立名冊",
+        "Given 同一 response ID 重送，When 再匯入，Then 不新增第二名參加者且可追溯原結果",
+        "Given 同人重複報到，When 重送，Then 不重複計算 uniqueCheckedInParticipants"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-009/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-008"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "錯表單、缺欄、同名異人、response重送與報到去重",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "核准Form ID／item ID mapping／trigger持有人未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 真Google測試Form，When 送有效／缺欄／重送／錯Form事件，Then 保存真Sheet結果與對應拒絕證據，不能以事件替身代替。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-010",
+      "epic_id": "E02",
+      "story_id": "S04",
+      "parent_task_id": "TSK-04A",
+      "title": "建立小隊資格與成員關聯",
+      "requirement_ids": [
+        "FR-03",
+        "FR-41"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §8.2",
+        "NORTH_STAR.md §3"
+      ],
+      "objective": "小隊名冊與隊長實到草稿；本票交付：隊伍ID、上下限、成員關係、隊長授權及成員異動規則",
+      "in_scope": "隊伍ID、上下限、成員關係、隊長授權及成員異動規則",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 小隊超過核准上限，When 加入成員或核章，Then 拒絕並提示；個人成績不合併為隊伍單筆",
+        "Given 小隊長送草稿，When 提交，Then 無PASS產生；其他隊伍不可被指定，關主仍需二次確認"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-010/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "隊伍ID、上下限、成員關係、隊長授權及成員異動規則",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "小隊資格、隊長指定及異動政策待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 7／8／10／11人的隊伍，When 做資格檢查，Then 8與10符合預設，7／11拒絕核章；所有成員仍有獨立ID。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-011",
+      "epic_id": "E02",
+      "story_id": "S04",
+      "parent_task_id": "TSK-04A",
+      "title": "實作隊長草稿與關主確認交接",
+      "requirement_ids": [
+        "FR-03",
+        "FR-41"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §8.2",
+        "NORTH_STAR.md §3"
+      ],
+      "objective": "小隊名冊與隊長實到草稿；本票交付：僅同隊候選名單，不產生有效章，關主重新核對實到",
+      "in_scope": "僅同隊候選名單，不產生有效章，關主重新核對實到",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 小隊超過核准上限，When 加入成員或核章，Then 拒絕並提示；個人成績不合併為隊伍單筆",
+        "Given 小隊長送草稿，When 提交，Then 無PASS產生；其他隊伍不可被指定，關主仍需二次確認"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-011/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-010",
+        "TKT-014",
+        "TKT-016",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "僅同隊候選名單，不產生有效章，關主重新核對實到",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "小隊資格、隊長指定及異動政策待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 受權隊長的有效session，When 送同隊候選名單，Then 只建立有站點／到期的草稿、不產生PASS；跨隊或非隊長拒絕。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-012",
+      "epic_id": "E02",
+      "story_id": "S04",
+      "parent_task_id": "TSK-04B",
+      "title": "驗證隊伍邊界與草稿越權",
+      "requirement_ids": [
+        "FR-03",
+        "FR-41"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §8.2",
+        "NORTH_STAR.md §3"
+      ],
+      "objective": "小隊名冊與隊長實到草稿；本票交付：7／8／10／11人、跨隊草稿、缺席、草稿無PASS",
+      "in_scope": "7／8／10／11人、跨隊草稿、缺席、草稿無PASS",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 小隊超過核准上限，When 加入成員或核章，Then 拒絕並提示；個人成績不合併為隊伍單筆",
+        "Given 小隊長送草稿，When 提交，Then 無PASS產生；其他隊伍不可被指定，關主仍需二次確認"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-012/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-010",
+        "TKT-011"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "7／8／10／11人、跨隊草稿、缺席、草稿無PASS",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "小隊資格、隊長指定及異動政策待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 草稿及當場實到不同，When 關主核章，Then 不自動採用草稿替缺席者蓋章，須重新確認實到快照。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-013",
+      "epic_id": "E03",
+      "story_id": "S05",
+      "parent_task_id": "TSK-05A",
+      "title": "實作高熵QR與受控發行",
+      "requirement_ids": [
+        "FR-05",
+        "FR-06",
+        "FR-07",
+        "NFR-02"
+      ],
+      "source": [
+        "NORTH_STAR.md §3.1",
+        "NORTH_STAR.md §8.1",
+        "NORTH_STAR.md §6.A",
+        "NORTH_STAR.md §10"
+      ],
+      "objective": "個人QR與工作階段；本票交付：不可猜token、僅存hash、私密交付、發行命令冪等",
+      "in_scope": "不可猜token、僅存hash、私密交付、發行命令冪等",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 授權發行，When 建立QR，Then QR不包含電話／健康資訊，且公開API及資料表無token原文",
+        "Given A的有效session，When 攜帶B的公開編號要求進度，Then 不回傳B的資料；失效session拒絕",
+        "Given 舊碼已重發，When 用舊碼或舊session查詢，Then 拒絕；新碼可登入",
+        "Given QR或PIN輪替，When 舊session／解鎖重用，Then 無權繼續；來源碼／console／localStorage無秘密"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-013/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004",
+        "TKT-005",
+        "TKT-016",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "不可猜token、僅存hash、私密交付、發行命令冪等",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "QR私密發放／遺失核身與保留政策待確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 管理員發行QR，When 檢查資料表／Requests／稽核，Then 無token原文；非管理員發行被拒，重送不多次輪替。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-014",
+      "epic_id": "E03",
+      "story_id": "S05",
+      "parent_task_id": "TSK-05A",
+      "title": "實作本人session與撤銷重發",
+      "requirement_ids": [
+        "FR-05",
+        "FR-06",
+        "FR-07",
+        "NFR-02"
+      ],
+      "source": [
+        "NORTH_STAR.md §3.1",
+        "NORTH_STAR.md §8.1",
+        "NORTH_STAR.md §6.A",
+        "NORTH_STAR.md §10"
+      ],
+      "objective": "個人QR與工作階段；本票交付：短效session、本人投影、輪替舊碼及session失效",
+      "in_scope": "短效session、本人投影、輪替舊碼及session失效",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 授權發行，When 建立QR，Then QR不包含電話／健康資訊，且公開API及資料表無token原文",
+        "Given A的有效session，When 攜帶B的公開編號要求進度，Then 不回傳B的資料；失效session拒絕",
+        "Given 舊碼已重發，When 用舊碼或舊session查詢，Then 拒絕；新碼可登入",
+        "Given QR或PIN輪替，When 舊session／解鎖重用，Then 無權繼續；來源碼／console／localStorage無秘密"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-014/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-013"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "短效session、本人投影、輪替舊碼及session失效",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "QR私密發放／遺失核身與保留政策待確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given A的session及B的公開編號，When 查進度，Then 只可見A；QR重發後舊碼／舊session失效，新碼可登入。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-015",
+      "epic_id": "E03",
+      "story_id": "S05",
+      "parent_task_id": "TSK-05B",
+      "title": "驗證QR生命週期及來源碼隱私",
+      "requirement_ids": [
+        "FR-05",
+        "FR-06",
+        "FR-07",
+        "NFR-02"
+      ],
+      "source": [
+        "NORTH_STAR.md §3.1",
+        "NORTH_STAR.md §8.1",
+        "NORTH_STAR.md §6.A",
+        "NORTH_STAR.md §10"
+      ],
+      "objective": "個人QR與工作階段；本票交付：本人隔離、失效、重發、回應遺失、無token落盤",
+      "in_scope": "本人隔離、失效、重發、回應遺失、無token落盤",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 授權發行，When 建立QR，Then QR不包含電話／健康資訊，且公開API及資料表無token原文",
+        "Given A的有效session，When 攜帶B的公開編號要求進度，Then 不回傳B的資料；失效session拒絕",
+        "Given 舊碼已重發，When 用舊碼或舊session查詢，Then 拒絕；新碼可登入",
+        "Given QR或PIN輪替，When 舊session／解鎖重用，Then 無權繼續；來源碼／console／localStorage無秘密"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-015/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-014"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "本人隔離、失效、重發、回應遺失、無token落盤",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "QR私密發放／遺失核身與保留政策待確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given token到期、登出、重發及回應遺失案例，When 逐一驗證，Then 機密不在URL／console／localStorage，舊憑證不可再用。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-016",
+      "epic_id": "E03",
+      "story_id": "S06",
+      "parent_task_id": "TSK-06A",
+      "title": "驗證Google身分與白名單範圍",
+      "requirement_ids": [
+        "FR-16",
+        "FR-17",
+        "FR-18",
+        "NFR-03"
+      ],
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §9"
+      ],
+      "objective": "工作人員授權與本站解鎖；本票交付：可信email、角色、站點／分區、空身分拒絕的PoC",
+      "in_scope": "可信email、角色、站點／分區、空身分拒絕的PoC",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 前端偽造role/email，When 呼叫管理或核章，Then 不取得權限；Google身分為空須UNAUTHORIZED",
+        "Given PIN錯誤超過限制，When 再嘗試，Then 限速；換碼後舊解鎖失效，公開端不含PIN或hash",
+        "Given S01關主要求S02核章，When 送出，Then FORBIDDEN且不寫章，留下不含秘密的拒絕證據",
+        "Given 停權人員仍持舊解鎖，When 下一請求，Then 拒絕；前端改Tab不得取得資料"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-016/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-005"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "可信email、角色、站點／分區、空身分拒絕的PoC",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦Workspace、staff帳號及Google email可用性PoC未完成"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 授權／非白名單／空Google身分，When 呼叫管理API，Then 分別依真Google身分授權或拒絕，前端email／role無效。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-017",
+      "epic_id": "E03",
+      "story_id": "S06",
+      "parent_task_id": "TSK-06A",
+      "title": "實作PIN限速與解鎖生命週期",
+      "requirement_ids": [
+        "FR-16",
+        "FR-17",
+        "FR-18",
+        "NFR-03"
+      ],
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §9"
+      ],
+      "objective": "工作人員授權與本站解鎖；本票交付：hash、限次鎖定、到期、換碼／停權失效與稽核",
+      "in_scope": "hash、限次鎖定、到期、換碼／停權失效與稽核",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 前端偽造role/email，When 呼叫管理或核章，Then 不取得權限；Google身分為空須UNAUTHORIZED",
+        "Given PIN錯誤超過限制，When 再嘗試，Then 限速；換碼後舊解鎖失效，公開端不含PIN或hash",
+        "Given S01關主要求S02核章，When 送出，Then FORBIDDEN且不寫章，留下不含秘密的拒絕證據",
+        "Given 停權人員仍持舊解鎖，When 下一請求，Then 拒絕；前端改Tab不得取得資料"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-017/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-016"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "hash、限次鎖定、到期、換碼／停權失效與稽核",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦Workspace、staff帳號及Google email可用性PoC未完成"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 同帳號本站連錯PIN，When 達設定上限，Then 鎖定至期限；換碼、解鎖到期或credential版本更新立即失效。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-018",
+      "epic_id": "E03",
+      "story_id": "S06",
+      "parent_task_id": "TSK-06B",
+      "title": "驗證越權、偽造及共用裝置",
+      "requirement_ids": [
+        "FR-16",
+        "FR-17",
+        "FR-18",
+        "NFR-03"
+      ],
+      "source": [
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §9"
+      ],
+      "objective": "工作人員授權與本站解鎖；本票交付：未登入、跨站、前端偽造role、停權、登出流程",
+      "in_scope": "未登入、跨站、前端偽造role、停權、登出流程",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 前端偽造role/email，When 呼叫管理或核章，Then 不取得權限；Google身分為空須UNAUTHORIZED",
+        "Given PIN錯誤超過限制，When 再嘗試，Then 限速；換碼後舊解鎖失效，公開端不含PIN或hash",
+        "Given S01關主要求S02核章，When 送出，Then FORBIDDEN且不寫章，留下不含秘密的拒絕證據",
+        "Given 停權人員仍持舊解鎖，When 下一請求，Then 拒絕；前端改Tab不得取得資料"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-018/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-016",
+        "TKT-017"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "未登入、跨站、前端偽造role、停權、登出流程",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦Workspace、staff帳號及Google email可用性PoC未完成"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given S01關主、停權關主及偽造角色，When 嘗試核S02或查管理資料，Then 拒絕且無章；審計不得含原PIN／token。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-019",
+      "epic_id": "E04",
+      "story_id": "S07",
+      "parent_task_id": "TSK-07A",
+      "title": "串接本人進度、徽章與政策",
+      "requirement_ids": [
+        "FR-08",
+        "FR-09",
+        "FR-10",
+        "NFR-01"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.A",
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §11"
+      ],
+      "objective": "本人通行證與榮譽摘要；本票交付：有效章、n/30、六區徽章、榮譽／必修站衍生值",
+      "in_scope": "有效章、n/30、六區徽章、榮譽／必修站衍生值",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 本人完成一站，When 同步成功，Then 護照只增加該人的有效站數；失敗時保留舊資料並標示",
+        "Given 一般隊員，When 查同隊摘要，Then 回傳必要編號／進度，不回傳其他姓名、聯絡人、token或PIN",
+        "Given honor_threshold未核定，When 顯示成就，Then 明示待核定且不授予；核定後依有效章及必修站判定",
+        "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-019/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-014"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "有效章、n/30、六區徽章、榮譽／必修站衍生值",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真手機／強光UAT環境未提供"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 核章與撤銷的已知真值集，When getMyProgress，Then 徽章／站數與有效章一致；門檻null不授榮譽，必修缺站不授榮譽。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-020",
+      "epic_id": "E04",
+      "story_id": "S07",
+      "parent_task_id": "TSK-07A",
+      "title": "完成QR與同隊最少摘要介面",
+      "requirement_ids": [
+        "FR-08",
+        "FR-09",
+        "FR-10",
+        "NFR-01"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.A",
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §11"
+      ],
+      "objective": "本人通行證與榮譽摘要；本票交付：本人QR canvas、有限識別、同隊進度、同步及登入狀態",
+      "in_scope": "本人QR canvas、有限識別、同隊進度、同步及登入狀態",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 本人完成一站，When 同步成功，Then 護照只增加該人的有效站數；失敗時保留舊資料並標示",
+        "Given 一般隊員，When 查同隊摘要，Then 回傳必要編號／進度，不回傳其他姓名、聯絡人、token或PIN",
+        "Given honor_threshold未核定，When 顯示成就，Then 明示待核定且不授予；核定後依有效章及必修站判定",
+        "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-020/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-019",
+        "TKT-065"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "本人QR canvas、有限識別、同隊進度、同步及登入狀態",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真手機／強光UAT環境未提供"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 本人登入，When 顯示護照，Then QR可離線編碼、本人成績可見，同隊只顯必要摘要；離開發行畫面清除QR內容。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-021",
+      "epic_id": "E04",
+      "story_id": "S07",
+      "parent_task_id": "TSK-07B",
+      "title": "驗證手機可用性與本人資料界線",
+      "requirement_ids": [
+        "FR-08",
+        "FR-09",
+        "FR-10",
+        "NFR-01"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.A",
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §11"
+      ],
+      "objective": "本人通行證與榮譽摘要；本票交付：390px、48px、鍵盤、失效／離線／同隊隱私",
+      "in_scope": "390px、48px、鍵盤、失效／離線／同隊隱私",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 本人完成一站，When 同步成功，Then 護照只增加該人的有效站數；失敗時保留舊資料並標示",
+        "Given 一般隊員，When 查同隊摘要，Then 回傳必要編號／進度，不回傳其他姓名、聯絡人、token或PIN",
+        "Given honor_threshold未核定，When 顯示成就，Then 明示待核定且不授予；核定後依有效章及必修站判定",
+        "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-021/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-020"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "390px、48px、鍵盤、失效／離線／同隊隱私",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真手機／強光UAT環境未提供"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 390px真手機及鍵盤，When 操作護照，Then 主要觸控≥48px、狀態有文字、強光可讀；未測裝置不標通過。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-022",
+      "epic_id": "E04",
+      "story_id": "S08",
+      "parent_task_id": "TSK-08A",
+      "title": "建立30站地圖資料投影",
+      "requirement_ids": [
+        "FR-11",
+        "FR-12",
+        "FR-15",
+        "NFR-01"
+      ],
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §11"
+      ],
+      "objective": "六區地圖與安全分流；本票交付：完整seed、分區示意、核准標記及無虛構坐標",
+      "in_scope": "完整seed、分區示意、核准標記及無虛構坐標",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 未完成現勘，When 顯示站點，Then 明示待核准及區域示意，不生成真實坐標或逃生路線",
+        "Given 依B2篩選，When 執行搜尋，Then 只顯示S21–S25且不遺漏任何該區站",
+        "Given 某站HIGH，When 顯示分流，Then 提醒改往資料有效且已開放站；沒有可用站則明示無可靠建議",
+        "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-022/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-005",
+        "TKT-028"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "完整seed、分區示意、核准標記及無虛構坐標",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "現勘與區域使用範圍尚待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 新版seed，When 查地圖投影，Then 恰S01–S30且分區正確，無姓名／電話／token／PIN，待現勘位置明示待核准。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-023",
+      "epic_id": "E04",
+      "story_id": "S08",
+      "parent_task_id": "TSK-08A",
+      "title": "實作搜尋、篩選與安全推薦",
+      "requirement_ids": [
+        "FR-11",
+        "FR-12",
+        "FR-15",
+        "NFR-01"
+      ],
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §11"
+      ],
+      "objective": "六區地圖與安全分流；本票交付：站號／名稱／區域查詢、僅推薦開放且資料有效站",
+      "in_scope": "站號／名稱／區域查詢、僅推薦開放且資料有效站",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 未完成現勘，When 顯示站點，Then 明示待核准及區域示意，不生成真實坐標或逃生路線",
+        "Given 依B2篩選，When 執行搜尋，Then 只顯示S21–S25且不遺漏任何該區站",
+        "Given 某站HIGH，When 顯示分流，Then 提醒改往資料有效且已開放站；沒有可用站則明示無可靠建議",
+        "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-023/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-022",
+        "TKT-026",
+        "TKT-029",
+        "TKT-065"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "站號／名稱／區域查詢、僅推薦開放且資料有效站",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "現勘與區域使用範圍尚待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given HIGH、STALE、PAUSED及未核准站，When 搜尋／推薦，Then 篩選正確且只推薦OPEN、已核准、資料有效的替代站；無候選明示。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-024",
+      "epic_id": "E04",
+      "story_id": "S08",
+      "parent_task_id": "TSK-08B",
+      "title": "驗證地圖完整性與安全提示",
+      "requirement_ids": [
+        "FR-11",
+        "FR-12",
+        "FR-15",
+        "NFR-01"
+      ],
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §11"
+      ],
+      "objective": "六區地圖與安全分流；本票交付：六區各五站、非疏散圖、無可用站、紅燈分流",
+      "in_scope": "六區各五站、非疏散圖、無可用站、紅燈分流",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 未完成現勘，When 顯示站點，Then 明示待核准及區域示意，不生成真實坐標或逃生路線",
+        "Given 依B2篩選，When 執行搜尋，Then 只顯示S21–S25且不遺漏任何該區站",
+        "Given 某站HIGH，When 顯示分流，Then 提醒改往資料有效且已開放站；沒有可用站則明示無可靠建議",
+        "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-024/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-023"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "六區各五站、非疏散圖、無可用站、紅燈分流",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "現勘與區域使用範圍尚待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 六區資料，When 逐區篩選與查S03，Then 每區5站且S03唯一；圖上有非官方疏散圖警語、無虛構坐標／距離。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-025",
+      "epic_id": "E05",
+      "story_id": "S09",
+      "parent_task_id": "TSK-09A",
+      "title": "實作本站排隊回報契約",
+      "requirement_ids": [
+        "FR-13",
+        "FR-14",
+        "FR-28"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.3",
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §9.2"
+      ],
+      "objective": "人隊排隊與等待估算；本票交付：個人／隊數分欄、非負整數、更新者／時間及權限",
+      "in_scope": "個人／隊數分欄、非負整數、更新者／時間及權限",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 開站但排隊資料超過設定期限，When 查站況，Then 顯示STALE而非LOW，附更新時間",
+        "Given 6隊、每隊5分鐘、2線，When 計算，Then 預估15分鐘；任一必要值缺失不得硬算0",
+        "Given 負值或非整數，When 更新，Then 拒絕；有效值成功後公開板及戰情中心一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-025/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-016",
+        "TKT-017",
+        "TKT-029",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "個人／隊數分欄、非負整數、更新者／時間及權限",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "各站實測耗時／服務線數與燈號設定待主辦確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 本站與別站關主，When 更新個人／小隊排隊，Then 本站成功並記人／時，跨站、負值及小數拒絕。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-026",
+      "epic_id": "E05",
+      "story_id": "S09",
+      "parent_task_id": "TSK-09A",
+      "title": "統一等待與過期燈號計算",
+      "requirement_ids": [
+        "FR-13",
+        "FR-14",
+        "FR-28"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.3",
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §9.2"
+      ],
+      "objective": "人隊排隊與等待估算；本票交付：人隊耗時／線數公式、缺值未知、暫停／過期優先",
+      "in_scope": "人隊耗時／線數公式、缺值未知、暫停／過期優先",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 開站但排隊資料超過設定期限，When 查站況，Then 顯示STALE而非LOW，附更新時間",
+        "Given 6隊、每隊5分鐘、2線，When 計算，Then 預估15分鐘；任一必要值缺失不得硬算0",
+        "Given 負值或非整數，When 更新，Then 拒絕；有效值成功後公開板及戰情中心一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-026/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-025"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "人隊耗時／線數公式、缺值未知、暫停／過期優先",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "各站實測耗時／服務線數與燈號設定待主辦確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 6隊×5分鐘÷2線，When 計算，Then 15分鐘；必要值缺失為未知，暫停優先UNAVAILABLE、逾期優先STALE。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-027",
+      "epic_id": "E05",
+      "story_id": "S09",
+      "parent_task_id": "TSK-09B",
+      "title": "驗證容量、未知及分流門檻",
+      "requirement_ids": [
+        "FR-13",
+        "FR-14",
+        "FR-28"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.3",
+        "NORTH_STAR.md §6.B",
+        "NORTH_STAR.md §9.2"
+      ],
+      "objective": "人隊排隊與等待估算；本票交付：5／10分鐘邊界、線數零／缺值、S29舊燈號不沿用",
+      "in_scope": "5／10分鐘邊界、線數零／缺值、S29舊燈號不沿用",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 開站但排隊資料超過設定期限，When 查站況，Then 顯示STALE而非LOW，附更新時間",
+        "Given 6隊、每隊5分鐘、2線，When 計算，Then 預估15分鐘；任一必要值缺失不得硬算0",
+        "Given 負值或非整數，When 更新，Then 拒絕；有效值成功後公開板及戰情中心一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-027/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-026"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "5／10分鐘邊界、線數零／缺值、S29舊燈號不沿用",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "各站實測耗時／服務線數與燈號設定待主辦確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 等候5、6、10、11分鐘及線數0／null，When 判級，Then LOW、MEDIUM、MEDIUM、HIGH及未知，不能沿用舊S29錯燈號。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-028",
+      "epic_id": "E05",
+      "story_id": "S10",
+      "parent_task_id": "TSK-10A",
+      "title": "核對30站名稱與場地配置",
+      "requirement_ids": [
+        "FR-29",
+        "FR-42"
+      ],
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §8.3",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §13"
+      ],
+      "objective": "場地核准與站點設定；本票交付：新版與舊CSV／Stitch逐站差異、現勘／雨備待填",
+      "in_scope": "新版與舊CSV／Stitch逐站差異、現勘／雨備待填",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 未核准場地或服務線數未知，When 嘗試開站，Then 拒絕並提示缺項；變更可追溯",
+        "Given 未核定，When 啟動功能，Then 不把15站、活動日期或全隊名冊自動當成已核准規則"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-028/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "新版與舊CSV／Stitch逐站差異、現勘／雨備待填",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 0,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "現勘核准點位、分齡任務、可及性與雨備說明未齊"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 新seed與舊CSV／Stitch，When 對照，Then 30站皆有新舊名稱及場域差異，F1–B3來源清楚且位置仍待現勘。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-029",
+      "epic_id": "E05",
+      "story_id": "S10",
+      "parent_task_id": "TSK-10A",
+      "title": "實作站點維護與開關站",
+      "requirement_ids": [
+        "FR-29",
+        "FR-42"
+      ],
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §8.3",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §13"
+      ],
+      "objective": "場地核准與站點設定；本票交付：站名、位置、分齡、可及性、雨備、耗時、線數及理由",
+      "in_scope": "站名、位置、分齡、可及性、雨備、耗時、線數及理由",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 未核准場地或服務線數未知，When 嘗試開站，Then 拒絕並提示缺項；變更可追溯",
+        "Given 未核定，When 啟動功能，Then 不把15站、活動日期或全隊名冊自動當成已核准規則"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-029/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-005",
+        "TKT-016",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "站名、位置、分齡、可及性、雨備、耗時、線數及理由",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "現勘核准點位、分齡任務、可及性與雨備說明未齊"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 授權管理員，When 修改分齡／雨備／位置／線數並開站，Then 設定可讀且有稽核；缺核准／線數不得OPEN。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-030",
+      "epic_id": "E05",
+      "story_id": "S10",
+      "parent_task_id": "TSK-10B",
+      "title": "驗證未核准場地不得開站",
+      "requirement_ids": [
+        "FR-29",
+        "FR-42"
+      ],
+      "source": [
+        "NORTH_STAR.md §5",
+        "NORTH_STAR.md §8.3",
+        "NORTH_STAR.md §4.2",
+        "NORTH_STAR.md §13"
+      ],
+      "objective": "場地核准與站點設定；本票交付：缺線數／場地／授權拒絕，設定變更可追溯",
+      "in_scope": "缺線數／場地／授權拒絕，設定變更可追溯",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 未核准場地或服務線數未知，When 嘗試開站，Then 拒絕並提示缺項；變更可追溯",
+        "Given 未核定，When 啟動功能，Then 不把15站、活動日期或全隊名冊自動當成已核准規則"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-030/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-029"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "缺線數／場地／授權拒絕，設定變更可追溯",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "現勘核准點位、分齡任務、可及性與雨備說明未齊"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 未核准場地、空耗時或無權帳號，When 開站／維護，Then 明確拒絕且不意外開站，失敗證據可重現。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-031",
+      "epic_id": "E06",
+      "story_id": "S11",
+      "parent_task_id": "TSK-11A",
+      "title": "串接掃碼／手動查驗與最少投影",
+      "requirement_ids": [
+        "FR-19",
+        "FR-20",
+        "FR-21",
+        "FR-24"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.C",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10"
+      ],
+      "objective": "關主查驗與個人核章；本票交付：相機權限、手動核身、查無／已完成／資格提示",
+      "in_scope": "相機權限、手動核身、查無／已完成／資格提示",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相機拒絕或瀏覽器不支援，When 開掃描，Then 提供可理解錯誤及手動身分核對流程",
+        "Given 未確認本人，When 以公開編號查詢／核章，Then 拒絕；授權核對後僅回必要識別與本站狀態",
+        "Given 本人首次合法通過S03，When 伺服器確認，Then 增一筆有效PASS；同站重複回ALREADY_STAMPED",
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-031/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-014",
+        "TKT-016",
+        "TKT-017",
+        "TKT-029",
+        "TKT-065"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "相機權限、手動核身、查無／已完成／資格提示",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真手機相機／GAS iframe授權未驗證"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 相機授權成功／拒絕／不支援，When 掃碼，Then 成功只到預覽不自動核章；手動編號須額外核身且只回必要資料。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-032",
+      "epic_id": "E06",
+      "story_id": "S11",
+      "parent_task_id": "TSK-11A",
+      "title": "實作個人核章驗證與確認契約",
+      "requirement_ids": [
+        "FR-19",
+        "FR-20",
+        "FR-21",
+        "FR-24"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.C",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10"
+      ],
+      "objective": "關主查驗與個人核章；本票交付：本站開放、有效參加者、提交防連點與伺服器確認",
+      "in_scope": "服務端核章驗證、確認參數、唯一有效章及錯誤回應；畫面二次確認由TKT-033驗證",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相機拒絕或瀏覽器不支援，When 開掃描，Then 提供可理解錯誤及手動身分核對流程",
+        "Given 未確認本人，When 以公開編號查詢／核章，Then 拒絕；授權核對後僅回必要識別與本站狀態",
+        "Given 本人首次合法通過S03，When 伺服器確認，Then 增一筆有效PASS；同站重複回ALREADY_STAMPED",
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-032/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-014",
+        "TKT-016",
+        "TKT-017",
+        "TKT-029",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "本站開放、有效參加者、提交防連點與伺服器確認",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真手機相機／GAS iframe授權未驗證"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 首次、重複、關站、無資格與跨站請求，When approveIndividualStamp，Then 只有首次合法者增一PASS，其餘拒絕且不變更成果。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-033",
+      "epic_id": "E06",
+      "story_id": "S11",
+      "parent_task_id": "TSK-11B",
+      "title": "驗證個人閉環與相機降級",
+      "requirement_ids": [
+        "FR-19",
+        "FR-20",
+        "FR-21",
+        "FR-24"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.C",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10"
+      ],
+      "objective": "關主查驗與個人核章；本票交付：首次／重複／未核身／跨站、相機拒絕與手動備援",
+      "in_scope": "首次／重複／未核身／跨站、相機拒絕與手動備援；含畫面二次確認與提交防連點",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相機拒絕或瀏覽器不支援，When 開掃描，Then 提供可理解錯誤及手動身分核對流程",
+        "Given 未確認本人，When 以公開編號查詢／核章，Then 拒絕；授權核對後僅回必要識別與本站狀態",
+        "Given 本人首次合法通過S03，When 伺服器確認，Then 增一筆有效PASS；同站重複回ALREADY_STAMPED",
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-033/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-031",
+        "TKT-032"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "首次／重複／未核身／跨站、相機拒絕與手動備援",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真手機相機／GAS iframe授權未驗證"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 關主查到本人，When 未二次確認／連點／相機不可用，Then 不產生未授權章，提交中禁連點且可走手動核身閉環。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-034",
+      "epic_id": "E06",
+      "story_id": "S12",
+      "parent_task_id": "TSK-12A",
+      "title": "實作實到與缺席核准快照",
+      "requirement_ids": [
+        "FR-22",
+        "FR-23"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "小隊實到核章與隊站統計；本票交付：不預勾全隊、只允許合法同隊成員，保留缺席ID",
+      "in_scope": "不預勾全隊、只允許合法同隊成員，保留缺席ID",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊其中1人缺席，When 其餘7人核章，Then 缺席者無章，批次保存實到及缺席快照",
+        "Given 已核准實到快照的所有成員有效通過，When 聚合，Then 隊站次+1；任一有效章撤銷須重算"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-034/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-010",
+        "TKT-011",
+        "TKT-029",
+        "TKT-016"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "不預勾全隊、只允許合法同隊成員，保留缺席ID",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "實到通過政策與缺席規則尚待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 8人隊其中1人缺席，When 核准實到快照，Then 存7人實到／1人缺席，ID不可重複／跨隊，初始不預勾全隊。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-035",
+      "epic_id": "E06",
+      "story_id": "S12",
+      "parent_task_id": "TSK-12A",
+      "title": "提交逐人核章與同批關聯",
+      "requirement_ids": [
+        "FR-22",
+        "FR-23"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "小隊實到核章與隊站統計；本票交付：實到N人各一PASS、batch_id、政策快照與提交狀態",
+      "in_scope": "實到N人各一PASS、batch_id、政策快照與提交狀態",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊其中1人缺席，When 其餘7人核章，Then 缺席者無章，批次保存實到及缺席快照",
+        "Given 已核准實到快照的所有成員有效通過，When 聚合，Then 隊站次+1；任一有效章撤銷須重算"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-035/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-034",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "實到N人各一PASS、batch_id、政策快照與提交狀態",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "實到通過政策與缺席規則尚待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 核准N名實到者，When 原子提交，Then 同批N筆個人PASS、批次／Requests／稽核齊備；缺席者零章。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-036",
+      "epic_id": "E06",
+      "story_id": "S12",
+      "parent_task_id": "TSK-12B",
+      "title": "完成小隊預覽與二次確認UI",
+      "requirement_ids": [
+        "FR-22",
+        "FR-23"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "小隊實到核章與隊站統計；本票交付：清楚列出此次實到／缺席與人數，成功前不加章",
+      "in_scope": "清楚列出此次實到／缺席與人數，成功前不加章",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊其中1人缺席，When 其餘7人核章，Then 缺席者無章，批次保存實到及缺席快照",
+        "Given 已核准實到快照的所有成員有效通過，When 聚合，Then 隊站次+1；任一有效章撤銷須重算"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-036/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-031",
+        "TKT-035"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "清楚列出此次實到／缺席與人數，成功前不加章",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "實到通過政策與缺席規則尚待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 實到候選，When 確認前預覽，Then 明列人數及各ID、缺席不勾選；只有二次確認後可提交且未知結果不顯成功。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-037",
+      "epic_id": "E06",
+      "story_id": "S12",
+      "parent_task_id": "TSK-12B",
+      "title": "驗證缺席、重複與隊員異動",
+      "requirement_ids": [
+        "FR-22",
+        "FR-23"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "小隊實到核章與隊站統計；本票交付：缺席不章、重複成員／跨隊拒絕、異動不污染快照",
+      "in_scope": "缺席不章、重複成員／跨隊拒絕、異動不污染快照",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊其中1人缺席，When 其餘7人核章，Then 缺席者無章，批次保存實到及缺席快照",
+        "Given 已核准實到快照的所有成員有效通過，When 聚合，Then 隊站次+1；任一有效章撤銷須重算"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-037/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-034",
+        "TKT-035"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "缺席不章、重複成員／跨隊拒絕、異動不污染快照",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "實到通過政策與缺席規則尚待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 重複成員、其他隊員、無效成員及名冊異動，When 核章，Then 非法名單整批拒絕，舊快照不被後續異動改寫。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-038",
+      "epic_id": "E06",
+      "story_id": "S12",
+      "parent_task_id": "TSK-12B",
+      "title": "驗證完成隊數與撤銷重算",
+      "requirement_ids": [
+        "FR-22",
+        "FR-23"
+      ],
+      "source": [
+        "NORTH_STAR.md §4.1",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D"
+      ],
+      "objective": "小隊實到核章與隊站統計；本票交付：八人站次+8且隊站次+1，同隊同站不重複計隊",
+      "in_scope": "八人站次+8且隊站次+1，同隊同站不重複計隊",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊其中1人缺席，When 其餘7人核章，Then 缺席者無章，批次保存實到及缺席快照",
+        "Given 已核准實到快照的所有成員有效通過，When 聚合，Then 隊站次+1；任一有效章撤銷須重算"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-038/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-035",
+        "TKT-045"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "八人站次+8且隊站次+1，同隊同站不重複計隊",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "實到通過政策與缺席規則尚待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 8人成批通過後撤銷其中1章，When 聚合，Then 先隊員站次+8／隊站次+1，撤銷後按原快照重算，隊數不重複。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-039",
+      "epic_id": "E07",
+      "story_id": "S13",
+      "parent_task_id": "TSK-13A",
+      "title": "建立冪等鍵與請求結果帳本",
+      "requirement_ids": [
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "NFR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.3",
+        "NORTH_STAR.md §1.2"
+      ],
+      "objective": "冪等、並行與批次復原；本票交付：鍵／actor／內容綁定、衝突拒絕、原結果查回",
+      "in_scope": "鍵／actor／內容綁定、衝突拒絕、原結果查回",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕",
+        "Given 兩關主並發核同人同站，When 提交，Then 最多一筆有效PASS且兩方回饋可對帳",
+        "Given 批次第5名寫入故障或API拒絕，When 查進度，Then 不公布無復原狀態的部分完成",
+        "Given 重送／並行／回應遺失／中途故障，When 對帳，Then 有效章、Requests、批次與稽核一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-039/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004",
+        "TKT-016"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "鍵／actor／內容綁定、衝突拒絕、原結果查回",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真Google測試帳號、雙關主環境與故障注入窗口未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 相同鍵同actor同內容及相同鍵異內容／actor，When 重送，Then 前者回原結果、後者衝突拒絕，未保存秘密payload。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-040",
+      "epic_id": "E07",
+      "story_id": "S13",
+      "parent_task_id": "TSK-13A",
+      "title": "實作鎖定與原子跨表提交",
+      "requirement_ids": [
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "NFR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.3",
+        "NORTH_STAR.md §1.2"
+      ],
+      "objective": "冪等、並行與批次復原；本票交付：章／批次／稽核／Requests同次提交，不把Sheets當原生交易庫",
+      "in_scope": "章／批次／稽核／Requests同次提交，不把Sheets當原生交易庫",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕",
+        "Given 兩關主並發核同人同站，When 提交，Then 最多一筆有效PASS且兩方回饋可對帳",
+        "Given 批次第5名寫入故障或API拒絕，When 查進度，Then 不公布無復原狀態的部分完成",
+        "Given 重送／並行／回應遺失／中途故障，When 對帳，Then 有效章、Requests、批次與稽核一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-040/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-005",
+        "TKT-039"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "章／批次／稽核／Requests同次提交，不把Sheets當原生交易庫",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真Google測試帳號、雙關主環境與故障注入窗口未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 需要章／批次／稽核／Requests的操作，When 提交，Then 同一受鎖檢查與原子API邊界，任一請求無效不得部分可見。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-041",
+      "epic_id": "E07",
+      "story_id": "S13",
+      "parent_task_id": "TSK-13B",
+      "title": "注入批次中斷與拒絕故障",
+      "requirement_ids": [
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "NFR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.3",
+        "NORTH_STAR.md §1.2"
+      ],
+      "objective": "冪等、並行與批次復原；本票交付：第5員故障不公布半批；可重試／補償及對帳",
+      "in_scope": "第5員故障不公布半批；可重試／補償及對帳",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕",
+        "Given 兩關主並發核同人同站，When 提交，Then 最多一筆有效PASS且兩方回饋可對帳",
+        "Given 批次第5名寫入故障或API拒絕，When 查進度，Then 不公布無復原狀態的部分完成",
+        "Given 重送／並行／回應遺失／中途故障，When 對帳，Then 有效章、Requests、批次與稽核一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-041/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-035",
+        "TKT-040"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "第5員故障不公布半批；可重試／補償及對帳",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真Google測試帳號、雙關主環境與故障注入窗口未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 第5人或批次API注入失敗，When 對外讀取及重試，Then 無未追復的部分成功，失敗／重試前後證據俱在。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-042",
+      "epic_id": "E07",
+      "story_id": "S13",
+      "parent_task_id": "TSK-13B",
+      "title": "驗證寫成但回應遺失重送",
+      "requirement_ids": [
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "NFR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.3",
+        "NORTH_STAR.md §1.2"
+      ],
+      "objective": "冪等、並行與批次復原；本票交付：原鍵查回已承諾結果，不產生第二組有效章",
+      "in_scope": "原鍵查回已承諾結果，不產生第二組有效章",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕",
+        "Given 兩關主並發核同人同站，When 提交，Then 最多一筆有效PASS且兩方回饋可對帳",
+        "Given 批次第5名寫入故障或API拒絕，When 查進度，Then 不公布無復原狀態的部分完成",
+        "Given 重送／並行／回應遺失／中途故障，When 對帳，Then 有效章、Requests、批次與稽核一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-042/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-035",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "原鍵查回已承諾結果，不產生第二組有效章",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真Google測試帳號、雙關主環境與故障注入窗口未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 寫入成功但回應遺失，When 用原鍵重送，Then 查回原成功結果、有效章不增加；不得改鍵掩蓋未知結果。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-043",
+      "epic_id": "E07",
+      "story_id": "S13",
+      "parent_task_id": "TSK-13B",
+      "title": "執行真Google雙關主併發測試",
+      "requirement_ids": [
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "NFR-04"
+      ],
+      "source": [
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.3",
+        "NORTH_STAR.md §1.2"
+      ],
+      "objective": "冪等、並行與批次復原；本票交付：同人同站競爭、鎖逾時及全表一致性證據",
+      "in_scope": "同人同站競爭、鎖逾時及全表一致性證據",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 相同鍵／人／內容，When 重送，Then 不重複寫入；相同鍵不同內容或人員須拒絕",
+        "Given 兩關主並發核同人同站，When 提交，Then 最多一筆有效PASS且兩方回饋可對帳",
+        "Given 批次第5名寫入故障或API拒絕，When 查進度，Then 不公布無復原狀態的部分完成",
+        "Given 重送／並行／回應遺失／中途故障，When 對帳，Then 有效章、Requests、批次與稽核一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-043/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-032",
+        "TKT-035",
+        "TKT-040",
+        "TKT-042"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "同人同站競爭、鎖逾時及全表一致性證據",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真Google測試帳號、雙關主環境與故障注入窗口未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 兩個真Google關主工作階段，When 同時核同人同站，Then 至多一有效PASS，附實際時間／回應／Sheet對帳及鎖等待紀錄。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-044",
+      "epic_id": "E07",
+      "story_id": "S14",
+      "parent_task_id": "TSK-14A",
+      "title": "實作組長更正申請與權責分離",
+      "requirement_ids": [
+        "FR-27",
+        "FR-38",
+        "FR-43",
+        "NFR-10"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §8.7",
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "更正申請、補償與稽核；本票交付：組長可申請、管理員核對及執行，原因與原章關聯",
+      "in_scope": "組長可申請、管理員核對及執行，原因與原章關聯",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 管理員撤銷一章，When 重算，Then 個人／小隊／地圖／報表一致且原PASS仍存在",
+        "Given 更正或越權，When 查稽核，Then 能定位事件與操作者而不含token／PIN原文",
+        "Given 組長申請，When 流轉，Then 不直接刪改核章且有申請與執行的責任追溯",
+        "Given 任一票，When 查證據，Then 可找到基準版本、輸入、預期／實際、結果與責任人"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-044/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-016",
+        "TKT-032"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "組長可申請、管理員核對及執行，原因與原章關聯",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "成績更正申請／核准流程與管理員責任人待指定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given EVENT_LEAD提出更正，When 送申請，Then 有申請ID／原章／理由／申請人但有效章不變；未受權角色拒絕。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-045",
+      "epic_id": "E07",
+      "story_id": "S14",
+      "parent_task_id": "TSK-14A",
+      "title": "實作不可無痕刪除的補償事件",
+      "requirement_ids": [
+        "FR-27",
+        "FR-38",
+        "FR-43",
+        "NFR-10"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §8.7",
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "更正申請、補償與稽核；本票交付：REVOKED指向原PASS，衍生統計重算，稽核不記秘密",
+      "in_scope": "REVOKED指向原PASS，衍生統計重算，稽核不記秘密",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 管理員撤銷一章，When 重算，Then 個人／小隊／地圖／報表一致且原PASS仍存在",
+        "Given 更正或越權，When 查稽核，Then 能定位事件與操作者而不含token／PIN原文",
+        "Given 組長申請，When 流轉，Then 不直接刪改核章且有申請與執行的責任追溯",
+        "Given 任一票，When 查證據，Then 可找到基準版本、輸入、預期／實際、結果與責任人"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-045/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-032",
+        "TKT-040",
+        "TKT-044"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "REVOKED指向原PASS，衍生統計重算，稽核不記秘密",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "成績更正申請／核准流程與管理員責任人待指定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 核准更正申請，When SYSTEM_ADMIN撤銷，Then 原PASS保留、新補償指向原章並連申請，申請結案且統計重算。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-046",
+      "epic_id": "E07",
+      "story_id": "S14",
+      "parent_task_id": "TSK-14B",
+      "title": "驗證更正前後跨畫面與報表",
+      "requirement_ids": [
+        "FR-27",
+        "FR-38",
+        "FR-43",
+        "NFR-10"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.4",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §1.1",
+        "NORTH_STAR.md §8.7",
+        "NORTH_STAR.md §3",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "更正申請、補償與稽核；本票交付：原紀錄保留、兩次撤銷拒絕、本人／小隊／總表一致",
+      "in_scope": "原紀錄保留、兩次撤銷拒絕、本人／小隊／總表一致",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 管理員撤銷一章，When 重算，Then 個人／小隊／地圖／報表一致且原PASS仍存在",
+        "Given 更正或越權，When 查稽核，Then 能定位事件與操作者而不含token／PIN原文",
+        "Given 組長申請，When 流轉，Then 不直接刪改核章且有申請與執行的責任追溯",
+        "Given 任一票，When 查證據，Then 可找到基準版本、輸入、預期／實際、結果與責任人"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-046/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-045",
+        "TKT-047",
+        "TKT-054"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "原紀錄保留、兩次撤銷拒絕、本人／小隊／總表一致",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "成績更正申請／核准流程與管理員責任人待指定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 已更正案例，When 比對A／B／D及匯出，Then 同口徑一致，第二次撤銷不可重減，附真整合證據。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-047",
+      "epic_id": "E08",
+      "story_id": "S15",
+      "parent_task_id": "TSK-15A",
+      "title": "聚合30站及六類全場KPI",
+      "requirement_ids": [
+        "FR-30",
+        "FR-35",
+        "FR-44",
+        "NFR-05"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §1.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "30站戰情與同步健康；本票交付：報到／有效隊伍／個人站次／隊員站次／隊站次／總章分開",
+      "in_scope": "報到／有效隊伍／個人站次／隊員站次／隊站次／總章分開",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊同站通過，When 顯示KPI，Then 隊員站次+8、隊站次+1，不把8當8隊或8個報到新增",
+        "Given 連續API失敗，When 再同步，Then 不假裝即時成功，顯示過期／故障及最後同步時間",
+        "Given API連續故障或容量保護，When 管理頁恢復，Then 可見故障時間／類別與處置提示",
+        "Given 核定負載模型，When 壓測，Then 記錄吞吐、p95/p99、錯誤率、配額及鎖競爭，門檻需事前核定"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-047/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-025",
+        "TKT-026",
+        "TKT-035",
+        "TKT-045"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "報到／有效隊伍／個人站次／隊員站次／隊站次／總章分開",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "正式參與規模及效能驗收門檻待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 1名個人與8名隊員各過1站，When 聚合，Then 個人站次1／隊員站次8／隊站次1／總章9；報到不由9推算。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-048",
+      "epic_id": "E08",
+      "story_id": "S15",
+      "parent_task_id": "TSK-15A",
+      "title": "串接戰情搜尋與20秒退避",
+      "requirement_ids": [
+        "FR-30",
+        "FR-35",
+        "FR-44",
+        "NFR-05"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §1.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "30站戰情與同步健康；本票交付：場域／狀態篩選、背景降頻、最後同步、系統故障指示",
+      "in_scope": "場域／狀態篩選、背景降頻、最後同步、系統故障指示",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊同站通過，When 顯示KPI，Then 隊員站次+8、隊站次+1，不把8當8隊或8個報到新增",
+        "Given 連續API失敗，When 再同步，Then 不假裝即時成功，顯示過期／故障及最後同步時間",
+        "Given API連續故障或容量保護，When 管理頁恢復，Then 可見故障時間／類別與處置提示",
+        "Given 核定負載模型，When 壓測，Then 記錄吞吐、p95/p99、錯誤率、配額及鎖競爭，門檻需事前核定"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-048/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-047",
+        "TKT-065"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "場域／狀態篩選、背景降頻、最後同步、系統故障指示",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "正式參與規模及效能驗收門檻待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 正常／連續失敗／背景頁，When 輪詢，Then 正常預設20秒、失敗退避、背景降頻，最後成功時間不被失敗刷新。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-049",
+      "epic_id": "E08",
+      "story_id": "S15",
+      "parent_task_id": "TSK-15B",
+      "title": "驗證統計口徑與核定負載",
+      "requirement_ids": [
+        "FR-30",
+        "FR-35",
+        "FR-44",
+        "NFR-05"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §1.2",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §7",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "30站戰情與同步健康；本票交付：人工算表、過期、連續失敗、配額與p95/p99壓測",
+      "in_scope": "人工算表、過期、連續失敗、配額與p95/p99壓測",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 8人小隊同站通過，When 顯示KPI，Then 隊員站次+8、隊站次+1，不把8當8隊或8個報到新增",
+        "Given 連續API失敗，When 再同步，Then 不假裝即時成功，顯示過期／故障及最後同步時間",
+        "Given API連續故障或容量保護，When 管理頁恢復，Then 可見故障時間／類別與處置提示",
+        "Given 核定負載模型，When 壓測，Then 記錄吞吐、p95/p99、錯誤率、配額及鎖競爭，門檻需事前核定"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-049/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-047",
+        "TKT-048"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "人工算表、過期、連續失敗、配額與p95/p99壓測",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "正式參與規模及效能驗收門檻待核准"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 事前核准的人數／隊數／延遲及錯誤門檻，When 真Google壓測，Then 記錄p95/p99、吞吐、配額、錯誤率及鎖競爭，不以420人示例當核准負載。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-050",
+      "epic_id": "E08",
+      "story_id": "S16",
+      "parent_task_id": "TSK-16A",
+      "title": "建立異常類型、狀態與權限",
+      "requirement_ids": [
+        "FR-31",
+        "FR-32",
+        "FR-33"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.5",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §6.B"
+      ],
+      "objective": "異常派工與公開安全公告；本票交付：人潮／物資／醫療等類型，PENDING至結案，本站／分區限制",
+      "in_scope": "人潮／物資／醫療等類型，PENDING至結案，本站／分區限制",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given MEDICAL內部描述，When 公開查站況，Then 不回傳病患個資或內部醫療內容",
+        "Given PENDING異常，When 指派及結案，Then 狀態與處置軌跡可查，未授權關主不得全場派工",
+        "Given 重大安全公告，When 參加者同步，Then 可見必要指示，不含內部細節；結案後不再當有效公告"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-050/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-016",
+        "TKT-029",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "人潮／物資／醫療等類型，PENDING至結案，本站／分區限制",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "告警調度責任、醫療資訊最小化與公告授權待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 關主或區長在權限範圍回報異常，When 建立，Then 類型／嚴重度／站點合法，越界拒絕、內外描述分離。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-051",
+      "epic_id": "E08",
+      "story_id": "S16",
+      "parent_task_id": "TSK-16A",
+      "title": "串接派工、結案與安全公告",
+      "requirement_ids": [
+        "FR-31",
+        "FR-32",
+        "FR-33"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.5",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §6.B"
+      ],
+      "objective": "異常派工與公開安全公告；本票交付：組長處置、handler／時間、另填公開安全指示",
+      "in_scope": "組長處置、handler／時間、另填公開安全指示",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given MEDICAL內部描述，When 公開查站況，Then 不回傳病患個資或內部醫療內容",
+        "Given PENDING異常，When 指派及結案，Then 狀態與處置軌跡可查，未授權關主不得全場派工",
+        "Given 重大安全公告，When 參加者同步，Then 可見必要指示，不含內部細節；結案後不再當有效公告"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-051/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-050"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "組長處置、handler／時間、另填公開安全指示",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "告警調度責任、醫療資訊最小化與公告授權待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 組長選定有效處理人，When 派工／結案／公告，Then 記handler與時間，公開訊息另填，結案公告解除。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-052",
+      "epic_id": "E08",
+      "story_id": "S16",
+      "parent_task_id": "TSK-16B",
+      "title": "驗證重大告警與醫療隱私",
+      "requirement_ids": [
+        "FR-31",
+        "FR-32",
+        "FR-33"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.5",
+        "NORTH_STAR.md §9.2",
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §6.B"
+      ],
+      "objective": "異常派工與公開安全公告；本票交付：重大優先、醫療內文不公開、解除公告、角色越權",
+      "in_scope": "重大優先、醫療內文不公開、解除公告、角色越權",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given MEDICAL內部描述，When 公開查站況，Then 不回傳病患個資或內部醫療內容",
+        "Given PENDING異常，When 指派及結案，Then 狀態與處置軌跡可查，未授權關主不得全場派工",
+        "Given 重大安全公告，When 參加者同步，Then 可見必要指示，不含內部細節；結案後不再當有效公告"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-052/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-050",
+        "TKT-051"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "重大優先、醫療內文不公開、解除公告、角色越權",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "告警調度責任、醫療資訊最小化與公告授權待核定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 同時存在LOW與CRITICAL及內部醫療描述，When 顯示，Then CRITICAL優先，公開端無病患細節，非管理員不可公開內文。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-053",
+      "epic_id": "E09",
+      "story_id": "S17",
+      "parent_task_id": "TSK-17A",
+      "title": "定義報表口徑與篩選契約",
+      "requirement_ids": [
+        "FR-34",
+        "NFR-07"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §9.1",
+        "NORTH_STAR.md §8.4"
+      ],
+      "objective": "受控報表與數據一致；本票交付：當前有效章、時間／區域／狀態範圍、Asia/Taipei",
+      "in_scope": "當前有效章、時間／區域／狀態範圍、Asia/Taipei",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 全站匯出，When 核對，Then 恰30站，個人站次／隊員站次／隊數分欄且無敏感名冊",
+        "Given 人工可核算測試集，When 比對護照／地圖／戰情／CSV，Then 同口徑數值完全一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-053/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004",
+        "TKT-047",
+        "TKT-045"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "當前有效章、時間／區域／狀態範圍、Asia/Taipei",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "成果報表使用者與時間範圍口徑待業務確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 成果需求，When 定義報表，Then 人／隊／站次、有效章、from/to含端點及Asia/Taipei有可核算說明，非歷史狀態重播。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-054",
+      "epic_id": "E09",
+      "story_id": "S17",
+      "parent_task_id": "TSK-17A",
+      "title": "實作受權CSV匯出與跳脫",
+      "requirement_ids": [
+        "FR-34",
+        "NFR-07"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §9.1",
+        "NORTH_STAR.md §8.4"
+      ],
+      "objective": "受控報表與數據一致；本票交付：30站欄位、個人／隊員／隊數分開、無敏感名冊",
+      "in_scope": "30站欄位、個人／隊員／隊數分開、無敏感名冊",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 全站匯出，When 核對，Then 恰30站，個人站次／隊員站次／隊數分欄且無敏感名冊",
+        "Given 人工可核算測試集，When 比對護照／地圖／戰情／CSV，Then 同口徑數值完全一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-054/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-016",
+        "TKT-053",
+        "TKT-039",
+        "TKT-040"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "30站欄位、個人／隊員／隊數分開、無敏感名冊",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "成果報表使用者與時間範圍口徑待業務確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 組長全站匯出及未授權匯出，When 下載，Then 前者恰30站且分欄、後者拒絕；含公式字首者安全跳脫、無敏感名冊。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-055",
+      "epic_id": "E09",
+      "story_id": "S17",
+      "parent_task_id": "TSK-17B",
+      "title": "比對人工真值與公式注入",
+      "requirement_ids": [
+        "FR-34",
+        "NFR-07"
+      ],
+      "source": [
+        "NORTH_STAR.md §6.D",
+        "NORTH_STAR.md §9.1",
+        "NORTH_STAR.md §8.4"
+      ],
+      "objective": "受控報表與數據一致；本票交付：30站列數、撤銷／區間、公式字首、跨畫面一致",
+      "in_scope": "30站列數、撤銷／區間、公式字首、跨畫面一致",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 全站匯出，When 核對，Then 恰30站，個人站次／隊員站次／隊數分欄且無敏感名冊",
+        "Given 人工可核算測試集，When 比對護照／地圖／戰情／CSV，Then 同口徑數值完全一致"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-055/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-045",
+        "TKT-054"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "30站列數、撤銷／區間、公式字首、跨畫面一致",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "成果報表使用者與時間範圍口徑待業務確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 手算測試集含撤銷及時間範圍，When 比較API／畫面／CSV，Then 每欄一致，新增公式／換行／引號測試不得執行或破壞列數。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-056",
+      "epic_id": "E09",
+      "story_id": "S18",
+      "parent_task_id": "TSK-18A",
+      "title": "定義離線候選與只讀快取界線",
+      "requirement_ids": [
+        "FR-36",
+        "NFR-06"
+      ],
+      "source": [
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §6"
+      ],
+      "objective": "弱網、離線與安全重試；本票交付：未確認不得有效核章，不長期存QR／PIN，恢復策略明確",
+      "in_scope": "未確認不得有效核章，不長期存QR／PIN，恢復策略明確",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 核章提交斷線，When 畫面回饋，Then 顯示未確認並允許安全重試，不顯示綠色成功章",
+        "Given 服務未確認，When 回饋使用者，Then 可知道尚未完成及下一步，不丟棄原冪等關聯"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-056/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "未確認不得有效核章，不長期存QR／PIN，恢復策略明確",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 1,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真機弱網測試環境及紙本對帳責任待指定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 無網路，When 規劃離線資料範圍，Then 僅允許最後成功只讀或候選，不定義為有效核章，不長期保存原token／PIN。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-057",
+      "epic_id": "E09",
+      "story_id": "S18",
+      "parent_task_id": "TSK-18A",
+      "title": "實作逾時、失敗及重送UX",
+      "requirement_ids": [
+        "FR-36",
+        "NFR-06"
+      ],
+      "source": [
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §6"
+      ],
+      "objective": "弱網、離線與安全重試；本票交付：原鍵保留、防雙擊、非綠色假成功、最後成功時間",
+      "in_scope": "原鍵保留、防雙擊、非綠色假成功、最後成功時間",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 核章提交斷線，When 畫面回饋，Then 顯示未確認並允許安全重試，不顯示綠色成功章",
+        "Given 服務未確認，When 回饋使用者，Then 可知道尚未完成及下一步，不丟棄原冪等關聯"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-057/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-032",
+        "TKT-035",
+        "TKT-040",
+        "TKT-065"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "原鍵保留、防雙擊、非綠色假成功、最後成功時間",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 3,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真機弱網測試環境及紙本對帳責任待指定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 提交逾時／斷線後重試，When 操作UI，Then 顯示未確認、沿用原鍵、防連點，未顯綠色成功；恢復後可核對結果。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-058",
+      "epic_id": "E09",
+      "story_id": "S18",
+      "parent_task_id": "TSK-18B",
+      "title": "執行真機弱網與背景恢復測試",
+      "requirement_ids": [
+        "FR-36",
+        "NFR-06"
+      ],
+      "source": [
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §6"
+      ],
+      "objective": "弱網、離線與安全重試；本票交付：斷網／高延遲／背景頁／時鐘差、保留原請求對帳",
+      "in_scope": "斷網／高延遲／背景頁／時鐘差、保留原請求對帳",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 核章提交斷線，When 畫面回饋，Then 顯示未確認並允許安全重試，不顯示綠色成功章",
+        "Given 服務未確認，When 回饋使用者，Then 可知道尚未完成及下一步，不丟棄原冪等關聯"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-058/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-020",
+        "TKT-033",
+        "TKT-036",
+        "TKT-048",
+        "TKT-057"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "斷網／高延遲／背景頁／時鐘差、保留原請求對帳",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真機弱網測試環境及紙本對帳責任待指定"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 真手機弱網、背景頁及時鐘誤差，When 核章／同步，Then 不丟原請求、不假成功，附實機版本及每情境實際結果。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-059",
+      "epic_id": "E10",
+      "story_id": "S19",
+      "parent_task_id": "TSK-19A",
+      "title": "審查公開／管理欄位投影",
+      "requirement_ids": [
+        "FR-39",
+        "NFR-09",
+        "NFR-10"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.8",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §0 第6項",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §8.7",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "公開資料、輸入安全與證據；本票交付：兒少／電話／醫療／token／PIN／權限欄位隔離",
+      "in_scope": "兒少／電話／醫療／token／PIN／權限欄位隔離",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 公式或script字串，When 寫入／顯示／匯出，Then 不執行、不洩露秘密且回可理解錯誤",
+        "Given 公開API／頁面／CSV檢查，When 搜尋敏感欄位或注入payload，Then 不洩露且不執行",
+        "Given 任一票，When 查證據，Then 可找到基準版本、輸入、預期／實際、結果與責任人"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-059/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001",
+        "TKT-004"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "兒少／電話／醫療／token／PIN／權限欄位隔離",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "資料留存、隱私存取與安全驗證責任人待確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 公開／本人／關主／組長API清單，When 審欄位投影，Then 每欄有必要角色，姓名／電話／醫療／token／PIN不落公開端。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-060",
+      "epic_id": "E10",
+      "story_id": "S19",
+      "parent_task_id": "TSK-19A",
+      "title": "實作輸入與輸出注入防護",
+      "requirement_ids": [
+        "FR-39",
+        "NFR-09",
+        "NFR-10"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.8",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §0 第6項",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §8.7",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "公開資料、輸入安全與證據；本票交付：schema、長度、狀態、CSV／Sheet公式及HTML安全",
+      "in_scope": "schema、長度、狀態、CSV／Sheet公式及HTML安全",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 公式或script字串，When 寫入／顯示／匯出，Then 不執行、不洩露秘密且回可理解錯誤",
+        "Given 公開API／頁面／CSV檢查，When 搜尋敏感欄位或注入payload，Then 不洩露且不執行",
+        "Given 任一票，When 查證據，Then 可找到基準版本、輸入、預期／實際、結果與責任人"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-060/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004",
+        "TKT-059"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "schema、長度、狀態、CSV／Sheet公式及HTML安全",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "資料留存、隱私存取與安全驗證責任人待確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 公式、HTML、超長字串、非法列舉及數值，When 輸入／顯示／寫Sheet／CSV，Then 拒絕或安全編碼，不執行且不洩露例外秘密。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-061",
+      "epic_id": "E10",
+      "story_id": "S19",
+      "parent_task_id": "TSK-19B",
+      "title": "執行權限與個資外洩安全驗證",
+      "requirement_ids": [
+        "FR-39",
+        "NFR-09",
+        "NFR-10"
+      ],
+      "source": [
+        "NORTH_STAR.md §8.8",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §0 第6項",
+        "NORTH_STAR.md §0 第7項",
+        "NORTH_STAR.md §8.7",
+        "NORTH_STAR.md §12"
+      ],
+      "objective": "公開資料、輸入安全與證據；本票交付：公開API／來源碼／console／storage／報表與拒絕稽核",
+      "in_scope": "公開API／來源碼／console／storage／報表與拒絕稽核",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 公式或script字串，When 寫入／顯示／匯出，Then 不執行、不洩露秘密且回可理解錯誤",
+        "Given 公開API／頁面／CSV檢查，When 搜尋敏感欄位或注入payload，Then 不洩露且不執行",
+        "Given 任一票，When 查證據，Then 可找到基準版本、輸入、預期／實際、結果與責任人"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-061/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-014",
+        "TKT-017",
+        "TKT-051",
+        "TKT-060"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "公開API／來源碼／console／storage／報表與拒絕稽核",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P0",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "資料留存、隱私存取與安全驗證責任人待確認"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 真登入權限及公開頁，When 查來源碼／console／storage／API／CSV，Then 無敏感洩露，前端偽造／停權／跨站均拒絕；附突變測試適用性證據。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-062",
+      "epic_id": "E10",
+      "story_id": "S20",
+      "parent_task_id": "TSK-20A",
+      "title": "建立可重現部署與設定手冊",
+      "requirement_ids": [
+        "FR-40",
+        "NFR-11",
+        "NFR-12"
+      ],
+      "source": [
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §14",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §13",
+        "NORTH_STAR.md §7"
+      ],
+      "objective": "部署、復原與活動驗收；本票交付：建置、HtmlService、Sheets／Forms、帳號、trigger與安全預設",
+      "in_scope": "建置、HtmlService、Sheets／Forms、帳號、trigger與安全預設",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 備份還原演練，When 切換資料，Then 可驗證有效章與批次一致，舊已撤銷憑證不復活",
+        "Given 活動結束或服務故障，When 執行SOP，Then 受權人可完成對帳／封存；保留期限須由主辦核定",
+        "Given 新測試環境，When 依部署文件操作，Then 可重建閉環，不能以雙擊靜態HTML視為後端驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-062/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001",
+        "TKT-004",
+        "TKT-005",
+        "TKT-016",
+        "TKT-065"
+      ],
+      "work_type": "規格／設計",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "建置、HtmlService、Sheets／Forms、帳號、trigger與安全預設",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 2,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦現勘核准、負載門檻、簽核人與測試Google資源未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 新隔離測試專案，When 依手冊建置與設定，Then 可重現Google閉環並記權限／Form／Sheet／trigger／版本；不得用靜態DEMO充當。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-063",
+      "epic_id": "E10",
+      "story_id": "S20",
+      "parent_task_id": "TSK-20A",
+      "title": "建立備份還原與現場紙本SOP",
+      "requirement_ids": [
+        "FR-40",
+        "NFR-11",
+        "NFR-12"
+      ],
+      "source": [
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §14",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §13",
+        "NORTH_STAR.md §7"
+      ],
+      "objective": "部署、復原與活動驗收；本票交付：憑證輪替、對帳、封存／刪除、資源歸屬及回復",
+      "in_scope": "憑證輪替、對帳、封存／刪除、資源歸屬及回復",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 備份還原演練，When 切換資料，Then 可驗證有效章與批次一致，舊已撤銷憑證不復活",
+        "Given 活動結束或服務故障，When 執行SOP，Then 受權人可完成對帳／封存；保留期限須由主辦核定",
+        "Given 新測試環境，When 依部署文件操作，Then 可重建閉環，不能以雙擊靜態HTML視為後端驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-063/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-004",
+        "TKT-040",
+        "TKT-062"
+      ],
+      "work_type": "實作／設定",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "憑證輪替、對帳、封存／刪除、資源歸屬及回復",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦現勘核准、負載門檻、簽核人與測試Google資源未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 複製備份及撤銷過的QR，When 實際還原演練，Then 章／批次／Requests／稽核一致且舊撤銷碼不復活，記恢復耗時與對帳差異。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-064",
+      "epic_id": "E10",
+      "story_id": "S20",
+      "parent_task_id": "TSK-20B",
+      "title": "執行現勘、真手機與UAT簽核",
+      "requirement_ids": [
+        "FR-40",
+        "NFR-11",
+        "NFR-12"
+      ],
+      "source": [
+        "NORTH_STAR.md §12",
+        "NORTH_STAR.md §14",
+        "NORTH_STAR.md §10",
+        "NORTH_STAR.md §13",
+        "NORTH_STAR.md §7"
+      ],
+      "objective": "部署、復原與活動驗收；本票交付：正式規模壓測、雨備、強光、相機、還原演練與簽核",
+      "in_scope": "正式規模壓測、雨備、強光、相機、還原演練與簽核",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 備份還原演練，When 切換資料，Then 可驗證有效章與批次一致，舊已撤銷憑證不復活",
+        "Given 活動結束或服務故障，When 執行SOP，Then 受權人可完成對帳／封存；保留期限須由主辦核定",
+        "Given 新測試環境，When 依部署文件操作，Then 可重建閉環，不能以雙擊靜態HTML視為後端驗證"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-064/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-009",
+        "TKT-012",
+        "TKT-015",
+        "TKT-018",
+        "TKT-021",
+        "TKT-024",
+        "TKT-027",
+        "TKT-030",
+        "TKT-033",
+        "TKT-036",
+        "TKT-037",
+        "TKT-038",
+        "TKT-041",
+        "TKT-042",
+        "TKT-043",
+        "TKT-046",
+        "TKT-049",
+        "TKT-052",
+        "TKT-055",
+        "TKT-058",
+        "TKT-061",
+        "TKT-062",
+        "TKT-063"
+      ],
+      "work_type": "驗證／整合",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "正式規模壓測、雨備、強光、相機、還原演練與簽核",
+        "需求／變更對照與實際測試紀錄"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 4,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "主辦現勘核准、負載門檻、簽核人與測試Google資源未配置"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 前置測試報告及主辦核准，When 現勘／雨備／真機／負載／UAT，Then 每項有正式責任人結果；未通過不發布、不計完成。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    },
+    {
+      "id": "TKT-065",
+      "epic_id": "E04",
+      "story_id": "S07",
+      "parent_task_id": "TSK-07A",
+      "title": "建立Stitch tokens與四視圖DEMO骨架",
+      "requirement_ids": [
+        "NFR-01",
+        "FR-08"
+      ],
+      "source": [
+        "NORTH_STAR.md §11",
+        "NORTH_STAR.md §12 Phase 1"
+      ],
+      "objective": "建立可在390px操作的四視圖導航與Stitch視覺基線，展示與正式寫入隔離",
+      "in_scope": "design tokens、四視圖路由、48px互動、DEMO標示與寫入拒絕",
+      "out_of_scope": "不變更主辦未核准政策；不宣稱其他票、Google正式環境或活動UAT已完成",
+      "acceptance_criteria": [
+        "Given 390px手機，When 操作四視圖，Then 能讀取／觸控／鍵盤聚焦，強光可讀性另以真機驗證",
+        "Given 本人完成一站，When 同步成功，Then 護照只增加該人的有效站數；失敗時保留舊資料並標示"
+      ],
+      "ac_applicability": "上述為父Story端到端AC；本票須證明與本票範圍直接相關的部分，未涵蓋AC明確交接至同Story相依票；不可單票宣稱整個Story驗收。",
+      "inputs": [
+        "NORTH_STAR.md NS-1.0",
+        "SRS.md v0.2",
+        "已提供交接檔與對照紀錄"
+      ],
+      "evidence_location": "docs/evidence/TKT-065/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）",
+      "dependencies": [
+        "TKT-001",
+        "TKT-002",
+        "TKT-056"
+      ],
+      "work_type": "實作／本機驗證",
+      "execution_environment": "本機；涉及Google能力須在隔離測試專案驗證，不接觸正式名冊",
+      "authorization": "僅限使用者已授權的開發與檢查；外部資源設定／正式部署／主辦政策另按既有權責",
+      "estimate": "未估算；由TL／TM評估，不視為排程承諾",
+      "assignee": null,
+      "deliverables": [
+        "可重建四視圖骨架、tokens、DEMO狀態",
+        "390px與觸控／導航證據"
+      ],
+      "applicable_dod": "DoD-COMMON；涉及個資、核章或權限者加DoD-SECURITY；Google或真機票加DoD-INTEGRATION",
+      "model_constraints": "不預設模型、代理數量或執行者；不得以模型能力擴張權限",
+      "recovery_notes": "先保存基準與未提交結果；不確定寫入先查冪等結果／有效章；涉及資料先備份，不刪稽核或略過檢查",
+      "priority": "P1",
+      "phase": 1,
+      "dor": "NOT_READY",
+      "dor_gaps": [
+        "估算與票大小未經TL／TM檢視",
+        "票級AC／依賴尚待PM／TL審查",
+        "真手機／強光UAT環境未提供"
+      ],
+      "execution_status": "UNASSIGNED_UNVERIFIED",
+      "existing_code_is_not_acceptance": true,
+      "ticket_acceptance_criteria": [
+        "Given 未連接Google的390px頁面，When 切四視圖與操作寫入，Then 視覺符合Stitch／按鈕≥48px／無非表格溢出，DEMO明示且所有正式寫入拒絕。",
+        "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
+      ],
+      "verification_status": "NOT_FORMALLY_ACCEPTED",
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+    }
+  ],
+  "review_method": "11_增量成果檢視與驗收交付_v0.1.md",
+  "completion_gate": "逐票自驗＋上繳驗證報告＋所需獨立與整合驗收，才得正式完成"
+}

@@ -1,0 +1,77 @@
+✔ T01 personal projection limited to own record (2.358988ms)
+✔ T02/03/04 single pass, idempotency, competing duplicate (0.777072ms)
+✔ idempotency payload conflict (0.277408ms)
+✔ T05 full team produces eight individual facts and one team station (1.407373ms)
+✔ T06 absent member is not stamped and snapshot retained (0.347614ms)
+✔ team conflict does not partially mutate (0.306983ms)
+✔ reject duplicate attendance, outsiders and pending policy (0.442708ms)
+✔ T08 cross station denied (0.187824ms)
+✔ T09 unauthenticated admin denied and staff denied (0.395967ms)
+✔ T10 closed or unapproved venue denied (0.425802ms)
+✔ T11 waiting calculation and missing/stale precedence (0.446694ms)
+✔ T14 CSV has 30 rows, units, timezone and sanitized cells (0.511231ms)
+✖ T15 reversal preserves immutable history and recomputes (0.862281ms)
+✔ T16 public response excludes private fields and medical detail (6.436199ms)
+✔ input formula/HTML injection, negative queues and locked station (0.441766ms)
+✔ seed has 30 unique exact IDs and safe defaults (0.568317ms)
+✔ honor policy not assumed at fifteen (0.172901ms)
+✔ pending policy cannot be set by event lead; admin changes audited (0.260182ms)
+✔ unapproved venue cannot open; measured capacity required (0.356277ms)
+✔ report interval excludes outside pass dates and rejects reversed range (0.870092ms)
+✔ FR41 only authorized team leader submits same-team draft without stamp (0.340303ms)
+✔ FR15 recommendations exclude unavailable stale and unapproved stations and sort safety announcements (0.338861ms)
+✖ FR43 event lead requests correction without mutating pass, admin reversal links and resolves request (0.483219ms)
+✔ dispatch only to active staff, internal text never enters public board (0.402397ms)
+✔ required stations affect honor and admin can assign same-team leader only (0.645674ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 23
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82.105717
+
+✖ failing tests:
+
+test at tests/core.test.cjs:21:1
+✖ T15 reversal preserves immutable history and recomputes (0.862281ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/work/srs/mutations/reversal_effect/tests/core.test.cjs:21:293)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/core.test.cjs:31:1
+✖ FR43 event lead requests correction without mutating pass, admin reversal links and resolves request (0.483219ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/workspace/work/srs/mutations/reversal_effect/tests/core.test.cjs:31:606)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
