@@ -22,3 +22,10 @@
 ## 需要人工設定
 
 主辦Workspace與測試資源、SPREADSHEET_ID、管理員Google email、staff白名單、各站新PIN、Form item ID mapping、trigger、現勘核准／耗時／線數、隊伍政策／榮譽門檻、QR私密交付、資料留存及UAT簽核。具體操作見 DEPLOYMENT.md。
+
+
+## Increment 01 更新（2026-11-14）
+
+原報告R07／R08／R09之本機實作缺口已補強：稽核前後值摘要與v2受控遷移、11表完整性讀寫邊界檢查、區長分區內派工與結案。59項Node測試通過、瀏覽器回歸及區長實際共用邏輯橋接通過、新增6個突變均被偵測。詳見 docs/INCREMENT_01_VERIFICATION.md 與 docs/evidence/increment-01。
+
+此為新增分段結果，不刪除舊版缺口紀錄；相關票未正式驗收，真Google／真機／現勘／負載／UAT仍未完成，不能宣稱APP開發完成或可上線。

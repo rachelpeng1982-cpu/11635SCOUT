@@ -30,13 +30,13 @@ FR-28,排隊回報,PARTIAL,tests/core.test.cjs;src/core.js:updateQueue,有非負
 FR-29,站點維護,PARTIAL,src/core.js:configureStation;tests/core.test.cjs,新增分齡／雨備／可及性維護；核准／容量測試通過，全部欄位UAT待測,NOT_ACCEPTED
 FR-30,活動組長戰情,PARTIAL,src/core.js:getAdminDashboard;tests/browser.cjs,六類KPI與30站表具實作，真資料人工對帳與全部KPI專項仍待補,NOT_ACCEPTED
 FR-31,異常建立,LOCAL_PASS,tests/core.test.cjs,異常／醫療公開隔離本機通過,NOT_ACCEPTED
-FR-32,派工與結案,PARTIAL,src/core.js:resolveAlert;tests/core.test.cjs,派工有效staff ID已測；區長派工許可範圍尚未完整落實,NOT_ACCEPTED
+FR-32,派工與結案,PARTIAL_LOCAL_PASS,src/core.js:resolveAlert;js/app.js:renderZoneAlerts;tests/zone-browser.cjs,Increment01區長分區派工／結案、處理人限制與更正／公告阻擋，本機業務及瀏覽器橋接通過；真Google未測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
 FR-33,公開安全公告,LOCAL_PASS,tests/core.test.cjs,重大公告優先、內部醫療不公開、結案公告過濾邏輯有測,NOT_ACCEPTED
 FR-34,受控CSV報表,PARTIAL,tests/core.test.cjs;src/core.js:exportReport,30列／口徑／時區／日期與公式跳脫本機通過；真下載與手算整合未測,NOT_ACCEPTED
 FR-35,同步與退避,PARTIAL,js/app.js:refresh,20秒／退避／背景／最後時間具實作；完整計時與連續故障測試未齊,NOT_ACCEPTED
 FR-36,離線保護,LOCAL_PASS,tests/browser.cjs,失敗不宣告成功，原鍵重試通過；真弱網待測,NOT_ACCEPTED
 FR-37,資料表與種子遷移,PARTIAL,tests/gas.test.cjs;backend-gas/Code.gs:setupProject_,建表／種子重跑通過；尚缺全表外鍵稽核及真遷移演練,NOT_ACCEPTED
-FR-38,稽核追溯,GAP,src/core.js:AuditLogs/audit,具人時對象理由結果；北極星old_value_summary/new_value_summary尚未落實，不能稱完整稽核,NOT_ACCEPTED
+FR-38,稽核追溯,PARTIAL_LOCAL_PASS,src/core.js:audit/safeSummary;tests/integrity.test.cjs;tests/gas.test.cjs,Increment01補前後值白名單、明確實體ID、角色變更與schema v2遷移；本機通過，真Google／正式稽核驗收待測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
 FR-39,輸入與輸出防護,PARTIAL,tests/core.test.cjs;src/core.js:text,HTML／公式／型別負例通過，全面輸入投影與真瀏覽器安全矩陣未齊,NOT_ACCEPTED
 FR-40,備份還原與封存,NOT_TESTED_INTEGRATION,docs/OPERATIONS.md,有備份還原／紙本對帳SOP，未執行還原／封存演練,NOT_ACCEPTED
 FR-41,小隊長實到草稿,LOCAL_PASS,tests/core.test.cjs;src/core.js:submitTeamAttendance,新增隊長授權與候選草稿、無PASS、跨隊拒絕已測，真UI交接待測,NOT_ACCEPTED
@@ -45,12 +45,12 @@ FR-43,受控更正申請,LOCAL_PASS,tests/core.test.cjs,新增組長申請不改
 FR-44,系統運作告警,PARTIAL,backend-gas/Code.gs:service-health,具快取健康事件與管理提示，真配額／設備故障整合待測,NOT_ACCEPTED
 NFR-01,戶外可用性,PARTIAL,tests/browser.cjs,390px、四視圖、48px通過；強光／真手機未測,NOT_ACCEPTED
 NFR-02,憑證生命週期,PARTIAL,tests/gas.test.cjs;tests/browser.cjs,hash／輪替／不持久存秘密通過；真到期／分發待測,NOT_ACCEPTED
-NFR-03,最小權限,PARTIAL,tests/gas.test.cjs,核心ACL通過；區長許可派工與真Google停權／共用裝置待補,NOT_ACCEPTED
+NFR-03,最小權限,PARTIAL_LOCAL_PASS,tests/gas.test.cjs;tests/integrity.test.cjs;tests/zone-browser.cjs,核心ACL及區長受控派工本機通過；真Google身分、停權與共用裝置仍待測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
 NFR-04,一致性與復原,PARTIAL,tests/gas.test.cjs,鎖／原子／重送替身證據，真Google並行未測,NOT_ACCEPTED
 NFR-05,容量與效能,NOT_TESTED_LOAD,docs/ACCEPTANCE.md,負載模型／人數／p95/p99門檻未核准，真壓測未執行,NOT_ACCEPTED
 NFR-06,弱網與錯誤可理解性,PARTIAL,tests/browser.cjs,網路失敗／原鍵重試通過，時鐘／背景／真弱網未齊,NOT_ACCEPTED
 NFR-07,統計與報表正確性,PARTIAL,tests/core.test.cjs,有效章與CSV測試通過，全真資料跨畫面人工算表未完成,NOT_ACCEPTED
-NFR-08,資料完整性與可遷移性,GAP,backend-gas/Code.gs:load_/setupProject_,有表頭／JSON型別編碼及重跑；全表主外鍵及資料損壞驗證未齊,NOT_ACCEPTED
+NFR-08,資料完整性與可遷移性,PARTIAL_LOCAL_PASS,src/integrity.js;backend-gas/Code.gs;tests/integrity.test.cjs;tests/gas.test.cjs,Increment01已加入11表主外鍵／唯一性／型別／有效章／批次及讀寫邊界驗證；真遷移與損壞資料演練待Google測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
 NFR-09,兒少隱私與注入防護,PARTIAL,tests/core.test.cjs;tests/browser.cjs,公開投影與注入部分通過，真Google分享／來源碼安全審查未完成,NOT_ACCEPTED
 NFR-10,證據與可追溯性,PARTIAL,docs/evidence/local-review,本輪有版本雜湊與實際證據，但逐票正式證據／獨立驗收未完成,NOT_ACCEPTED
 NFR-11,可維運與資料留存,NOT_TESTED_OPERATIONS,docs/OPERATIONS.md,維運文件已建，留存政策／真還原／責任歸屬待主辦核定,NOT_ACCEPTED

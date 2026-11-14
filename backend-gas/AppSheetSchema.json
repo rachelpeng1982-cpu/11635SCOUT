@@ -96,7 +96,9 @@
     "entity_id",
     "request_id",
     "result",
-    "reason"
+    "reason",
+    "old_value_summary",
+    "new_value_summary"
   ],
   "StampBatches": [
     "batch_id",

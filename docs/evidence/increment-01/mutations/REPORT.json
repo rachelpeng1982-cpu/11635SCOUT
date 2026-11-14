@@ -1,0 +1,41 @@
+{
+  "scope": "six selected protections, not exhaustive assurance",
+  "results": [
+    {
+      "name": "read_integrity",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/read_integrity.txt"
+    },
+    {
+      "name": "write_integrity",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/write_integrity.txt"
+    },
+    {
+      "name": "audit_before_snapshot",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/audit_before_snapshot.txt"
+    },
+    {
+      "name": "zone_boundary",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/zone_boundary.txt"
+    },
+    {
+      "name": "handler_boundary",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/handler_boundary.txt"
+    },
+    {
+      "name": "batch_completeness",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/batch_completeness.txt"
+    }
+  ]
+}

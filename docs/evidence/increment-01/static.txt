@@ -1,0 +1,1 @@
+PASS: six source/GAS artifacts parsed.

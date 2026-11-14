@@ -31,7 +31,7 @@ PLAYWRIGHT_BROWSERS_PATH=/tmp/scout-browsers npx playwright install chromium
 PLAYWRIGHT_BROWSERS_PATH=/tmp/scout-browsers node tests/browser.cjs
 ```
 
-正式部署產物為 `backend-gas/Code.gs`、`Domain.gs`、`Seed.gs`、`Index.html`、`appsscript.json`。修改 src、js、css 後須重新 `npm run build`。AppSheetSchema.json 僅欄位參考，不是要上傳的 GAS 檔案。
+正式部署產物為 `backend-gas/Code.gs`、`Domain.gs`、`Integrity.gs`、`Seed.gs`、`Index.html`、`appsscript.json`。修改 src、js、css 後須重新 `npm run build`。AppSheetSchema.json 僅欄位參考，不是要上傳的 GAS 檔案。
 
 ## 交付索引
 

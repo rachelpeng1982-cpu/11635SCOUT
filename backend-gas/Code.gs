@@ -5,22 +5,35 @@ function digest_(value) {return Utilities.base64EncodeWebSafe(Utilities.computeH
 function token_(){return Utilities.getUuid()+Utilities.getUuid();}
 function now_(){return new Date().toISOString();}
 function dbId_(){var id=PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');if(!id)Quest.fail('NOT_CONFIGURED');return id;}
-function load_(){
+function load_(options){
+  options=options||{};
   var ss=SpreadsheetApp.openById(dbId_()), state={};
   Quest.tables.forEach(function(name){
     var sheet=ss.getSheetByName(name);if(!sheet)Quest.fail('SCHEMA_MISSING');
     var cols=Quest.schemas[name],rows=sheet.getLastRow();if(rows>15001)Quest.fail('CAPACITY_LIMIT');
-    var values=sheet.getRange(1,1,Math.max(1,rows),cols.length).getValues();
-    if(JSON.stringify(values[0])!==JSON.stringify(cols))Quest.fail('SCHEMA_MISMATCH');
-    state[name]=values.slice(1).filter(function(r){return r[0]!=='';}).map(function(row){var out={};cols.forEach(function(k,i){out[k]=row[i]===''?null:JSON.parse(String(row[i]));});return out;});
-  });return state;
+    var width=typeof sheet.getMaxColumns==='function'?Math.min(sheet.getMaxColumns(),cols.length):cols.length;
+    if(width<cols.length&&!(options.allowLegacyAudit&&name==='AuditLogs'))Quest.fail('SCHEMA_MISMATCH');
+    var values=sheet.getRange(1,1,Math.max(1,rows),width).getValues().map(function(row){return row.concat(Array(cols.length-row.length).fill(''));});
+    var headerMatches=JSON.stringify(values[0])===JSON.stringify(cols);
+    if(!headerMatches&&!(options.allowLegacyAudit&&name==='AuditLogs'&&JSON.stringify(values[0].slice(0,-2))===JSON.stringify(cols.slice(0,-2))&&values[0].slice(-2).every(function(v){return v==='';})))Quest.fail('SCHEMA_MISMATCH');
+    if(typeof sheet.getLastColumn==='function'&&sheet.getLastColumn()>cols.length)Quest.fail('SCHEMA_MISMATCH');
+    state[name]=values.slice(1).map(function(row){var out={};cols.forEach(function(k,i){try{out[k]=row[i]===''?null:JSON.parse(String(row[i]));}catch(ignored){Quest.fail('DATA_INTEGRITY');}});return out;});
+  });Integrity.validate(state,{allowIncompleteStations:Boolean(options.allowIncompleteStations),allowSchemaV1:Boolean(options.allowLegacyAudit)});return state;
 }
-function commit_(before,after){
+function commit_(before,after,options){
+  options=options||{};
+  after.AuditLogs.slice(before.AuditLogs.length).forEach(function(a){if(a.old_value_summary===null||a.old_value_summary===undefined)a.old_value_summary=Quest.safeSummary(before);if(a.new_value_summary===null||a.new_value_summary===undefined)a.new_value_summary=Quest.safeSummary(after);});
+  Integrity.validate(after);
   var ss=SpreadsheetApp.openById(dbId_()),requests=[];
   Quest.tables.forEach(function(name){
-    if(JSON.stringify(before[name])===JSON.stringify(after[name]))return;
+    var upgrade=options.upgradeAuditHeader&&name==='AuditLogs';
+    if(JSON.stringify(before[name])===JSON.stringify(after[name])&&!upgrade)return;
     var sheet=ss.getSheetByName(name),cols=Quest.schemas[name];
     if(after[name].length>15000)Quest.fail('CAPACITY_LIMIT');
+    if(upgrade){
+      if(sheet.getMaxColumns()<cols.length)requests.push({appendDimension:{sheetId:sheet.getSheetId(),dimension:'COLUMNS',length:cols.length-sheet.getMaxColumns()}});
+      requests.push({updateCells:{range:{sheetId:sheet.getSheetId(),startRowIndex:0,endRowIndex:1,startColumnIndex:0,endColumnIndex:cols.length},rows:[{values:cols.map(function(k){return {userEnteredValue:{stringValue:k}};})}],fields:'userEnteredValue'}});
+    }
     // Only changed rows are written; unchanged historical log rows are untouched.
     var required=after[name].length+1;
     if(required>sheet.getMaxRows())requests.push({appendDimension:{sheetId:sheet.getSheetId(),dimension:'ROWS',length:required-sheet.getMaxRows()}});
@@ -88,6 +101,7 @@ function api(action,request){
     }else{
       data=Quest.execute(state,action,q,ctx);
     }
+    state.AuditLogs.slice(before.AuditLogs.length).forEach(function(a){if(a.old_value_summary===null)a.old_value_summary=Quest.safeSummary(before,q);if(a.new_value_summary===null)a.new_value_summary=Quest.safeSummary(state,q);});
     commit_(before,state);
     if(JSON.stringify(before)!==JSON.stringify(state))cache_().remove('public-board');
     if(action==='getPublicStationBoard')cache_().put('public-board',JSON.stringify(data),10);
@@ -95,15 +109,15 @@ function api(action,request){
     return {ok:true,data:data,serverTime:ctx.now,requestId:requestId};
   }catch(err){
     var code=err&&err.code||'SERVICE_UNAVAILABLE';
-    if(['SERVICE_UNAVAILABLE','BUSY_RETRY','CAPACITY_LIMIT','SCHEMA_MISMATCH'].indexOf(code)>=0){try{cache_().put('service-health',JSON.stringify({lastFailureAt:now_(),code:code}),21600);}catch(ignored){}}
+    if(['SERVICE_UNAVAILABLE','BUSY_RETRY','CAPACITY_LIMIT','SCHEMA_MISMATCH','DATA_INTEGRITY'].indexOf(code)>=0){try{cache_().put('service-health',JSON.stringify({lastFailureAt:now_(),code:code}),21600);}catch(ignored){}}
     // Denials are auditable without recording incoming token/PIN/payload.
     if(before&&actor&&['FORBIDDEN','UNAUTHORIZED','INVALID_CREDENTIAL','RATE_LIMITED','STATION_LOCKED'].indexOf(code)>=0){
-      try{var denial=clone_(before);Quest.audit(denial,{actor:actor,now:now_(),id:Utilities.getUuid,requestId:requestId},String(action).slice(0,60),'',code);commit_(before,denial);}catch(ignored){}
+      try{var denial=clone_(before);Quest.audit(denial,{actor:actor,now:now_(),id:Utilities.getUuid,requestId:requestId},String(action).slice(0,60),before.Stations.some(function(st){return st.station_id===request.stationId;})?request.stationId:'',code);commit_(before,denial);}catch(ignored){}
     }
     return {ok:false,error:{code:code,message:errorMessage_(code)},requestId:requestId};
   }finally{if(lock.hasLock())lock.releaseLock();}
 }
-function errorMessage_(code){var messages={UNAUTHORIZED:'請登入授權帳號或重新登入個人通行證',FORBIDDEN:'沒有此操作的權限',ALREADY_STAMPED:'本站已完成核章，本次未重複寫入',STATION_CLOSED:'本站未開放或場地尚未核准',STATION_LOCKED:'請先解鎖本站',RATE_LIMITED:'嘗試次數過多，請十分鐘後再試',INVALID_CREDENTIAL:'憑證無效',POLICY_PENDING:'小隊政策尚待核定',VENUE_PENDING:'場地或服務線數未核准',BUSY_RETRY:'系統忙碌，請使用同一請求重試',SERVICE_UNAVAILABLE:'服務暫不可用；尚未確認成功，請保留請求重試'};return messages[code]||'操作未完成（'+code+'）';}
+function errorMessage_(code){var messages={UNAUTHORIZED:'請登入授權帳號或重新登入個人通行證',FORBIDDEN:'沒有此操作的權限',ALREADY_STAMPED:'本站已完成核章，本次未重複寫入',STATION_CLOSED:'本站未開放或場地尚未核准',STATION_LOCKED:'請先解鎖本站',RATE_LIMITED:'嘗試次數過多，請十分鐘後再試',INVALID_CREDENTIAL:'憑證無效',POLICY_PENDING:'小隊政策尚待核定',VENUE_PENDING:'場地或服務線數未核准',BUSY_RETRY:'系統忙碌，請使用同一請求重試',DATA_INTEGRITY:'資料完整性檢查未通過，已停止本次操作，請通知管理員',SCHEMA_MISMATCH:'資料表版本不符，請先由管理員完成受控遷移',CORRECTION_REQUIRES_REVIEW:'成績更正須走管理員審核流程',ALREADY_RESOLVED:'此異常已結案',SERVICE_UNAVAILABLE:'服務暫不可用；尚未確認成功，請保留請求重試'};return messages[code]||'操作未完成（'+code+'）';}
 /** Run editor-side after setting SPREADSHEET_ID and BOOTSTRAP_ADMIN_EMAIL. Never exposed to client. */
 function setupProject_(){
   var lock=LockService.getScriptLock();lock.waitLock(10000);
@@ -112,11 +126,11 @@ function setupProject_(){
     var email=String(props.getProperty('BOOTSTRAP_ADMIN_EMAIL')||'').toLowerCase();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))throw new Error('Set BOOTSTRAP_ADMIN_EMAIL');
     var ss=SpreadsheetApp.openById(dbId_());
     Quest.tables.forEach(function(name){var sh=ss.getSheetByName(name),cols=Quest.schemas[name];if(!sh){sh=ss.insertSheet(name);sh.getRange(1,1,1,cols.length).setValues([cols]);sh.setFrozenRows(1);}else if(JSON.stringify(sh.getRange(1,1,1,cols.length).getValues()[0])!==JSON.stringify(cols))throw new Error('SCHEMA_MISMATCH '+name);});
-    var before=load_(),s=clone_(before);
+    var before=load_({allowIncompleteStations:true}),s=clone_(before);
     SEED_STATIONS.forEach(function(st){if(!s.Stations.some(function(x){return x.station_id===st.station_id;}))s.Stations.push(clone_(st));});
     if(!s.StaffPermissions.length)s.StaffPermissions.push({staff_id:Utilities.getUuid(),account_email:email,role:'SYSTEM_ADMIN',allowed_station_ids:[],allowed_zone_ids:[],active:true,credential_version:1,updated_at:now_()});
-    [['schema_version',1],['honor_threshold',null],['required_station_ids',[]],['team_policy','PENDING'],['stale_seconds',90]].forEach(function(pair){if(!s.EventConfig.some(function(c){return c.key===pair[0];}))s.EventConfig.push({key:pair[0],value:pair[1]});});
-    Quest.audit(s,{actor:null,now:now_(),id:Utilities.getUuid,requestId:Utilities.getUuid()},'SCHEMA_SETUP','v1');commit_(before,s);
+    [['schema_version',2],['honor_threshold',null],['required_station_ids',[]],['team_policy','PENDING'],['stale_seconds',90]].forEach(function(pair){if(!s.EventConfig.some(function(c){return c.key===pair[0];}))s.EventConfig.push({key:pair[0],value:pair[1]});});
+    Quest.audit(s,{actor:null,now:now_(),id:Utilities.getUuid,requestId:Utilities.getUuid()},'SCHEMA_SETUP','v2');commit_(before,s);
   }finally{lock.releaseLock();}
 }
 /** Editor: provide STAFF_CHANGE_JSON then run. Existing account edits bump credential version. */
@@ -128,7 +142,9 @@ function configureStaff_(){
     var email=Quest.text(input.email,200).toLowerCase();if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))Quest.fail('INVALID_INPUT');
     var ids=input.stationIds||[],zones=input.zoneIds||[];if(!Array.isArray(ids)||!Array.isArray(zones)||ids.some(function(id){return !s.Stations.some(function(st){return st.station_id===id;});})||zones.some(function(z){return !s.Stations.some(function(st){return st.zone_id===z;});}))Quest.fail('INVALID_INPUT');
     var row=s.StaffPermissions.find(function(r){return r.account_email===email;});if(!row){row={staff_id:Utilities.getUuid(),credential_version:0};s.StaffPermissions.push(row);}Object.assign(row,{account_email:email,role:input.role,allowed_station_ids:ids,allowed_zone_ids:zones,active:input.active,credential_version:row.credential_version+1,updated_at:now_()});
-    Quest.audit(s,{actor:actor,now:now_(),id:Utilities.getUuid,requestId:Utilities.getUuid()},'STAFF_CHANGE',row.staff_id);commit_(b,s);p.deleteProperty('STAFF_CHANGE_JSON');
+    var previous=b.StaffPermissions.find(function(v){return v.staff_id===row.staff_id;});
+    var summarize=function(v){return v?{staff:{role:v.role,active:v.active,stationIds:v.allowed_station_ids,zoneIds:v.allowed_zone_ids,credentialVersion:v.credential_version}}:{staff:null};};
+    Quest.audit(s,{actor:actor,now:now_(),id:Utilities.getUuid,requestId:Utilities.getUuid(),oldSummary:summarize(previous),newSummary:summarize(row)},'STAFF_CHANGE',row.staff_id);commit_(b,s);p.deleteProperty('STAFF_CHANGE_JSON');
   }finally{lock.releaseLock();}
 }
 /** Editor only: PIN_CHANGE_JSON={"stationId":"S01","pin":"..."}. Delete input after hashing. */
@@ -159,4 +175,23 @@ function installRegistrationTrigger_(){
   var triggers=ScriptApp.getProjectTriggers().filter(function(t){return t.getHandlerFunction()==='onRegistrationSubmit_';});
   if(triggers.length)throw new Error('Registration trigger already exists; inspect before replacing');
   ScriptApp.newTrigger('onRegistrationSubmit_').forForm(FormApp.openById(id)).onFormSubmit().create();
+}
+
+/** Editor-only v1 -> v2 audit migration. Requires a separately confirmed backup. */
+function migrateAuditSchemaV2_(){
+  var lock=LockService.getScriptLock();lock.waitLock(10000);
+  try{
+    var props=PropertiesService.getScriptProperties();
+    var before=load_({allowLegacyAudit:true}),actor=staff_(before);
+    if(!actor||actor.role!=='SYSTEM_ADMIN')Quest.fail('FORBIDDEN');
+    if(Quest.config(before,'schema_version')===2){load_();props.deleteProperty('AUDIT_V2_BACKUP_CONFIRMED');cache_().remove('public-board');return {migrated:false};}
+    if(props.getProperty('AUDIT_V2_BACKUP_CONFIRMED')!=='true')Quest.fail('BACKUP_REQUIRED');
+    var after=clone_(before);
+    after.AuditLogs.forEach(function(row){row.old_value_summary={availability:'NOT_CAPTURED_V1'};row.new_value_summary={availability:'NOT_CAPTURED_V1'};});
+    var version=after.EventConfig.find(function(row){return row.key==='schema_version';});
+    if(!version||version.value!==1)Quest.fail('SCHEMA_MISMATCH');version.value=2;
+    Quest.audit(after,{actor:actor,now:now_(),id:Utilities.getUuid,requestId:Utilities.getUuid(),oldSummary:{event:{key:'schema_version',value:1}},newSummary:{event:{key:'schema_version',value:2}}},'AUDIT_SCHEMA_MIGRATION','v2');
+    commit_(before,after,{upgradeAuditHeader:true});cache_().remove('public-board');props.deleteProperty('AUDIT_V2_BACKUP_CONFIRMED');
+    return {migrated:true,version:2};
+  }finally{lock.releaseLock();}
 }

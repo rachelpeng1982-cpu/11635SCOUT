@@ -1772,7 +1772,15 @@
         "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
       ],
       "verification_status": "NOT_FORMALLY_ACCEPTED",
-      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE",
+      "increment_evidence": [
+        {
+          "increment": "01",
+          "report": "docs/INCREMENT_01_VERIFICATION.md",
+          "status": "SCOPED_LOCAL_PASS_NOT_FORMAL_ACCEPTANCE",
+          "formal_ticket_done": false
+        }
+      ]
     },
     {
       "id": "TKT-005",
@@ -1898,7 +1906,15 @@
         "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
       ],
       "verification_status": "NOT_FORMALLY_ACCEPTED",
-      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE",
+      "increment_evidence": [
+        {
+          "increment": "01",
+          "report": "docs/INCREMENT_01_VERIFICATION.md",
+          "status": "SCOPED_LOCAL_PASS_NOT_FORMAL_ACCEPTANCE",
+          "formal_ticket_done": false
+        }
+      ]
     },
     {
       "id": "TKT-007",
@@ -4474,7 +4490,15 @@
         "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
       ],
       "verification_status": "NOT_FORMALLY_ACCEPTED",
-      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE",
+      "increment_evidence": [
+        {
+          "increment": "01",
+          "report": "docs/INCREMENT_01_VERIFICATION.md",
+          "status": "SCOPED_LOCAL_PASS_NOT_FORMAL_ACCEPTANCE",
+          "formal_ticket_done": false
+        }
+      ]
     },
     {
       "id": "TKT-046",
@@ -4883,7 +4907,15 @@
         "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
       ],
       "verification_status": "NOT_FORMALLY_ACCEPTED",
-      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE",
+      "increment_evidence": [
+        {
+          "increment": "01",
+          "report": "docs/INCREMENT_01_VERIFICATION.md",
+          "status": "SCOPED_LOCAL_PASS_NOT_FORMAL_ACCEPTANCE",
+          "formal_ticket_done": false
+        }
+      ]
     },
     {
       "id": "TKT-052",
@@ -5391,7 +5423,15 @@
         "Given 本票測試結果，When 上繳驗證報告，Then 附版本、輸入、預期、實際、PASS／FAIL／NOT_TESTED及證據；替身明示。"
       ],
       "verification_status": "NOT_FORMALLY_ACCEPTED",
-      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE"
+      "review_note": "v0.2修正票級AC、Phase相依及Phase1骨架缺票；未改為READY／DONE",
+      "increment_evidence": [
+        {
+          "increment": "01",
+          "report": "docs/INCREMENT_01_VERIFICATION.md",
+          "status": "SCOPED_LOCAL_PASS_NOT_FORMAL_ACCEPTANCE",
+          "formal_ticket_done": false
+        }
+      ]
     },
     {
       "id": "TKT-060",

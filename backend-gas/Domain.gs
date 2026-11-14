@@ -8,7 +8,7 @@ var Quest = (() => {
     StampLogs:['log_id','batch_id','station_id','participant_id','team_id','stamp_mode','participation_mode','outcome','created_at','operator_id','idempotency_key','source','reversal_of','reason','correction_request_id'],
     Alerts:['alert_id','created_at','station_id','alert_type','severity','description','status','handler_id','resolved_at','public_message','related_log_id','requested_by'],
     StaffPermissions:['staff_id','account_email','role','allowed_station_ids','allowed_zone_ids','active','credential_version','updated_at'],
-    AuditLogs:['audit_id','timestamp','staff_id','action','entity_type','entity_id','request_id','result','reason'],
+    AuditLogs:['audit_id','timestamp','staff_id','action','entity_type','entity_id','request_id','result','reason','old_value_summary','new_value_summary'],
     StampBatches:['batch_id','station_id','team_id','present_member_ids','absent_member_ids','policy','status','created_at','operator_id'],
     Requests:['idempotency_key','actor_id','fingerprint','result','created_at'],
     EventConfig:['key','value'],
@@ -31,7 +31,38 @@ var Quest = (() => {
     fail('FORBIDDEN');
   }
   function active(s,id){const p=s.Participants.find(p=>p.participant_id===id);if(!p||p.active_status!=='ACTIVE')fail('INELIGIBLE');return p;}
-  function audit(s,ctx,action,id,result='OK',reason=''){s.AuditLogs.push({audit_id:ctx.id(),timestamp:ctx.now,staff_id:ctx.actor?.staff_id||'SYSTEM',action,entity_type:action,entity_id:id||'',request_id:ctx.requestId,result,reason});}
+  // Deliberate allowlist: no names, contacts, hashes, PINs, tokens or request payloads.
+  function safeSummary(s,q={}){
+    const st=s.Stations.find(r=>r.station_id===q.stationId);
+    const p=s.Participants.find(r=>r.participant_id===q.participantId);
+    const team=s.Teams.find(r=>r.team_id===q.teamId);
+    const alert=s.Alerts.find(r=>r.alert_id===q.alertId||r.alert_id===q.correctionRequestId);
+    const event=s.EventConfig.find(r=>r.key===q.key&&['honor_threshold','required_station_ids','team_policy','stale_seconds','schema_version'].includes(r.key));
+    return JSON.parse(JSON.stringify({
+      counts:{participants:s.Participants.length,teams:s.Teams.length,stampEvents:s.StampLogs.length,effectivePasses:effective(s).length,batches:s.StampBatches.length,alerts:s.Alerts.length,attendanceDrafts:s.AttendanceDrafts.length},
+      station:st?{stationId:st.station_id,status:st.status,venueApproval:st.venue_approval_status,individualQueue:st.current_individual_queue,teamQueue:st.current_team_queue,serviceLanes:st.service_lanes,individualDuration:st.individual_duration_min,teamDuration:st.team_duration_min}:null,
+      participant:p?{activeStatus:p.active_status,checkedIn:Boolean(p.checked_in_at),teamId:p.team_id,credentialAvailable:Boolean(p.qr_token_hash),updatedAt:p.updated_at||null}:null,
+      team:team?{leaderParticipantId:team.leader_participant_id,status:team.status}:null,
+      alert:alert?{status:alert.status,handlerId:alert.handler_id,resolvedAt:alert.resolved_at}:null,
+      event:event?{key:event.key,value:event.value}:null
+    }));
+  }
+  function audit(s,ctx,action,id,result='OK',reason=''){
+    const entityTypes={approveIndividualStamp:'StampLogs',approveTeamStamp:'StampBatches',revokeStamp:'StampLogs',registerParticipant:'Participants',markCheckedIn:'Participants',issueParticipantQr:'Participants',createTeam:'Teams',setTeamLeader:'Teams',submitTeamAttendance:'AttendanceDrafts',updateQueue:'Stations',changeStationStatus:'Stations',configureStation:'Stations',updateEventConfig:'EventConfig',createAlert:'Alerts',resolveAlert:'Alerts',requestStampCorrection:'Alerts',STAFF_CHANGE:'StaffPermissions',PIN_ROTATE:'StationCredentials'};
+    s.AuditLogs.push({audit_id:ctx.id(),timestamp:ctx.now,staff_id:ctx.actor?.staff_id||'SYSTEM',action,entity_type:entityTypes[action]||action,entity_id:id||'',request_id:ctx.requestId,result,reason:typeof reason==='string'?reason.slice(0,300):'',old_value_summary:ctx.oldSummary??null,new_value_summary:ctx.newSummary??null});
+  }
+  function canDispatch(s,actor,alert){
+    auth(actor);
+    if(isAdmin(actor))return true;
+    return actor.role==='ZONE_LEAD'&&Boolean(alert.station_id)&&!alert.related_log_id&&alert.alert_type!=='BROADCAST'&&(actor.allowed_zone_ids||[]).includes(station(s,alert.station_id).zone_id);
+  }
+  function dispatchStaff(s,actor,alert){
+    if(!canDispatch(s,actor,alert))fail('FORBIDDEN');
+    return s.StaffPermissions.filter(p=>p.active===true&&(isAdmin(actor)||
+      p.staff_id===actor.staff_id||p.role==='STATION_MASTER'&&(p.allowed_station_ids||[]).includes(alert.station_id)||
+      p.role==='ZONE_LEAD'&&(p.allowed_zone_ids||[]).includes(station(s,alert.station_id).zone_id)
+    )).map(p=>({staffId:p.staff_id,role:p.role}));
+  }
   function board(s,now,range={}){const passes=effective(s).filter(p=>(!range.from||p.created_at>=range.from)&&(!range.to||p.created_at<=range.to));return s.Stations.map(st=>{
     const records=passes.filter(p=>p.station_id===st.station_id);
     const completed=new Set(s.StampBatches.filter(b=>b.station_id===st.station_id&&b.status==='COMMITTED'&&b.present_member_ids.length&&b.present_member_ids.every(id=>records.some(p=>p.participant_id===id))).map(b=>b.team_id));
@@ -44,7 +75,7 @@ var Quest = (() => {
   });}
   const csvCell=x=>{let s=String(x??'');if(/^[\s]*[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
   function execute(s,action,q,ctx){
-    const actor=ctx.actor;const now=ctx.now;
+    const actor=ctx.actor;const now=ctx.now;const oldSummary=safeSummary(s,q);
     if(action==='getPublicStationBoard'){
       const stations=board(s,now),rank={CRITICAL:0,HIGH:1,MEDIUM:2,LOW:3};
       return {stations,recommendations:stations.filter(st=>st.status==='OPEN'&&st.venueApproved&&['LOW','MEDIUM'].includes(st.congestion)&&st.estimatedWaitMin!==null).sort((a,b)=>a.estimatedWaitMin-b.estimatedWaitMin||a.stationId.localeCompare(b.stationId)).slice(0,3).map(st=>({stationId:st.stationId,name:st.name,estimatedWaitMin:st.estimatedWaitMin})),announcements:s.Alerts.filter(a=>a.public_message&&a.status!=='RESOLVED').sort((a,b)=>rank[a.severity]-rank[b.severity]).map(a=>({message:a.public_message,severity:a.severity})),serverTime:now};
@@ -63,7 +94,7 @@ var Quest = (() => {
       if(!Array.isArray(q.presentMemberIds)||!q.presentMemberIds.length||new Set(q.presentMemberIds).size!==q.presentMemberIds.length||q.presentMemberIds.length>10)fail('INVALID_ATTENDANCE');
       if(q.presentMemberIds.some(id=>{const member=s.Participants.find(x=>x.participant_id===id);return !member||member.team_id!==team.team_id||member.active_status!=='ACTIVE';}))fail('INVALID_ATTENDANCE');
       const draft={draft_id:ctx.id(),station_id:q.stationId,team_id:team.team_id,leader_participant_id:p.participant_id,present_member_ids:q.presentMemberIds.slice(),created_at:now,expires_at:new Date(Date.parse(now)+900000).toISOString()};s.AttendanceDrafts.push(draft);
-      const result={draftId:draft.draft_id,stamped:false,expiresAt:draft.expires_at};s.Requests.push({idempotency_key:key,actor_id:actorId,fingerprint:ctx.fingerprint,result,created_at:now});audit(s,{...ctx,actor:{staff_id:actorId}},action,draft.draft_id);return result;
+      const result={draftId:draft.draft_id,stamped:false,expiresAt:draft.expires_at};s.Requests.push({idempotency_key:key,actor_id:actorId,fingerprint:ctx.fingerprint,result,created_at:now});audit(s,{...ctx,actor:{staff_id:actorId},oldSummary,newSummary:safeSummary(s,q)},action,draft.draft_id);return result;
     }
     auth(actor);
     if(action==='getStaffContext')return {staffId:actor.staff_id,role:actor.role,stationIds:actor.allowed_station_ids||[],zoneIds:actor.allowed_zone_ids||[]};
@@ -77,7 +108,7 @@ var Quest = (() => {
       return {dispatchStaff:s.StaffPermissions.filter(p=>p.active).map(p=>({staffId:p.staff_id,role:p.role})),stations,summary:{uniqueCheckedInParticipants:s.Participants.filter(p=>p.active_status==='ACTIVE'&&p.checked_in_at).length,activeTeams:s.Teams.filter(t=>{const count=s.Participants.filter(p=>p.team_id===t.team_id&&p.active_status==='ACTIVE').length;return t.status==='ACTIVE'&&count>=t.member_min&&count<=t.member_max;}).length,individualStampCount:passes.filter(p=>p.participation_mode==='INDIVIDUAL').length,teamMemberStampCount:passes.filter(p=>p.participation_mode==='TEAM').length,completedTeamStationCount:board(s,now).reduce((n,r)=>n+r.completedTeamCount,0),totalValidStamps:passes.length},alerts:s.Alerts,serverTime:now};
     }
     if(action==='getStationDetail'){
-      const st=station(s,q.stationId);scope(actor,st);return {attendanceDrafts:s.AttendanceDrafts.filter(d=>d.station_id===q.stationId&&d.expires_at>=now).slice(-20),station:board(s,now).find(r=>r.stationId===q.stationId),history:s.StampLogs.filter(r=>r.station_id===q.stationId).slice(-20).map(r=>({logId:r.log_id,participantId:r.participant_id,outcome:r.outcome,createdAt:r.created_at})),alerts:s.Alerts.filter(a=>a.station_id===q.stationId)};
+      const st=station(s,q.stationId);scope(actor,st);return {attendanceDrafts:s.AttendanceDrafts.filter(d=>d.station_id===q.stationId&&d.expires_at>=now).slice(-20),station:board(s,now).find(r=>r.stationId===q.stationId),history:s.StampLogs.filter(r=>r.station_id===q.stationId).slice(-20).map(r=>({logId:r.log_id,participantId:r.participant_id,outcome:r.outcome,createdAt:r.created_at})),alerts:s.Alerts.filter(a=>a.station_id===q.stationId&&(!a.related_log_id||isAdmin(actor))).map(a=>({...a,canDispatch:canDispatch(s,actor,a),dispatchStaff:canDispatch(s,actor,a)?dispatchStaff(s,actor,a):[]}))};
     }
     if(action==='lookupParticipantForStamp'){
       const st=station(s,q.stationId);scope(actor,st,true);if(!ctx.unlocked)fail('STATION_LOCKED');
@@ -142,11 +173,19 @@ var Quest = (() => {
       const id=ctx.id(),publicMessage=q.publicMessage?text(q.publicMessage,300):'';if(publicMessage&&!isAdmin(actor))fail('FORBIDDEN');
       s.Alerts.push({alert_id:id,created_at:now,station_id:q.stationId||null,alert_type:q.type,severity:q.severity,description:text(q.description,500),status:'PENDING',handler_id:null,resolved_at:null,public_message:publicMessage});result={alertId:id};
     }else if(action==='resolveAlert'){
-      admin(actor);const a=s.Alerts.find(a=>a.alert_id===q.alertId);if(!a)fail('NOT_FOUND');if(!['DISPATCHED','RESOLVED'].includes(q.status))fail('INVALID_INPUT');a.status=q.status;if(q.handlerId&&!s.StaffPermissions.some(p=>p.staff_id===q.handlerId&&p.active))fail('INVALID_INPUT');a.handler_id=q.handlerId||actor.staff_id;if(a.status==='RESOLVED')a.resolved_at=now;result={updated:true};
+      const a=s.Alerts.find(a=>a.alert_id===q.alertId);if(!a)fail('NOT_FOUND');
+      if(!canDispatch(s,actor,a))fail('FORBIDDEN');
+      if(a.related_log_id)fail('CORRECTION_REQUIRES_REVIEW');
+      if(!['DISPATCHED','RESOLVED'].includes(q.status))fail('INVALID_INPUT');
+      if(a.status==='RESOLVED')fail('ALREADY_RESOLVED');
+      const handlerId=q.handlerId||a.handler_id||actor.staff_id;
+      if(!dispatchStaff(s,actor,a).some(p=>p.staffId===handlerId))fail('FORBIDDEN');
+      a.status=q.status;a.handler_id=handlerId;if(a.status==='RESOLVED')a.resolved_at=now;result={updated:true};
     }else fail('UNKNOWN_ACTION');
-    audit(s,ctx,action,q.stationId||q.participantId||q.logId||'', 'OK',q.reason||'');
+    const entityId=action==='approveTeamStamp'?result.batchId:action==='approveIndividualStamp'?result.logIds[0]:action==='registerParticipant'?result.participantId:action==='createTeam'?result.teamId:action==='createAlert'?result.alertId:action==='requestStampCorrection'?result.requestId:action==='setTeamLeader'?q.teamId:action==='updateEventConfig'?q.key:q.logId||q.alertId||q.stationId||q.participantId||'';
+    audit(s,{...ctx,oldSummary,newSummary:safeSummary(s,q)},action,entityId, 'OK',q.reason||'');
     s.Requests.push({idempotency_key:key,actor_id:actor.staff_id,fingerprint,result,created_at:now});return result;
   }
-  return {tables,schemas,Fault,fail,text,integer,config,effective,board,execute,audit,scope,admin};
+  return {tables,schemas,Fault,fail,text,integer,config,effective,board,execute,audit,safeSummary,scope,admin};
 })();
 if(typeof module!=='undefined')module.exports=Quest;

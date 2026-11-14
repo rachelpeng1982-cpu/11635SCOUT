@@ -6,7 +6,7 @@
 
 1. 執行 README 的 npm ci、import_seed.py、npm test、npm run build。
 2. 在主辦管理的 Google Workspace 建立私有空白試算表與獨立 Apps Script 專案。資料表只分享給必要系統維運，不給所有關主試算表編輯權；關主透過 Web App 操作。
-3. 將 backend-gas 的 Code.gs、Domain.gs、Seed.gs、Index.html 複製為同名 GAS 檔，套用 appsscript.json。不要上傳 AppSheetSchema.json 或原始 Stitch HTML。
+3. 將 backend-gas 的 Code.gs、Domain.gs、Integrity.gs、Seed.gs、Index.html 複製為同名 GAS 檔，套用 appsscript.json。不要上傳 AppSheetSchema.json 或原始 Stitch HTML。
 4. Services 啟用 Google Sheets API v4；如使用標準 Cloud Project，也確認該專案已啟用 Sheets API。
 5. Script Properties 設定 SPREADSHEET_ID、BOOTSTRAP_ADMIN_EMAIL；在編輯器執行 setupProject_ 並授權。SECRET 由程式建立，不複製到前端或版本庫。重跑不覆寫人員、既有站況或成績；若遇 schema mismatch 先備份與調查，禁止清表重來。
 
@@ -57,3 +57,16 @@ EVENT_CONFIG_JSON 包含 key、value、reason（核准文件／決議摘要）�
 ## 6. 驗證與正式啟用
 
 執行 ACCEPTANCE.md 的 Google 整合、真併發、故障、真手機、現勘與容量項目。所有阻擋解除、主辦核定與UAT簽核後，才另外核准正式資源及部署版本；記錄部署者、版本、表單、資料表歸屬與回復方案。
+
+
+## 7. 舊版稽核表受控遷移（schema v1 → v2）
+
+新建空白測試表直接setupProject_建立v2。已有v1表時，常規API會拒絕舊表頭／版本，不會靜默修改資料。
+
+1. 暫停寫入，複製整份受限試算表並記錄備份。更新GAS的Domain.gs、Integrity.gs、Code.gs及其他建置檔，尚不開放正式活動。
+2. 以原有StaffPermissions中active的SYSTEM_ADMIN帳號開啟編輯器。Script Properties設定 AUDIT_V2_BACKUP_CONFIRMED=true，表示已依主辦流程完成備份。
+3. 執行 migrateAuditSchemaV2_。程式只接受已知v1欄位，驗證整體資料後以單一Sheets batchUpdate補稽核欄位、標記舊資料未擷取、更新版本2及加入遷移稽核。
+4. 原始核章／人員／權限值保留，舊稽核兩摘要欄填 availability=NOT_CAPTURED_V1，不造假前後值。批次失敗不改表頭／資料；回應遺失時重跑會辨識已是v2，不重複遷移。
+5. 成功後移除備份確認旗標並清公開快取。逐表對帳、執行測試後再啟用；真Google遷移仍須先在隔離測試副本演練。
+
+如完整性檢查失敗：維持停寫，由資料管理員在已備份副本核對主外鍵、空白列、批次與撤銷，修復後重驗；不要刪稽核／Requests或停用驗證繞過。

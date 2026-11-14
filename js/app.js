@@ -25,7 +25,7 @@ async function refresh(){
   if(route==='map'){const d=await api.call('getPublicStationBoard');renderBoard(d);}
   if(route==='participant'&&api.session){progress=await api.call('getMyProgress');renderParticipant();}
   if(route==='war-room'&&staff){const d=await api.call('getAdminDashboard',{zoneId:value('admin-zone'),status:value('admin-status')});renderDashboard(d);}
-  if(route==='station-master'&&staff&&$('master-station')){const d=await api.call('getStationDetail',{stationId:value('master-station')});$('station-history').textContent=d.history.map(r=>`${time(r.createdAt)} ${r.participantId} ${r.outcome} (${r.logId})`).join('\n')||'本站尚無核章紀錄';}
+  if(route==='station-master'&&staff&&$('master-station')){const d=await api.call('getStationDetail',{stationId:value('master-station')});$('station-history').textContent=d.history.map(r=>`${time(r.createdAt)} ${r.participantId} ${r.outcome} (${r.logId})`).join('\n')||'本站尚無核章紀錄';if($('zone-alerts'))renderZoneAlerts(d.alerts);}
   lastSync=new Date().toISOString();failures=0;
  }catch(e){failures++;message(e.message+'；保留最後成功資料，核章未經確認不得視為完成',true);}
  $('sync').textContent=(api.demo?'展示模式・未連線':failures?'同步失敗／資料可能過期':'最近成功同步')+'：'+time(lastSync)+'｜預設每 20 秒更新';
@@ -55,13 +55,23 @@ function renderParticipant(){
 function renderMaster(){
  const view=$('station-master');view.replaceChildren(node('h2','關主核章站'));
  if(!staff){view.append(node('p','請以授權 Google 帳號登入後使用上方「辨識工作人員」。'));return;}
- if(staff.role==='ZONE_LEAD'){const station=stationSelector('master-station');station.onchange=()=>refresh();view.append(label('所屬分區站點',station),alertForm(false));let hist=node('pre');hist.id='station-history';view.append(node('h3','分區站點操作歷程'),hist);return;}
+ if(staff.role==='ZONE_LEAD'){const station=stationSelector('master-station');station.onchange=()=>refresh();view.append(label('所屬分區站點',station),alertForm(false));let hist=node('pre');hist.id='station-history';const alerts=node('section');alerts.id='zone-alerts';view.append(alerts,node('h3','分區站點操作歷程'),hist);return;}
  const box=node('div',undefined,'card'),st=stationSelector('master-station'),pin=input('station-pin','password');pin.inputMode='numeric';pin.maxLength=4;st.onchange=()=>{selected=null;$('candidate').replaceChildren();refresh();};
  box.append(label('操作站點',st),label('本站 PIN（15 分鐘解鎖）',pin),writeButton('解鎖本站',async()=>{await api.call('unlockStation',{stationId:value('master-station'),pin:value('station-pin')});pin.value='';message('本站已解鎖');}));
  let scan=input('scan-code','password'),manual=input('manual-id');scan.autocomplete='off';box.append(label('掃描結果／貼上個人私密憑證',scan),button('開啟相機掃碼',startCamera),button('停止相機',stopCamera,'ghost'));const video=node('video');video.id='scanner';video.setAttribute('playsinline','');box.append(video);
  const confirmed=input('identity-confirmed','checkbox'),l=label('手動查詢時：已另行核對本人身分',confirmed);l.className='check';box.append(label('或手動學員編號',manual),l,button('查詢並預覽',()=>run(async()=>{selected=await api.call('lookupParticipantForStamp',{stationId:value('master-station'),credential:value('scan-code')||undefined,participantId:value('manual-id')||undefined,identityConfirmed:$('identity-confirmed').checked});scan.value='';renderCandidate();})));view.append(box,node('div'));let candidate=node('section');candidate.id='candidate';view.append(candidate);
  const queue=node('div',undefined,'card');let iq=input('iq','number'),tq=input('tq','number');iq.min=tq.min='0';queue.append(node('h3','本站排隊回報'),label('個人排隊人數',iq),label('小隊排隊隊數',tq),writeButton('回報排隊數',async()=>{await command('updateQueue',{stationId:value('master-station'),individualQueue:iq.value===''?null:Number(iq.value),teamQueue:tq.value===''?null:Number(tq.value)});await refresh();}));view.append(queue);
  view.append(alertForm(false));let hist=node('pre');hist.id='station-history';view.append(node('h3','本站操作歷程'),hist);
+}
+function renderZoneAlerts(alerts){
+ const view=$('zone-alerts');const selections=new Map(Array.from(view.querySelectorAll('select')).map(el=>[el.id,el.value]));view.replaceChildren(node('h3','本站異常・分區內派工'));
+ for(const a of alerts.filter(a=>a.status!=='RESOLVED')){
+  const card=node('div',undefined,'card level-'+a.severity);card.append(node('strong',a.alert_type+' · '+a.severity),node('p',a.description));
+  if(a.canDispatch){const selector=select('zone-handler-'+a.alert_id,a.dispatchStaff.map(p=>[p.staffId,p.staffId+' · '+p.role]));if(a.dispatchStaff.some(p=>p.staffId===selections.get(selector.id)))selector.value=selections.get(selector.id);
+   card.append(label('授權處理人',selector),writeButton('分區派工',async()=>{await command('resolveAlert',{alertId:a.alert_id,status:'DISPATCHED',handlerId:selector.value});await refresh();}),writeButton('分區結案',async()=>{await command('resolveAlert',{alertId:a.alert_id,status:'RESOLVED',handlerId:selector.value});await refresh();}));
+  }else card.append(node('p','此事項需活動組長或管理員處理','muted'));
+  view.append(card);
+ }
 }
 function renderCandidate(){
  const view=$('candidate');view.replaceChildren();if(!selected)return;const c=node('div',undefined,'card');c.append(node('h3',`${selected.participantId} ${selected.name}`),node('p',selected.alreadyStamped?'本站已完成；再次提交會被拒絕':'請核對本人及此次實到名單'));

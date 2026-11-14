@@ -1,0 +1,41 @@
+✖ all foreign-key families reject orphans (5.345102ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66.422048
+
+✖ failing tests:
+
+test at tests/integrity.test.cjs:10:1
+✖ all foreign-key families reject orphans (5.345102ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: DATA_INTEGRITY
+      at invalid (/workspace/scout-quest-2027/tests/integrity.test.cjs:2:69)
+      at TestContext.<anonymous> (/workspace/scout-quest-2027/tests/integrity.test.cjs:12:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: DATA_INTEGRITY
+        at reject (/workspace/scout-quest-2027/src/integrity.js:5:41)
+        at ensure (/workspace/scout-quest-2027/src/integrity.js:6:36)
+        at Object.validate (/workspace/scout-quest-2027/src/integrity.js:39:98)
+        at /workspace/scout-quest-2027/tests/integrity.test.cjs:2:82
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at invalid (/workspace/scout-quest-2027/tests/integrity.test.cjs:2:69)
+        at TestContext.<anonymous> (/workspace/scout-quest-2027/tests/integrity.test.cjs:12:35)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25),
+    operator: 'throws',
+    diff: 'simple'
+  }

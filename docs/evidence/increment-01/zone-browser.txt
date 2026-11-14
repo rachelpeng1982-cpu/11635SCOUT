@@ -1,0 +1,1 @@
+PASS: browser → API envelope → real shared domain → integrity validator; zone UI lists five stations, dispatches eligible staff, audits before/after, denies foreign handler/zone, and closes alert. Google transport is a test bridge.

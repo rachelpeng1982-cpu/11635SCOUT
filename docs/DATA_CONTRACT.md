@@ -30,3 +30,12 @@
 排隊以人／隊分別回報；wait=ceil((個人數×個人分鐘+隊數×小隊分鐘)/線數)。任一來源未知則等待未知。站關閉優先 UNAVAILABLE；更新超過90秒優先 STALE；否則 ≤5分 LOW、≤10分 MEDIUM、>10分 HIGH。公布的是估計，非保證。公開端僅輸出白名單欄位。
 
 exportReport 支援 zoneId、status、from、to（UTC ISO，含端點）；from/to 篩選核章發生時間，非重建歷史時點的成績快照。CSV 表頭註明時間範圍、Asia/Taipei與人站次／隊站次口徑；預設全歷史有效章。介面提供場域／狀態篩選，日期範圍可透過 API 傳入。整體 KPI 是全場，列表可篩選。
+
+
+## Increment 01：讀寫完整性與稽核 v2
+
+src/integrity.js（建置為 Integrity.gs）在非快取的資料讀取及每次提交前驗證11表：主鍵／唯一欄位、站點與分區、核心型別／狀態、主外鍵、有效章唯一性、撤銷關聯、已提交批次的逐人章與實到／缺席、工作人員範圍及活動規則。損壞資料回 DATA_INTEGRITY，錯誤回應不含列值；空白主鍵列不再靜默略過，避免實體列號偏移。公開快取只保留先前已通過檢查的10秒快照。
+
+AuditLogs 新增 old_value_summary、new_value_summary。摘要是受限欄位投影：狀態、排隊數、線數、角色／範圍／版本與成果計數，不包含姓名、email、QR、hash、PIN或整個請求。舊版未記錄的值不能還原，必須明示 NOT_CAPTURED_V1。遷移程序見 DEPLOYMENT.md；不可手改schema_version或覆蓋舊表。
+
+此版的批次策略只支援原子提交的COMMITTED資料；如遇舊版PENDING／FAILED或不完整批次會停止，而非將其當有效章。需要先隔離、備份及對帳修復，不會自動刪除歷史。

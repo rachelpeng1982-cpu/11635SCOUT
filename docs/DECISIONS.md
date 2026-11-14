@@ -8,3 +8,6 @@
 - D06：保守預設全站 CLOSED／PENDING、線數與排隊未知、榮譽門檻 null；依核准實到快照統計小隊完成隊次，同一隊站只計一次。此政策可停用，正式須主辦核定。
 - D07：PIN置 Script Properties、HMAC核驗、限次鎖定、15分鐘本站解鎖。工作人員角色及範圍每次請求重新讀取，不靠前端隱藏控制。
 - D08：名冊只由管理員或配置的 Forms trigger匯入；使用穩定外部識別碼避免同名誤合併。Forms觸發不寄送QR或訊息；以管理員受控發行／補發交付，正式發放流程須人工確認。
+
+- D09（Increment01）：新增storage-boundary完整性檢查及schema v2稽核摘要；v1遷移須管理員確認備份，未知歷史值明示未知。真Google整合待驗證。
+- D10（Increment01）：ZONE_LEAD只能在allowed_zone_ids內派工／結案本站一般異常，可指派本人、同區區長或該站關主；不得處理全場公告或成績更正，也不能指定區外人員。成績更正仍由SYSTEM_ADMIN走補償流程。

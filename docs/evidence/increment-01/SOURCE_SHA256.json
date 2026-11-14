@@ -1,0 +1,32 @@
+{
+  "baselineCommit": "ac5a3567cae6c8c833432686736d460dd4db6548",
+  "capturedAt": "2026-11-14T11:26:11.604187+00:00",
+  "files": {
+    "src/integrity.js": "a88b88474b7fcca751b374e9a202215aad1f823cca3ca89a4a5f9871f4ec07be",
+    "src/core.js": "fed72a4e55a07e717152836df1610eb119ad4763af750be925ecf34d83b62c70",
+    "backend-gas/Seed.gs": "d21c7690ea901953e03708e07612adf4909b055512d9f3025af481d2ccba34fe",
+    "backend-gas/AppSheetSchema.json": "423735513d84cd672853614d9ad3fed668295f77c73bc1ee69679965ebede319",
+    "backend-gas/Index.html": "47b2d677157187344baf7b05959f401da5b6d7d6d7dffcff03fc114a5bd587e2",
+    "backend-gas/Code.gs": "c5ea4ca0eab1f5d307091322d879601e1d942ef52b3393defad5a43304046d5a",
+    "backend-gas/Domain.gs": "fed72a4e55a07e717152836df1610eb119ad4763af750be925ecf34d83b62c70",
+    "backend-gas/Integrity.gs": "a88b88474b7fcca751b374e9a202215aad1f823cca3ca89a4a5f9871f4ec07be",
+    "backend-gas/appsscript.json": "9e42e4d6012a1490b6fdcaa789e069a63d72290ba0cb958ee576aaa9c8c97b75",
+    "js/app.js": "208c694eee9fd4ee5f68716e1cd772e8c3587f9da68a1aba3a17ffc5dfba179d",
+    "js/api.js": "74f8f6c9708a8292b7a0043ff261b4f1a496501670f5a593f509a9ac5636a59f",
+    "css/scout-theme.css": "135529ba1b71d1e6068ae0cf5fb0ed48a8f0809d724ffc3bd4599a93571cb000",
+    "css/design-tokens.css": "76950f2aa913086ac4e40a025bbc96890e3aa38e775d8dc107f455ad1cba9ecc",
+    "tests/browser.cjs": "890b777f5dbe44bbf109a1a2144d82718bae7997de359be9c94de4945bbc2ac6",
+    "tests/zone-browser.cjs": "253d3d66832070ba08669ca9abc609d7dd123bbdf149abbb23dbad2607fd6a0a",
+    "tests/core.test.cjs": "78109b6f31cbbbfe521a9be899204d27bff3d4434f84a45d23874aa3005c9c20",
+    "tests/integrity.test.cjs": "8512d42004b90f6835a8ffba438b5bae5e0471ca58a31010669abfea26fbdb78",
+    "tests/gas.test.cjs": "8fcd0b1b45a5a92dfcf633e99398f644b2ba890e5558371071b3b54505a4acd7",
+    "tests/helpers/fixture.cjs": "12be0f72201b9e881d644b58e6ae9136604fa18525bdcd4d9c86f27f533a1a8c",
+    "tools/import_seed.py": "068281ef9e186c91d90f8a83fa9a41eb1e13c6f70a2f35ee24b6c649689729d2",
+    "tools/build.cjs": "916d4b6bef6d7c5baf9983a46a7656c1d98639a6139415951ff08d29b153d695",
+    "tools/validate_backlog.py": "bb4abcf9842370846235f940145073f3ce692a1eaa6860db617c70c1e574f8f0",
+    "tools/run_mutations.cjs": "084f51e3ac00aa952257bc0e21056e5a990042b1b0ab3a202dfdf0a468049dc4",
+    "tools/render_backlog.py": "f392515f6adb3d69302a00f79ffd14a509205dd04826f0a15db50bd8dda8b706",
+    "data/stations.json": "91c2ecd91cd1f1830f7e48454d87fcc4ca44d49615815bb107ab53ef18ea2dea",
+    "data/stations_seed.csv": "b74351a2ec93182ef544fb3c1028409f8e93c3f0eff926bf16f64c185422d1d2"
+  }
+}
