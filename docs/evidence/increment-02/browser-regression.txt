@@ -1,0 +1,1 @@
+Browser checks passed: 390px layout, 30 stations, filters, four views, 48px targets, no storage secrets, QR rendering, GAS bridge, failed submission same-key retry.

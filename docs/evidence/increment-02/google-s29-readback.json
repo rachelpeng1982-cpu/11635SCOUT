@@ -1,0 +1,53 @@
+[
+  {
+    "source": "GOOGLE_SHEETS_CONNECTOR",
+    "appsScript": "NOT_RUN",
+    "calculationRuntime": "LOCAL_NODE_ON_GOOGLE_READBACK",
+    "observedAt": "2026-11-14T12:36:44.896Z",
+    "stationId": "S29",
+    "individualQueue": 4,
+    "teamQueue": 0,
+    "serviceLanes": 2,
+    "wait": 10,
+    "congestion": "MEDIUM",
+    "thresholds": {
+      "lowMax": 5,
+      "mediumMax": 10
+    },
+    "result": "PASS"
+  },
+  {
+    "source": "GOOGLE_SHEETS_CONNECTOR",
+    "appsScript": "NOT_RUN",
+    "calculationRuntime": "LOCAL_NODE_ON_GOOGLE_READBACK",
+    "observedAt": "2026-11-14T12:36:51.433Z",
+    "stationId": "S29",
+    "individualQueue": 4,
+    "teamQueue": 0,
+    "serviceLanes": 1,
+    "wait": 20,
+    "congestion": "HIGH",
+    "thresholds": {
+      "lowMax": 5,
+      "mediumMax": 10
+    },
+    "result": "PASS"
+  },
+  {
+    "source": "GOOGLE_SHEETS_CONNECTOR",
+    "appsScript": "NOT_RUN",
+    "calculationRuntime": "LOCAL_NODE_ON_GOOGLE_READBACK",
+    "observedAt": "2026-11-14T12:37:04.545Z",
+    "stationId": "S29",
+    "individualQueue": 4,
+    "teamQueue": 0,
+    "serviceLanes": 1,
+    "wait": 20,
+    "congestion": "MEDIUM",
+    "thresholds": {
+      "lowMax": 10,
+      "mediumMax": 20
+    },
+    "result": "PASS"
+  }
+]

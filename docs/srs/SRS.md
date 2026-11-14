@@ -1,6 +1,6 @@
 # 軟體需求規格書 SRS｜竹風勇者・野外冒險任務島
 
-版本：SRS-0.2　日期：2026-11-14（Asia/Taipei）　產品基準：NORTH_STAR.md NS-1.0
+版本：SRS-0.3　日期：2026-11-14（Asia/Taipei）　產品基準：NORTH_STAR.md NS-1.0
 
 **狀態：供審查草案，未經主辦核准，不是完成／部署／上線證明。** 本文件將北極星展開為可驗證需求；若衝突仍以北極星為準，不以既有程式或本文件推翻最高規格。
 
@@ -234,3 +234,9 @@ Google測試專案、身份、觸發器、真持久化／並發／故障，及�
 ## 12. 變更管理
 
 需求更動保留來源、影響、取捨與核准紀錄；缺陷回原需求修正，新增需求另入Backlog，重構不暗改行為。拆票／取消／取代保留關聯；完成數只讀正式驗收結果。此版未建立正式Sprint日期、指定執行者或代替主辦核准。
+
+## Increment 02 契約補充（待核准）
+
+EventConfig.wait_thresholds 為 {lowMax, mediumMax}，兩者皆整數且 0 ≤ lowMax < mediumMax ≤ 1440；缺省5／10，損壞值拒絕載入。活動組長及系統管理員可受控變更並稽核；其他活動政策仍限系統管理員。等候分鐘 = ceil((個人排隊數×個人分鐘＋小隊排隊數×小隊分鐘)／服務線數)。≤lowMax為LOW、≤mediumMax為MEDIUM，否則HIGH；缺值UNKNOWN、過期STALE、停站UNAVAILABLE優先，不用舊congestion_level充當事實。
+
+冪等回應重送仍先檢查當下角色／站點／分區／公告能力，撤權後不可取回舊成功回應。Requests.actor_id須與章的operator_id一致；已提交批次的逐人成績操作者與時間須匹配快照。11表110欄完整順序見資料字典；本地驗證不表示所有選填中繼欄位均具嚴格型別約束。真Google Sheets連接器證據與Apps Script執行分開紀錄，後者目前NOT_RUN。詳見 ../INCREMENT_02_VERIFICATION.md。

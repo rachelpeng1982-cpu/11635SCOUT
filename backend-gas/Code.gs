@@ -129,7 +129,7 @@ function setupProject_(){
     var before=load_({allowIncompleteStations:true}),s=clone_(before);
     SEED_STATIONS.forEach(function(st){if(!s.Stations.some(function(x){return x.station_id===st.station_id;}))s.Stations.push(clone_(st));});
     if(!s.StaffPermissions.length)s.StaffPermissions.push({staff_id:Utilities.getUuid(),account_email:email,role:'SYSTEM_ADMIN',allowed_station_ids:[],allowed_zone_ids:[],active:true,credential_version:1,updated_at:now_()});
-    [['schema_version',2],['honor_threshold',null],['required_station_ids',[]],['team_policy','PENDING'],['stale_seconds',90]].forEach(function(pair){if(!s.EventConfig.some(function(c){return c.key===pair[0];}))s.EventConfig.push({key:pair[0],value:pair[1]});});
+    [['schema_version',2],['honor_threshold',null],['required_station_ids',[]],['team_policy','PENDING'],['stale_seconds',90],['wait_thresholds',{lowMax:5,mediumMax:10}]].forEach(function(pair){if(!s.EventConfig.some(function(c){return c.key===pair[0];}))s.EventConfig.push({key:pair[0],value:pair[1]});});
     Quest.audit(s,{actor:null,now:now_(),id:Utilities.getUuid,requestId:Utilities.getUuid()},'SCHEMA_SETUP','v2');commit_(before,s);
   }finally{lock.releaseLock();}
 }

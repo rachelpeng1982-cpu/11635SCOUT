@@ -1,0 +1,1 @@
+PASS LOCAL E2E: browser → Api → GAS adapter VM → domain → integrity → atomic storage double; QR login, write-success/response-loss retry, personal progress, 7-of-8 team snapshot, S29 queue, event-lead thresholds, CSV download and reversal statistics. Real Google transport, staff login and concurrency are NOT tested.

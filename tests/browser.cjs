@@ -1,7 +1,7 @@
 const {chromium}=require('@playwright/test'),assert=require('node:assert/strict'),fs=require('node:fs');
 (async()=>{
 const browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:390,height:844}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.goto('http://127.0.0.1:8765');await page.locator('#stations .card').first().waitFor();
+await page.goto(process.env.SCOUT_TEST_BASE_URL||'http://127.0.0.1:8765');await page.locator('#stations .card').first().waitFor();
 assert.equal(await page.locator('#stations .card').count(),30);assert.match(await page.locator('#mode').innerText(),/DEMO/);
 assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
 await page.locator('#search').fill('S03');assert.equal(await page.locator('#stations .card').count(),1);await page.locator('#search').fill('');

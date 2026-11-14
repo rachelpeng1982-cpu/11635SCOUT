@@ -1,3 +1,5 @@
+> 最新進度：2026-11-14 Increment 02。請以 [逐項驗證報告](INCREMENT_02_VERIFICATION.md) 與缺陷清單為本輪狀態；以下保留歷史基線。真Sheets層已測，Apps Script仍NOT_RUN，正式驗收未通過。
+
 # 北極星差距分析 NS-1.0
 
 ## Phase 0 基線

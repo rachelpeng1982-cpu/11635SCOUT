@@ -37,7 +37,7 @@ var Quest = (() => {
     const p=s.Participants.find(r=>r.participant_id===q.participantId);
     const team=s.Teams.find(r=>r.team_id===q.teamId);
     const alert=s.Alerts.find(r=>r.alert_id===q.alertId||r.alert_id===q.correctionRequestId);
-    const event=s.EventConfig.find(r=>r.key===q.key&&['honor_threshold','required_station_ids','team_policy','stale_seconds','schema_version'].includes(r.key));
+    const event=s.EventConfig.find(r=>r.key===q.key&&['honor_threshold','required_station_ids','team_policy','stale_seconds','schema_version','wait_thresholds'].includes(r.key));
     return JSON.parse(JSON.stringify({
       counts:{participants:s.Participants.length,teams:s.Teams.length,stampEvents:s.StampLogs.length,effectivePasses:effective(s).length,batches:s.StampBatches.length,alerts:s.Alerts.length,attendanceDrafts:s.AttendanceDrafts.length},
       station:st?{stationId:st.station_id,status:st.status,venueApproval:st.venue_approval_status,individualQueue:st.current_individual_queue,teamQueue:st.current_team_queue,serviceLanes:st.service_lanes,individualDuration:st.individual_duration_min,teamDuration:st.team_duration_min}:null,
@@ -63,14 +63,24 @@ var Quest = (() => {
       p.role==='ZONE_LEAD'&&(p.allowed_zone_ids||[]).includes(station(s,alert.station_id).zone_id)
     )).map(p=>({staffId:p.staff_id,role:p.role}));
   }
-  function board(s,now,range={}){const passes=effective(s).filter(p=>(!range.from||p.created_at>=range.from)&&(!range.to||p.created_at<=range.to));return s.Stations.map(st=>{
+  const validWaitThresholds=v=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).length===2&&Number.isInteger(v.lowMax)&&Number.isInteger(v.mediumMax)&&v.lowMax>=0&&v.lowMax<v.mediumMax&&v.mediumMax<=1440;
+  function authorizeCommand(s,actor,action,q){
+    if(['approveIndividualStamp','approveTeamStamp','updateQueue'].includes(action)){scope(actor,station(s,q.stationId),true);return;}
+    if(['changeStationStatus','markCheckedIn','requestStampCorrection'].includes(action)){admin(actor);return;}
+    if(action==='updateEventConfig'){if(actor.role!=='SYSTEM_ADMIN'&&!(actor.role==='EVENT_LEAD'&&q.key==='wait_thresholds'))fail('FORBIDDEN');return;}
+    if(['configureStation','registerParticipant','createTeam','setTeamLeader','revokeStamp'].includes(action)){if(actor.role!=='SYSTEM_ADMIN')fail('FORBIDDEN');return;}
+    if(action==='createAlert'){if(q.publicMessage&&!isAdmin(actor))fail('FORBIDDEN');if(q.stationId){if(!isAdmin(actor))scope(actor,station(s,q.stationId));}else admin(actor);return;}
+    if(action==='resolveAlert'){const a=s.Alerts.find(a=>a.alert_id===q.alertId);if(!a)fail('NOT_FOUND');if(!canDispatch(s,actor,a))fail('FORBIDDEN');return;}
+    fail('UNKNOWN_ACTION');
+  }
+  function board(s,now,range={}){const passes=effective(s).filter(p=>(!range.from||p.created_at>=range.from)&&(!range.to||p.created_at<=range.to));const thresholds=config(s,'wait_thresholds',{lowMax:5,mediumMax:10});return s.Stations.map(st=>{
     const records=passes.filter(p=>p.station_id===st.station_id);
     const completed=new Set(s.StampBatches.filter(b=>b.station_id===st.station_id&&b.status==='COMMITTED'&&b.present_member_ids.length&&b.present_member_ids.every(id=>records.some(p=>p.participant_id===id))).map(b=>b.team_id));
     const age=st.queue_updated_at?Date.parse(now)-Date.parse(st.queue_updated_at):Infinity;
     const stale=!Number.isFinite(age)||age<0||age>Number(config(s,'stale_seconds',90))*1000;
     let wait=null,level='UNKNOWN';
     const valid=[st.current_individual_queue,st.current_team_queue].every(x=>Number.isInteger(x)&&x>=0)&&Number.isInteger(st.service_lanes)&&st.service_lanes>=1&&[st.individual_duration_min,st.team_duration_min].every(x=>Number.isFinite(x)&&x>0);
-    if(st.status!=='OPEN')level='UNAVAILABLE';else if(stale)level='STALE';else if(valid){wait=Math.ceil((st.current_individual_queue*st.individual_duration_min+st.current_team_queue*st.team_duration_min)/st.service_lanes);level=wait<=5?'LOW':wait<=10?'MEDIUM':'HIGH';}
+    if(st.status!=='OPEN')level='UNAVAILABLE';else if(stale)level='STALE';else if(valid&&validWaitThresholds(thresholds)){wait=Math.ceil((st.current_individual_queue*st.individual_duration_min+st.current_team_queue*st.team_duration_min)/st.service_lanes);level=wait<=thresholds.lowMax?'LOW':wait<=thresholds.mediumMax?'MEDIUM':'HIGH';}
     return {stationId:st.station_id,zoneId:st.zone_id,zoneName:st.zone_name,name:st.station_name,description:st.task_description||'',ageVariants:st.age_variants||{},accessibility:st.accessibility||'',rainPlan:st.rain_plan||'',location:st.location_desc,venueApproved:st.venue_approval_status==='APPROVED',status:st.status,individualCount:records.filter(p=>p.participation_mode==='INDIVIDUAL').length,teamMemberCount:records.filter(p=>p.participation_mode==='TEAM').length,completedTeamCount:completed.size,individualQueue:st.current_individual_queue,teamQueue:st.current_team_queue,estimatedWaitMin:wait,congestion:level,lastUpdated:st.queue_updated_at};
   });}
   const csvCell=x=>{let s=String(x??'');if(/^[\s]*[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
@@ -105,7 +115,7 @@ var Quest = (() => {
         const header=['stationId','name','zoneId','status','individualCount','teamMemberCount','completedTeamCount','individualQueue','teamQueue','estimatedWaitMin','congestion','lastUpdated'];
         return {csv:'\ufeff'+['# timezone=Asia/Taipei; generatedAt='+now+'; scope=current effective passes; from='+(q.from||'BEGINNING')+'; to='+(q.to||now)+'; counts=person-stations/team-stations; queues=service units',header.join(','),...stations.map(st=>header.map(k=>csvCell(st[k])).join(','))].join('\r\n')};
       }
-      return {dispatchStaff:s.StaffPermissions.filter(p=>p.active).map(p=>({staffId:p.staff_id,role:p.role})),stations,summary:{uniqueCheckedInParticipants:s.Participants.filter(p=>p.active_status==='ACTIVE'&&p.checked_in_at).length,activeTeams:s.Teams.filter(t=>{const count=s.Participants.filter(p=>p.team_id===t.team_id&&p.active_status==='ACTIVE').length;return t.status==='ACTIVE'&&count>=t.member_min&&count<=t.member_max;}).length,individualStampCount:passes.filter(p=>p.participation_mode==='INDIVIDUAL').length,teamMemberStampCount:passes.filter(p=>p.participation_mode==='TEAM').length,completedTeamStationCount:board(s,now).reduce((n,r)=>n+r.completedTeamCount,0),totalValidStamps:passes.length},alerts:s.Alerts,serverTime:now};
+      return {waitThresholds:config(s,'wait_thresholds',{lowMax:5,mediumMax:10}),dispatchStaff:s.StaffPermissions.filter(p=>p.active).map(p=>({staffId:p.staff_id,role:p.role})),stations,summary:{uniqueCheckedInParticipants:s.Participants.filter(p=>p.active_status==='ACTIVE'&&p.checked_in_at).length,activeTeams:s.Teams.filter(t=>{const count=s.Participants.filter(p=>p.team_id===t.team_id&&p.active_status==='ACTIVE').length;return t.status==='ACTIVE'&&count>=t.member_min&&count<=t.member_max;}).length,individualStampCount:passes.filter(p=>p.participation_mode==='INDIVIDUAL').length,teamMemberStampCount:passes.filter(p=>p.participation_mode==='TEAM').length,completedTeamStationCount:board(s,now).reduce((n,r)=>n+r.completedTeamCount,0),totalValidStamps:passes.length},alerts:s.Alerts,serverTime:now};
     }
     if(action==='getStationDetail'){
       const st=station(s,q.stationId);scope(actor,st);return {attendanceDrafts:s.AttendanceDrafts.filter(d=>d.station_id===q.stationId&&d.expires_at>=now).slice(-20),station:board(s,now).find(r=>r.stationId===q.stationId),history:s.StampLogs.filter(r=>r.station_id===q.stationId).slice(-20).map(r=>({logId:r.log_id,participantId:r.participant_id,outcome:r.outcome,createdAt:r.created_at})),alerts:s.Alerts.filter(a=>a.station_id===q.stationId&&(!a.related_log_id||isAdmin(actor))).map(a=>({...a,canDispatch:canDispatch(s,actor,a),dispatchStaff:canDispatch(s,actor,a)?dispatchStaff(s,actor,a):[]}))};
@@ -115,6 +125,8 @@ var Quest = (() => {
       let p;if(q.participantId){if(q.identityConfirmed!==true)fail('IDENTITY_CONFIRMATION_REQUIRED');p=active(s,text(q.participantId));}else{p=s.Participants.find(p=>p.qr_token_hash===ctx.credentialHash&&p.active_status==='ACTIVE');if(!p)fail('INVALID_CREDENTIAL');}
       return {attendanceDraft:p.team_id?s.AttendanceDrafts.filter(d=>d.team_id===p.team_id&&d.station_id===q.stationId&&d.expires_at>=now).slice(-1)[0]||null:null,participantId:p.participant_id,name:p.name,mode:p.participation_mode,teamId:p.team_id,alreadyStamped:effective(s).some(l=>l.participant_id===p.participant_id&&l.station_id===q.stationId),members:p.team_id?s.Participants.filter(m=>m.team_id===p.team_id&&m.active_status==='ACTIVE').map(m=>({participantId:m.participant_id,name:m.name})):[]};
     }
+    // Replays may return an old result, but must never revive a revoked role/scope.
+    authorizeCommand(s,actor,action,q);
     const key=text(q.idempotencyKey,100);if(!/^[A-Za-z0-9_-]{12,100}$/.test(key))fail('INVALID_INPUT');
     const fingerprint=ctx.fingerprint;
     const old=s.Requests.find(r=>r.idempotency_key===key);
@@ -146,11 +158,12 @@ var Quest = (() => {
     }else if(action==='configureStation'){
       if(actor.role!=='SYSTEM_ADMIN')fail('FORBIDDEN');const st=station(s,q.stationId);for(const key of ['individualDuration','teamDuration'])if(!Number.isFinite(q[key])||q[key]<=0||q[key]>120)fail('INVALID_INPUT');if(!['APPROVED','PENDING'].includes(q.venueApproval))fail('INVALID_INPUT');const lanes=integer(q.serviceLanes);if(!lanes)fail('INVALID_INPUT');st.service_lanes=lanes;st.individual_duration_min=q.individualDuration;st.team_duration_min=q.teamDuration;st.venue_approval_status=q.venueApproval;for(const [key,field]of Object.entries({stationName:'station_name',locationDescription:'location_desc',taskDescription:'task_description',accessibility:'accessibility',rainPlan:'rain_plan',notes:'notes'}))if(q[key]!==undefined)st[field]=text(q[key],500);if(q.ageVariants!==undefined){if(typeof q.ageVariants!=='object'||Array.isArray(q.ageVariants)||q.ageVariants===null)fail('INVALID_INPUT');const variants={};for(const [key,value]of Object.entries(q.ageVariants)){variants[text(key,30)]=text(value,300);}st.age_variants=variants;}if(q.venueApproval!=='APPROVED')st.status='CLOSED';result={updated:true};
     }else if(action==='updateEventConfig'){
-      if(actor.role!=='SYSTEM_ADMIN')fail('FORBIDDEN');text(q.reason,300);
+      text(q.reason,300);
       if(q.key==='honor_threshold'){if(q.value!==null&&(!Number.isInteger(q.value)||q.value<1||q.value>30))fail('INVALID_INPUT');}
       else if(q.key==='team_policy'){if(!['PENDING','CONFIRMED_PRESENT'].includes(q.value))fail('INVALID_INPUT');}
       else if(q.key==='required_station_ids'){if(!Array.isArray(q.value)||new Set(q.value).size!==q.value.length||q.value.some(id=>!s.Stations.some(st=>st.station_id===id)))fail('INVALID_INPUT');}
       else if(q.key==='stale_seconds'){if(!Number.isInteger(q.value)||q.value<30||q.value>600)fail('INVALID_INPUT');}
+      else if(q.key==='wait_thresholds'){if(!validWaitThresholds(q.value))fail('INVALID_INPUT');}
       else fail('INVALID_INPUT');
       const row=s.EventConfig.find(r=>r.key===q.key);if(row)row.value=q.value;else s.EventConfig.push({key:q.key,value:q.value});result={updated:true};
     }else if(action==='registerParticipant'){
@@ -186,6 +199,6 @@ var Quest = (() => {
     audit(s,{...ctx,oldSummary,newSummary:safeSummary(s,q)},action,entityId, 'OK',q.reason||'');
     s.Requests.push({idempotency_key:key,actor_id:actor.staff_id,fingerprint,result,created_at:now});return result;
   }
-  return {tables,schemas,Fault,fail,text,integer,config,effective,board,execute,audit,safeSummary,scope,admin};
+  return {tables,schemas,Fault,fail,text,integer,config,effective,board,execute,audit,safeSummary,scope,admin,validWaitThresholds};
 })();
 if(typeof module!=='undefined')module.exports=Quest;

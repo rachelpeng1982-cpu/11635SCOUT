@@ -56,6 +56,7 @@ var Integrity = (() => {
     for(const log of s.StampLogs){
       ref('StampLogs',log.station_id,'Stations');ref('StampLogs',log.participant_id,'Participants');ref('StampLogs',log.team_id,'Teams',true);ref('StampLogs',log.idempotency_key,'Requests');
       ensure(maps.StaffPermissions.has(log.operator_id)&&iso(log.created_at),'StampLogs','OPERATOR_TIME');
+      ensure(maps.Requests.get(log.idempotency_key).actor_id===log.operator_id,'StampLogs','REQUEST_ACTOR');
       enums(log.outcome,['PASS','REVOKED'],'StampLogs','OUTCOME');enums(log.stamp_mode,['INDIVIDUAL','TEAM'],'StampLogs','MODE');enums(log.participation_mode,['INDIVIDUAL','TEAM'],'StampLogs','PARTICIPATION');
       if(log.participation_mode==='TEAM')ensure(!nullable(log.team_id),'StampLogs','TEAM_REQUIRED');
       if(log.stamp_mode==='TEAM')ref('StampLogs',log.batch_id,'StampBatches');
@@ -70,7 +71,7 @@ var Integrity = (() => {
       ref('StampBatches',b.station_id,'Stations');ref('StampBatches',b.team_id,'Teams');ref('StampBatches',b.operator_id,'StaffPermissions');ensure(b.status==='COMMITTED'&&b.policy==='CONFIRMED_PRESENT'&&iso(b.created_at),'StampBatches','COMMIT');
       const present=list(b.present_member_ids,'StampBatches'),absent=list(b.absent_member_ids,'StampBatches');ensure(present.length>=1&&present.length<=10&&!present.some(id=>absent.includes(id)),'StampBatches','ATTENDANCE');
       [...present,...absent].forEach(id=>ref('StampBatches',id,'Participants'));
-      const logs=s.StampLogs.filter(l=>l.batch_id===b.batch_id&&l.outcome==='PASS');ensure(logs.length===present.length&&present.every(id=>logs.filter(l=>l.participant_id===id).length===1)&&logs.every(l=>l.station_id===b.station_id&&l.team_id===b.team_id&&l.stamp_mode==='TEAM'),'StampBatches','COMPLETE_FACTS');
+      const logs=s.StampLogs.filter(l=>l.batch_id===b.batch_id&&l.outcome==='PASS');ensure(logs.length===present.length&&present.every(id=>logs.filter(l=>l.participant_id===id).length===1)&&logs.every(l=>l.station_id===b.station_id&&l.team_id===b.team_id&&l.stamp_mode==='TEAM'&&l.operator_id===b.operator_id&&l.created_at===b.created_at),'StampBatches','COMPLETE_FACTS');
     }
     for(const a of s.Alerts){
       ref('Alerts',a.station_id,'Stations',true);ref('Alerts',a.handler_id,'StaffPermissions',true);ref('Alerts',a.related_log_id,'StampLogs',true);ref('Alerts',a.requested_by,'StaffPermissions',true);
@@ -87,6 +88,7 @@ var Integrity = (() => {
     const threshold=Q.config(s,'honor_threshold');ensure(threshold===null||Number.isInteger(threshold)&&threshold>=1&&threshold<=30,'EventConfig','THRESHOLD');
     enums(Q.config(s,'team_policy','PENDING'),['PENDING','CONFIRMED_PRESENT'],'EventConfig','POLICY');
     const stale=Q.config(s,'stale_seconds',90);ensure(Number.isInteger(stale)&&stale>=30&&stale<=600,'EventConfig','STALE');
+    ensure(Q.validWaitThresholds(Q.config(s,'wait_thresholds',{lowMax:5,mediumMax:10})),'EventConfig','WAIT_THRESHOLDS');
     return {ok:true,tableCount:Q.tables.length,stationCount:s.Stations.length};
   }
   return {validate};

@@ -1,3 +1,5 @@
+> 最新進度：2026-11-14 Increment 02。請以 [逐項驗證報告](INCREMENT_02_VERIFICATION.md) 與缺陷清單為本輪狀態；以下保留歷史基線。真Sheets層已測，Apps Script仍NOT_RUN，正式驗收未通過。
+
 # 階段交付狀態
 
 日期：2026-11-14（Asia/Taipei）。原始規格 NS-1.0 仍為主辦待核准基準草案。

@@ -1,0 +1,13 @@
+{
+  "version": "0.2",
+  "requirements": 58,
+  "epics": 10,
+  "stories": 20,
+  "tasks": 40,
+  "tickets": 65,
+  "errors": [],
+  "structure_pass": true,
+  "semantic_acceptance": "NOT_IMPLIED",
+  "ready_tickets": 0,
+  "formally_done_tickets": 0
+}

@@ -1,0 +1,83 @@
+{
+  "scope": "selected protections only; not exhaustive assurance",
+  "results": [
+    {
+      "name": "read_integrity",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/read_integrity.txt"
+    },
+    {
+      "name": "write_integrity",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/write_integrity.txt"
+    },
+    {
+      "name": "audit_before_snapshot",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/audit_before_snapshot.txt"
+    },
+    {
+      "name": "zone_boundary",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/zone_boundary.txt"
+    },
+    {
+      "name": "handler_boundary",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/handler_boundary.txt"
+    },
+    {
+      "name": "batch_completeness",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/batch_completeness.txt"
+    },
+    {
+      "name": "replay_authorization",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/replay_authorization.txt"
+    },
+    {
+      "name": "wait_threshold_configuration",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/wait_threshold_configuration.txt"
+    },
+    {
+      "name": "wait_threshold_validation",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/wait_threshold_validation.txt"
+    },
+    {
+      "name": "request_actor_binding",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/request_actor_binding.txt"
+    },
+    {
+      "name": "batch_actor_binding",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/batch_actor_binding.txt"
+    },
+    {
+      "name": "test_cleanup_gate",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/test_cleanup_gate.txt"
+    },
+    {
+      "name": "test_preflight_gate",
+      "result": "KILLED",
+      "exitCode": 1,
+      "evidence": "mutations/test_preflight_gate.txt"
+    }
+  ]
+}

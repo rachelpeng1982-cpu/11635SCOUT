@@ -1,0 +1,27 @@
+{
+  "testEnvironment": "isolated TEST ONLY workbook (private resource ID withheld)",
+  "connector": "Google Drive / native Google Sheets",
+  "tableCount": 11,
+  "seedStationCount": 30,
+  "headerChecks": "11/11 MATCH",
+  "privateSharing": "owner only at creation; unchanged",
+  "timeZone": "Asia/Taipei",
+  "schemaReadWrite": "PASS",
+  "invalidBatchFault": {
+    "code": "INVALID_ARGUMENT",
+    "httpStatus": 400,
+    "cause": "second request references absent grid ID 0",
+    "firstWriteObservedAfterFailure": "null (unchanged)",
+    "result": "PASS"
+  },
+  "s29Roundtrips": 3,
+  "customThresholdReadback": "PASS (10/20)",
+  "snapshotRestore": {
+    "tableCount": 11,
+    "allValuesEqualToBefore": true,
+    "result": "PASS"
+  },
+  "appsScriptRuntime": "NOT_RUN",
+  "actualGoogleStaffRoles": "NOT_RUN",
+  "visualReview": "API metadata only; no native rendered UI inspection"
+}

@@ -1,3 +1,5 @@
+> 最新進度：2026-11-14 Increment 02。請以 [逐項驗證報告](INCREMENT_02_VERIFICATION.md) 與缺陷清單為本輪狀態；以下保留歷史基線。真Sheets層已測，Apps Script仍NOT_RUN，正式驗收未通過。
+
 # 驗收證據與未測清單
 
 狀態：**未通過正式上線驗收**。本機服務及儲存層替身不等於Google正式環境。

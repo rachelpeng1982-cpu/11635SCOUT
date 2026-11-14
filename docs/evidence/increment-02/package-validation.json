@@ -1,0 +1,9 @@
+{
+  "readable": true,
+  "deterministicBuild": true,
+  "archiveSha256": "3ae8ac890559e41a330d909510af7e90b4fb63c20907d04b68d9154ec2f0d276",
+  "sourceHashCount": 7,
+  "sourceHashesMatch": true,
+  "testAccess": "MYSELF",
+  "appsScriptExecution": "NOT_RUN"
+}
