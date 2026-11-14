@@ -1,0 +1,71 @@
+✔ T01 personal projection limited to own record (3.99106ms)
+✖ T02/03/04 single pass, idempotency, competing duplicate (1.615707ms)
+✔ idempotency payload conflict (0.446023ms)
+✔ T05 full team produces eight individual facts and one team station (1.132949ms)
+✔ T06 absent member is not stamped and snapshot retained (1.942751ms)
+✖ team conflict does not partially mutate (0.342707ms)
+✔ reject duplicate attendance, outsiders and pending policy (0.580826ms)
+✔ T08 cross station denied (0.298901ms)
+✔ T09 unauthenticated admin denied and staff denied (0.422677ms)
+✔ T10 closed or unapproved venue denied (0.712505ms)
+✔ T11 waiting calculation and missing/stale precedence (0.439123ms)
+✔ T14 CSV has 30 rows, units, timezone and sanitized cells (0.917033ms)
+✔ T15 reversal preserves immutable history and recomputes (0.314434ms)
+✔ T16 public response excludes private fields and medical detail (10.723946ms)
+✔ input formula/HTML injection, negative queues and locked station (0.823042ms)
+✔ seed has 30 unique exact IDs and safe defaults (0.843603ms)
+✔ honor policy not assumed at fifteen (0.320073ms)
+✔ pending policy cannot be set by event lead; admin changes audited (0.572894ms)
+✔ unapproved venue cannot open; measured capacity required (0.487345ms)
+✔ report interval excludes outside pass dates and rejects reversed range (1.73745ms)
+✔ FR41 only authorized team leader submits same-team draft without stamp (0.533205ms)
+✔ FR15 recommendations exclude unavailable stale and unapproved stations and sort safety announcements (0.782781ms)
+✔ FR43 event lead requests correction without mutating pass, admin reversal links and resolves request (0.409778ms)
+✔ dispatch only to active staff, internal text never enters public board (0.658564ms)
+✔ required stations affect honor and admin can assign same-team leader only (0.519714ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 23
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.449085
+
+✖ failing tests:
+
+test at tests/core.test.cjs:10:1
+✖ T02/03/04 single pass, idempotency, competing duplicate (1.615707ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at error (/workspace/work/srs/mutations/duplicate_guard/tests/core.test.cjs:8:28)
+      at TestContext.<anonymous> (/workspace/work/srs/mutations/duplicate_guard/tests/core.test.cjs:10:217)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/core.test.cjs:14:1
+✖ team conflict does not partially mutate (0.342707ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at error (/workspace/work/srs/mutations/duplicate_guard/tests/core.test.cjs:8:28)
+      at TestContext.<anonymous> (/workspace/work/srs/mutations/duplicate_guard/tests/core.test.cjs:14:155)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

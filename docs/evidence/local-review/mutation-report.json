@@ -1,0 +1,38 @@
+[
+  {
+    "mutation": "duplicate_guard",
+    "result": "KILLED",
+    "exit_code": 1,
+    "evidence": "/workspace/work/srs/mutations/duplicate_guard/result.txt"
+  },
+  {
+    "mutation": "station_acl",
+    "result": "KILLED",
+    "exit_code": 1,
+    "evidence": "/workspace/work/srs/mutations/station_acl/result.txt"
+  },
+  {
+    "mutation": "station_open",
+    "result": "KILLED",
+    "exit_code": 1,
+    "evidence": "/workspace/work/srs/mutations/station_open/result.txt"
+  },
+  {
+    "mutation": "reversal_effect",
+    "result": "KILLED",
+    "exit_code": 1,
+    "evidence": "/workspace/work/srs/mutations/reversal_effect/result.txt"
+  },
+  {
+    "mutation": "idempotent_result",
+    "result": "KILLED",
+    "exit_code": 1,
+    "evidence": "/workspace/work/srs/mutations/idempotent_result/result.txt"
+  },
+  {
+    "mutation": "attendance_team",
+    "result": "KILLED",
+    "exit_code": 1,
+    "evidence": "/workspace/work/srs/mutations/attendance_team/result.txt"
+  }
+]

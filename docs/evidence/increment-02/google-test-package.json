@@ -1,0 +1,15 @@
+{
+  "packageVersion": "increment-02",
+  "hashes": {
+    "Code.gs": "046c125dceed18b08893c3c36e58c6db120fde6fdbd2bb5ca635369231d39e7a",
+    "Domain.gs": "d657d7f426409d59bf205295bcf370d8a9644fed5797e9d47d97e5f738ac794a",
+    "Integrity.gs": "dc208cdd285aac8d122ea2bfe626b6178534f078355e012945bc0c4ff3ecdc86",
+    "Seed.gs": "d21c7690ea901953e03708e07612adf4909b055512d9f3025af481d2ccba34fe",
+    "Index.html": "d1ab2cad9a8f03662f820e38e078db4418ed1fa18f223da8f3e2cb3807d77e19",
+    "IntegrationTests.gs": "97f2929df64c47faca8861cdfcdd13740c46a28d83b40bb12105fb17c29de5d7",
+    "appsscript.json": "b77520009370873095b201584346da9e96868c56fc5b03d0049167e17c1f2450"
+  },
+  "scope": "OWNER_ONLY_TEST_PACKAGE_NOT_PRODUCTION",
+  "archiveSha256": "3ae8ac890559e41a330d909510af7e90b4fb63c20907d04b68d9154ec2f0d276",
+  "appsScriptExecution": "NOT_RUN"
+}

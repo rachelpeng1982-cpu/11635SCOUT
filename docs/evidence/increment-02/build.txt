@@ -1,0 +1,5 @@
+
+> scout-quest-2027@0.1.0 build
+> node tools/build.cjs
+
+Built offline dist/ and GAS backend-gas/. No deployment performed.

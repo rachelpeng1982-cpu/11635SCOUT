@@ -1,0 +1,1 @@
+{"tableCount":11,"columnCount":110,"sourceAndGeneratedSchema":"MATCH","generatedDomainAndIntegrity":"BYTE_IDENTICAL","generatedSeed":"MATCH","privateHelpers":"PASS","productionManifestUnchanged":"DOMAIN","testManifest":"MYSELF","layer":"STATIC_NOT_GOOGLE_EXECUTION"}

@@ -1,0 +1,59 @@
+﻿需求,標題,本輪結果,程式／證據,實際判定與未測,正式驗收
+FR-01,表單匯入,PARTIAL,Code.gs:onRegistrationSubmit_,Forms事件替身通過；真Form／trigger未測,NOT_ACCEPTED
+FR-02,報名去重,LOCAL_PASS,tests/gas.test.cjs,穩定response ID重送無重複；真Google待測,NOT_ACCEPTED
+FR-03,小隊名冊,LOCAL_PASS,tests/next-stage.test.cjs;tests/full-flow-browser.cjs;docs/INCREMENT_02_VERIFICATION.md,7／8／10／11邊界本地通過；真名冊異動待測,NOT_ACCEPTED
+FR-04,報到統計,LOCAL_PASS,tests/next-stage.test.cjs;tests/full-flow-browser.cjs;docs/INCREMENT_02_VERIFICATION.md,報到重送與核章分離本地通過；真Forms待測,NOT_ACCEPTED
+FR-05,私密QR發行,PARTIAL,tests/gas.test.cjs,發行／hash／冪等有本機證據，私密實際發放待演練,NOT_ACCEPTED
+FR-06,本人登入與工作階段,LOCAL_PASS,tests/core.test.cjs;tests/gas.test.cjs,本人隔離、session與公開編號不可冒用通過；Cache真到期待Google測,NOT_ACCEPTED
+FR-07,憑證撤銷重發,LOCAL_PASS,tests/gas.test.cjs,重發撤銷舊QR／session及發行回應遺失通過,NOT_ACCEPTED
+FR-08,個人通行證,PARTIAL,tests/browser.cjs,護照／QR／徽章為模擬GAS行為關，真服務待測,NOT_ACCEPTED
+FR-09,小隊最少摘要,LOCAL_PASS,tests/next-stage.test.cjs;tests/full-flow-browser.cjs;docs/INCREMENT_02_VERIFICATION.md,同隊僅ID及完成數；姓名／聯絡資訊負向投影本地通過,NOT_ACCEPTED
+FR-10,徽章與榮譽,LOCAL_PASS,tests/core.test.cjs,門檻null及必修站影響榮譽已測，主辦規則待核准,NOT_ACCEPTED
+FR-11,完整30站地圖,LOCAL_PASS,tests/core.test.cjs;tests/browser.cjs,30站、六區與安全預設／篩選本機通過，現勘待核准,NOT_ACCEPTED
+FR-12,站點搜尋篩選,LOCAL_PASS,tests/browser.cjs,S03搜尋及B2五站篩選通過,NOT_ACCEPTED
+FR-13,站況與過期,LOCAL_PASS,tests/core.test.cjs,未知／過期／暫停優先順序通過,NOT_ACCEPTED
+FR-14,等候估算,LOCAL_PASS,tests/core.test.cjs,S29線數／混隊／四捨取上／未知與可設門檻本地通過；Google讀回後本地計算通過；Apps Script未測,NOT_ACCEPTED
+FR-15,安全分流,LOCAL_PASS,tests/core.test.cjs,新增可靠替代站建議，拒推未開／過期／未核准站，無候選明示,NOT_ACCEPTED
+FR-16,工作人員身分,PARTIAL,tests/gas.test.cjs,Google身分替身與偽造拒絕通過；真Workspace email PoC未測,NOT_ACCEPTED
+FR-17,本站PIN解鎖,PARTIAL,tests/gas.test.cjs,錯誤限次／換碼／停權通過；Cache真到期／共用裝置待測,NOT_ACCEPTED
+FR-18,角色與站點權限,LOCAL_PASS,tests/core.test.cjs;tests/gas.test.cjs,跨站、未登入、停權、前端偽造與拒絕稽核通過,NOT_ACCEPTED
+FR-19,相機QR掃描,NOT_TESTED_REAL_DEVICE,js/app.js:startCamera,有BarcodeDetector與手動降級，未測真相機／GAS iframe,NOT_ACCEPTED
+FR-20,手動查詢核身,LOCAL_PASS,tests/next-stage.test.cjs;tests/full-flow-browser.cjs;docs/INCREMENT_02_VERIFICATION.md,核身確認必填及無hash輸出本地通過；真裝置待測,NOT_ACCEPTED
+FR-21,個人核章,LOCAL_PASS,tests/core.test.cjs;tests/gas.test.cjs,首次、重複、關站、資格／站權限相關測試通過,NOT_ACCEPTED
+FR-22,小隊實到核章,LOCAL_PASS,tests/core.test.cjs,實到逐人章、缺席無章、重複／跨隊拒絕通過,NOT_ACCEPTED
+FR-23,小隊完成口徑,LOCAL_PASS,tests/core.test.cjs,小隊完成快照聚合及撤銷規則有本機測試，真整合待測,NOT_ACCEPTED
+FR-24,命令冪等,LOCAL_PASS,tests/core.test.cjs;tests/gas.test.cjs;tests/browser.cjs,原鍵重送、內容衝突、回應遺失與UI原鍵重試通過,NOT_ACCEPTED
+FR-25,並行唯一性,PARTIAL,tests/gas.test.cjs,鎖競爭替身通過，真雙關主並行未測,NOT_ACCEPTED
+FR-26,批次失敗恢復,PARTIAL,tests/gas.test.cjs,真Sheets API非法批次無部分寫入通過；Apps Script核章故障恢復未測,NOT_ACCEPTED
+FR-27,撤銷補償,LOCAL_PASS,tests/core.test.cjs,原章保留、補償／更正申請連結及重算通過,NOT_ACCEPTED
+FR-28,排隊回報,LOCAL_PASS,tests/next-stage.test.cjs;tests/full-flow-browser.cjs;docs/INCREMENT_02_VERIFICATION.md,排隊回報跨關主與組長UI本地閉環通過；Google Sheet讀寫通過，Apps Script未測,NOT_ACCEPTED
+FR-29,站點維護,PARTIAL,src/core.js:configureStation;tests/core.test.cjs,新增分齡／雨備／可及性維護；核准／容量測試通過，全部欄位UAT待測,NOT_ACCEPTED
+FR-30,活動組長戰情,PARTIAL,src/core.js:getAdminDashboard;tests/browser.cjs,六類KPI與30站表具實作，真資料人工對帳與全部KPI專項仍待補,NOT_ACCEPTED
+FR-31,異常建立,LOCAL_PASS,tests/core.test.cjs,異常／醫療公開隔離本機通過,NOT_ACCEPTED
+FR-32,派工與結案,PARTIAL_LOCAL_PASS,src/core.js:resolveAlert;js/app.js:renderZoneAlerts;tests/zone-browser.cjs,Increment01區長分區派工／結案、處理人限制與更正／公告阻擋，本機業務及瀏覽器橋接通過；真Google未測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
+FR-33,公開安全公告,LOCAL_PASS,tests/core.test.cjs,重大公告優先、內部醫療不公開、結案公告過濾邏輯有測,NOT_ACCEPTED
+FR-34,受控CSV報表,LOCAL_PASS,tests/next-stage.test.cjs;tests/full-flow-browser.cjs;docs/INCREMENT_02_VERIFICATION.md,CSV瀏覽器下載本地通過；真Google報表及人工對帳待測,NOT_ACCEPTED
+FR-35,同步與退避,PARTIAL,js/app.js:refresh,20秒／退避／背景／最後時間具實作；完整計時與連續故障測試未齊,NOT_ACCEPTED
+FR-36,離線保護,LOCAL_PASS,tests/browser.cjs,失敗不宣告成功，原鍵重試通過；真弱網待測,NOT_ACCEPTED
+FR-37,資料表與種子遷移,PARTIAL,tests/gas.test.cjs;backend-gas/Code.gs:setupProject_,11表110欄及30站真Sheets讀回通過；遷移本地VM通過；真Apps Script遷移未測,NOT_ACCEPTED
+FR-38,稽核追溯,PARTIAL_LOCAL_PASS,src/core.js:audit/safeSummary;tests/integrity.test.cjs;tests/gas.test.cjs,Increment01補前後值白名單、明確實體ID、角色變更與schema v2遷移；本機通過，真Google／正式稽核驗收待測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
+FR-39,輸入與輸出防護,PARTIAL,tests/core.test.cjs;src/core.js:text,HTML／公式／型別負例通過，全面輸入投影與真瀏覽器安全矩陣未齊,NOT_ACCEPTED
+FR-40,備份還原與封存,NOT_TESTED_INTEGRATION,docs/OPERATIONS.md,測試Sheet快照還原雜湊一致；全系統備份／Script Properties／實際災難復原未測,NOT_ACCEPTED
+FR-41,小隊長實到草稿,LOCAL_PASS,tests/core.test.cjs;src/core.js:submitTeamAttendance,新增隊長授權與候選草稿、無PASS、跨隊拒絕已測，真UI交接待測,NOT_ACCEPTED
+FR-42,活動政策設定,PARTIAL,src/core.js:updateEventConfig,門檻／必修／政策可設，日期與全部主辦政策仍待核准／補齊管理流程,NOT_ACCEPTED
+FR-43,受控更正申請,LOCAL_PASS,tests/core.test.cjs,新增組長申請不改章，管理員補償連申請並結案通過,NOT_ACCEPTED
+FR-44,系統運作告警,PARTIAL,backend-gas/Code.gs:service-health,具快取健康事件與管理提示，真配額／設備故障整合待測,NOT_ACCEPTED
+NFR-01,戶外可用性,PARTIAL,tests/browser.cjs,390px、四視圖、48px通過；強光／真手機未測,NOT_ACCEPTED
+NFR-02,憑證生命週期,PARTIAL,tests/gas.test.cjs;tests/browser.cjs,hash／輪替／不持久存秘密通過；真到期／分發待測,NOT_ACCEPTED
+NFR-03,最小權限,PARTIAL_LOCAL_PASS,tests/gas.test.cjs;tests/integrity.test.cjs;tests/zone-browser.cjs,核心ACL及區長受控派工本機通過；真Google身分、停權與共用裝置仍待測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
+NFR-04,一致性與復原,PARTIAL,tests/gas.test.cjs,鎖／原子／重送替身證據，真Google並行未測,NOT_ACCEPTED
+NFR-05,容量與效能,NOT_TESTED_LOAD,docs/ACCEPTANCE.md,負載模型／人數／p95/p99門檻未核准，真壓測未執行,NOT_ACCEPTED
+NFR-06,弱網與錯誤可理解性,PARTIAL,tests/browser.cjs,網路失敗／原鍵重試通過，時鐘／背景／真弱網未齊,NOT_ACCEPTED
+NFR-07,統計與報表正確性,PARTIAL,tests/core.test.cjs,有效章與CSV測試通過，全真資料跨畫面人工算表未完成,NOT_ACCEPTED
+NFR-08,資料完整性與可遷移性,PARTIAL_LOCAL_PASS,src/integrity.js;backend-gas/Code.gs;tests/integrity.test.cjs;tests/gas.test.cjs,Increment01已加入11表主外鍵／唯一性／型別／有效章／批次及讀寫邊界驗證；真遷移與損壞資料演練待Google測；docs/INCREMENT_01_VERIFICATION.md,NOT_ACCEPTED
+NFR-09,兒少隱私與注入防護,PARTIAL,tests/core.test.cjs;tests/browser.cjs,公開投影與注入部分通過，真Google分享／來源碼安全審查未完成,NOT_ACCEPTED
+NFR-10,證據與可追溯性,PARTIAL,docs/evidence/local-review,本輪有版本雜湊與實際證據，但逐票正式證據／獨立驗收未完成,NOT_ACCEPTED
+NFR-11,可維運與資料留存,NOT_TESTED_OPERATIONS,docs/OPERATIONS.md,維運文件已建，留存政策／真還原／責任歸屬待主辦核定,NOT_ACCEPTED
+NFR-12,部署可重現性,PARTIAL,docs/DEPLOYMENT.md;backend-gas,本機可重建，真Google建置及首輪閉環未執行,NOT_ACCEPTED
+PR-01,規格與來源基線,LOCAL_PASS,docs/srs/SRS.md;docs/DECISIONS.md,需求來源／優先級／待決與缺檔保留，未冒稱核准,NOT_ACCEPTED
+PR-02,拆解與就緒管理,PARTIAL,tools/validate_backlog.py,結構及Phase相依通過；估算／角色責任／DoR／正式AC驗收未完成,NOT_ACCEPTED

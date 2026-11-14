@@ -1,0 +1,66 @@
+﻿票號,Epic,Story,父Task,標題,需求,優先序提案,Phase,前置票,DoR,執行狀態,估算,執行者,DoR缺項
+TKT-001,E01,S01,TSK-01A,建立有效規格、衝突與政策清單,"PR-01,PR-02,FR-42",P0,0,,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦尚待核定：活動日期／人數／門檻／必修站／實到政策；未提供04票卡正式schema，本文識別碼為本專案提案
+TKT-002,E01,S01,TSK-01A,定義可設定規則與安全預設,"PR-01,PR-02,FR-42",P0,0,TKT-001,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦尚待核定：活動日期／人數／門檻／必修站／實到政策；未提供04票卡正式schema，本文識別碼為本專案提案
+TKT-003,E01,S01,TSK-01B,審查追溯與DoR門檻,"PR-01,PR-02,FR-42",P0,0,"TKT-001,TKT-002",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦尚待核定：活動日期／人數／門檻／必修站／實到政策；未提供04票卡正式schema，本文識別碼為本專案提案
+TKT-004,E01,S02,TSK-02A,建立資料契約與schema版本,"FR-37,NFR-08",P0,2,"TKT-001,TKT-002",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；legacy-v2程式未提供，僅可採安全新表方案；真實測試Google試算表未配置
+TKT-005,E01,S02,TSK-02A,實作安全建表與30站seed,"FR-37,NFR-08",P0,2,TKT-004,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；legacy-v2程式未提供，僅可採安全新表方案；真實測試Google試算表未配置
+TKT-006,E01,S02,TSK-02B,驗證遷移重跑及舊資料隔離,"FR-37,NFR-08",P0,2,TKT-005,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；legacy-v2程式未提供，僅可採安全新表方案；真實測試Google試算表未配置
+TKT-007,E02,S03,TSK-03A,定義Forms欄位映射與去重鍵,"FR-01,FR-02,FR-04",P0,2,TKT-004,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；核准Form ID／item ID mapping／trigger持有人未配置
+TKT-008,E02,S03,TSK-03A,串接報名trigger與報到命令,"FR-01,FR-02,FR-04",P0,2,"TKT-005,TKT-007,TKT-010,TKT-016,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；核准Form ID／item ID mapping／trigger持有人未配置
+TKT-009,E02,S03,TSK-03B,執行Forms與重送整合驗證,"FR-01,FR-02,FR-04",P0,4,TKT-008,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；核准Form ID／item ID mapping／trigger持有人未配置
+TKT-010,E02,S04,TSK-04A,建立小隊資格與成員關聯,"FR-03,FR-41",P0,2,TKT-004,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；小隊資格、隊長指定及異動政策待核准
+TKT-011,E02,S04,TSK-04A,實作隊長草稿與關主確認交接,"FR-03,FR-41",P0,2,"TKT-010,TKT-014,TKT-016,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；小隊資格、隊長指定及異動政策待核准
+TKT-012,E02,S04,TSK-04B,驗證隊伍邊界與草稿越權,"FR-03,FR-41",P0,2,"TKT-010,TKT-011",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；小隊資格、隊長指定及異動政策待核准
+TKT-013,E03,S05,TSK-05A,實作高熵QR與受控發行,"FR-05,FR-06,FR-07,NFR-02",P0,2,"TKT-004,TKT-005,TKT-016,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；QR私密發放／遺失核身與保留政策待確認
+TKT-014,E03,S05,TSK-05A,實作本人session與撤銷重發,"FR-05,FR-06,FR-07,NFR-02",P0,2,TKT-013,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；QR私密發放／遺失核身與保留政策待確認
+TKT-015,E03,S05,TSK-05B,驗證QR生命週期及來源碼隱私,"FR-05,FR-06,FR-07,NFR-02",P0,2,TKT-014,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；QR私密發放／遺失核身與保留政策待確認
+TKT-016,E03,S06,TSK-06A,驗證Google身分與白名單範圍,"FR-16,FR-17,FR-18,NFR-03",P0,2,TKT-005,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦Workspace、staff帳號及Google email可用性PoC未完成
+TKT-017,E03,S06,TSK-06A,實作PIN限速與解鎖生命週期,"FR-16,FR-17,FR-18,NFR-03",P0,2,TKT-016,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦Workspace、staff帳號及Google email可用性PoC未完成
+TKT-018,E03,S06,TSK-06B,驗證越權、偽造及共用裝置,"FR-16,FR-17,FR-18,NFR-03",P0,2,"TKT-016,TKT-017",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦Workspace、staff帳號及Google email可用性PoC未完成
+TKT-019,E04,S07,TSK-07A,串接本人進度、徽章與政策,"FR-08,FR-09,FR-10,NFR-01",P1,2,TKT-014,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真手機／強光UAT環境未提供
+TKT-020,E04,S07,TSK-07A,完成QR與同隊最少摘要介面,"FR-08,FR-09,FR-10,NFR-01",P1,3,"TKT-019,TKT-065",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真手機／強光UAT環境未提供
+TKT-021,E04,S07,TSK-07B,驗證手機可用性與本人資料界線,"FR-08,FR-09,FR-10,NFR-01",P1,4,TKT-020,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真手機／強光UAT環境未提供
+TKT-022,E04,S08,TSK-08A,建立30站地圖資料投影,"FR-11,FR-12,FR-15,NFR-01",P1,2,"TKT-005,TKT-028",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；現勘與區域使用範圍尚待核准
+TKT-023,E04,S08,TSK-08A,實作搜尋、篩選與安全推薦,"FR-11,FR-12,FR-15,NFR-01",P1,3,"TKT-022,TKT-026,TKT-029,TKT-065",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；現勘與區域使用範圍尚待核准
+TKT-024,E04,S08,TSK-08B,驗證地圖完整性與安全提示,"FR-11,FR-12,FR-15,NFR-01",P1,3,TKT-023,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；現勘與區域使用範圍尚待核准
+TKT-025,E05,S09,TSK-09A,實作本站排隊回報契約,"FR-13,FR-14,FR-28",P1,2,"TKT-016,TKT-017,TKT-029,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；各站實測耗時／服務線數與燈號設定待主辦確認
+TKT-026,E05,S09,TSK-09A,統一等待與過期燈號計算,"FR-13,FR-14,FR-28",P1,2,TKT-025,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；各站實測耗時／服務線數與燈號設定待主辦確認
+TKT-027,E05,S09,TSK-09B,驗證容量、未知及分流門檻,"FR-13,FR-14,FR-28",P1,2,TKT-026,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；各站實測耗時／服務線數與燈號設定待主辦確認
+TKT-028,E05,S10,TSK-10A,核對30站名稱與場地配置,"FR-29,FR-42",P1,0,TKT-001,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；現勘核准點位、分齡任務、可及性與雨備說明未齊
+TKT-029,E05,S10,TSK-10A,實作站點維護與開關站,"FR-29,FR-42",P1,2,"TKT-005,TKT-016,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；現勘核准點位、分齡任務、可及性與雨備說明未齊
+TKT-030,E05,S10,TSK-10B,驗證未核准場地不得開站,"FR-29,FR-42",P1,2,TKT-029,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；現勘核准點位、分齡任務、可及性與雨備說明未齊
+TKT-031,E06,S11,TSK-11A,串接掃碼／手動查驗與最少投影,"FR-19,FR-20,FR-21,FR-24",P0,3,"TKT-014,TKT-016,TKT-017,TKT-029,TKT-065",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真手機相機／GAS iframe授權未驗證
+TKT-032,E06,S11,TSK-11A,實作個人核章驗證與確認契約,"FR-19,FR-20,FR-21,FR-24",P0,2,"TKT-014,TKT-016,TKT-017,TKT-029,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真手機相機／GAS iframe授權未驗證
+TKT-033,E06,S11,TSK-11B,驗證個人閉環與相機降級,"FR-19,FR-20,FR-21,FR-24",P0,3,"TKT-031,TKT-032",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真手機相機／GAS iframe授權未驗證
+TKT-034,E06,S12,TSK-12A,實作實到與缺席核准快照,"FR-22,FR-23",P0,2,"TKT-010,TKT-011,TKT-029,TKT-016",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；實到通過政策與缺席規則尚待核定
+TKT-035,E06,S12,TSK-12A,提交逐人核章與同批關聯,"FR-22,FR-23",P0,2,"TKT-034,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；實到通過政策與缺席規則尚待核定
+TKT-036,E06,S12,TSK-12B,完成小隊預覽與二次確認UI,"FR-22,FR-23",P0,3,"TKT-031,TKT-035",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；實到通過政策與缺席規則尚待核定
+TKT-037,E06,S12,TSK-12B,驗證缺席、重複與隊員異動,"FR-22,FR-23",P0,2,"TKT-034,TKT-035",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；實到通過政策與缺席規則尚待核定
+TKT-038,E06,S12,TSK-12B,驗證完成隊數與撤銷重算,"FR-22,FR-23",P0,2,"TKT-035,TKT-045",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；實到通過政策與缺席規則尚待核定
+TKT-039,E07,S13,TSK-13A,建立冪等鍵與請求結果帳本,"FR-24,FR-25,FR-26,NFR-04",P0,2,"TKT-004,TKT-016",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真Google測試帳號、雙關主環境與故障注入窗口未配置
+TKT-040,E07,S13,TSK-13A,實作鎖定與原子跨表提交,"FR-24,FR-25,FR-26,NFR-04",P0,2,"TKT-005,TKT-039",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真Google測試帳號、雙關主環境與故障注入窗口未配置
+TKT-041,E07,S13,TSK-13B,注入批次中斷與拒絕故障,"FR-24,FR-25,FR-26,NFR-04",P0,2,"TKT-035,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真Google測試帳號、雙關主環境與故障注入窗口未配置
+TKT-042,E07,S13,TSK-13B,驗證寫成但回應遺失重送,"FR-24,FR-25,FR-26,NFR-04",P0,2,"TKT-035,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真Google測試帳號、雙關主環境與故障注入窗口未配置
+TKT-043,E07,S13,TSK-13B,執行真Google雙關主併發測試,"FR-24,FR-25,FR-26,NFR-04",P0,4,"TKT-032,TKT-035,TKT-040,TKT-042",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真Google測試帳號、雙關主環境與故障注入窗口未配置
+TKT-044,E07,S14,TSK-14A,實作組長更正申請與權責分離,"FR-27,FR-38,FR-43,NFR-10",P0,2,"TKT-016,TKT-032",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；成績更正申請／核准流程與管理員責任人待指定
+TKT-045,E07,S14,TSK-14A,實作不可無痕刪除的補償事件,"FR-27,FR-38,FR-43,NFR-10",P0,2,"TKT-032,TKT-040,TKT-044",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；成績更正申請／核准流程與管理員責任人待指定
+TKT-046,E07,S14,TSK-14B,驗證更正前後跨畫面與報表,"FR-27,FR-38,FR-43,NFR-10",P0,4,"TKT-045,TKT-047,TKT-054",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；成績更正申請／核准流程與管理員責任人待指定
+TKT-047,E08,S15,TSK-15A,聚合30站及六類全場KPI,"FR-30,FR-35,FR-44,NFR-05",P1,2,"TKT-025,TKT-026,TKT-035,TKT-045",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；正式參與規模及效能驗收門檻待核准
+TKT-048,E08,S15,TSK-15A,串接戰情搜尋與20秒退避,"FR-30,FR-35,FR-44,NFR-05",P1,3,"TKT-047,TKT-065",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；正式參與規模及效能驗收門檻待核准
+TKT-049,E08,S15,TSK-15B,驗證統計口徑與核定負載,"FR-30,FR-35,FR-44,NFR-05",P1,4,"TKT-047,TKT-048",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；正式參與規模及效能驗收門檻待核准
+TKT-050,E08,S16,TSK-16A,建立異常類型、狀態與權限,"FR-31,FR-32,FR-33",P1,2,"TKT-016,TKT-029,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；告警調度責任、醫療資訊最小化與公告授權待核定
+TKT-051,E08,S16,TSK-16A,串接派工、結案與安全公告,"FR-31,FR-32,FR-33",P1,3,TKT-050,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；告警調度責任、醫療資訊最小化與公告授權待核定
+TKT-052,E08,S16,TSK-16B,驗證重大告警與醫療隱私,"FR-31,FR-32,FR-33",P1,4,"TKT-050,TKT-051",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；告警調度責任、醫療資訊最小化與公告授權待核定
+TKT-053,E09,S17,TSK-17A,定義報表口徑與篩選契約,"FR-34,NFR-07",P1,2,"TKT-004,TKT-047,TKT-045",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；成果報表使用者與時間範圍口徑待業務確認
+TKT-054,E09,S17,TSK-17A,實作受權CSV匯出與跳脫,"FR-34,NFR-07",P1,2,"TKT-016,TKT-053,TKT-039,TKT-040",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；成果報表使用者與時間範圍口徑待業務確認
+TKT-055,E09,S17,TSK-17B,比對人工真值與公式注入,"FR-34,NFR-07",P1,4,"TKT-045,TKT-054",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；成果報表使用者與時間範圍口徑待業務確認
+TKT-056,E09,S18,TSK-18A,定義離線候選與只讀快取界線,"FR-36,NFR-06",P1,1,TKT-001,NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真機弱網測試環境及紙本對帳責任待指定
+TKT-057,E09,S18,TSK-18A,實作逾時、失敗及重送UX,"FR-36,NFR-06",P1,3,"TKT-032,TKT-035,TKT-040,TKT-065",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真機弱網測試環境及紙本對帳責任待指定
+TKT-058,E09,S18,TSK-18B,執行真機弱網與背景恢復測試,"FR-36,NFR-06",P1,4,"TKT-020,TKT-033,TKT-036,TKT-048,TKT-057",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真機弱網測試環境及紙本對帳責任待指定
+TKT-059,E10,S19,TSK-19A,審查公開／管理欄位投影,"FR-39,NFR-09,NFR-10",P0,2,"TKT-001,TKT-004",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；資料留存、隱私存取與安全驗證責任人待確認
+TKT-060,E10,S19,TSK-19A,實作輸入與輸出注入防護,"FR-39,NFR-09,NFR-10",P0,2,"TKT-004,TKT-059",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；資料留存、隱私存取與安全驗證責任人待確認
+TKT-061,E10,S19,TSK-19B,執行權限與個資外洩安全驗證,"FR-39,NFR-09,NFR-10",P0,4,"TKT-014,TKT-017,TKT-051,TKT-060",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；資料留存、隱私存取與安全驗證責任人待確認
+TKT-062,E10,S20,TSK-20A,建立可重現部署與設定手冊,"FR-40,NFR-11,NFR-12",P1,2,"TKT-001,TKT-004,TKT-005,TKT-016,TKT-065",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦現勘核准、負載門檻、簽核人與測試Google資源未配置
+TKT-063,E10,S20,TSK-20A,建立備份還原與現場紙本SOP,"FR-40,NFR-11,NFR-12",P1,4,"TKT-004,TKT-040,TKT-062",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦現勘核准、負載門檻、簽核人與測試Google資源未配置
+TKT-064,E10,S20,TSK-20B,執行現勘、真手機與UAT簽核,"FR-40,NFR-11,NFR-12",P1,4,"TKT-009,TKT-012,TKT-015,TKT-018,TKT-021,TKT-024,TKT-027,TKT-030,TKT-033,TKT-036,TKT-037,TKT-038,TKT-041,TKT-042,TKT-043,TKT-046,TKT-049,TKT-052,TKT-055,TKT-058,TKT-061,TKT-062,TKT-063",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；主辦現勘核准、負載門檻、簽核人與測試Google資源未配置
+TKT-065,E04,S07,TSK-07A,建立Stitch tokens與四視圖DEMO骨架,"NFR-01,FR-08",P1,1,"TKT-001,TKT-002,TKT-056",NOT_READY,UNASSIGNED_UNVERIFIED,未估算；由TL／TM評估，不視為排程承諾,未分派,估算與票大小未經TL／TM檢視；票級AC／依賴尚待PM／TL審查；真手機／強光UAT環境未提供

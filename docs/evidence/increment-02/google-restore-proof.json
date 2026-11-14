@@ -1,0 +1,31 @@
+{
+  "layer": "GOOGLE_SHEETS_NATIVE_API",
+  "appsScript": "NOT_RUN",
+  "beforeSha256": "e2d86cbe47029e1697317a0574a63e7a2f61cd8c4d31052bb14a1e381c0c8cc4",
+  "afterSha256": "e2d86cbe47029e1697317a0574a63e7a2f61cd8c4d31052bb14a1e381c0c8cc4",
+  "equal": true,
+  "S29": {
+    "station_id": "S29",
+    "zone_id": "B3",
+    "zone_name": "籃球場丙",
+    "station_name": "世界童軍",
+    "theme": "風城冒險",
+    "location_code": "B3",
+    "task_description": null,
+    "age_variants": {},
+    "accessibility": null,
+    "rain_plan": null,
+    "notes": "現勘核定後調整，預留通道與休息緩衝",
+    "location_desc": "籃球場丙",
+    "venue_approval_status": "PENDING",
+    "status": "CLOSED",
+    "individual_duration_min": 5,
+    "team_duration_min": 7,
+    "service_lanes": null,
+    "current_individual_queue": null,
+    "current_team_queue": null,
+    "queue_updated_at": null,
+    "last_updated": null
+  },
+  "tableCount": 11
+}

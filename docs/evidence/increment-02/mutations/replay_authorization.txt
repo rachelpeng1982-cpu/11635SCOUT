@@ -1,0 +1,157 @@
+✔ T01 personal projection limited to own record (2.924191ms)
+✔ T02/03/04 single pass, idempotency, competing duplicate (0.96137ms)
+✔ idempotency payload conflict (0.374716ms)
+✔ T05 full team produces eight individual facts and one team station (1.674065ms)
+✔ T06 absent member is not stamped and snapshot retained (0.677141ms)
+✔ team conflict does not partially mutate (0.301665ms)
+✔ reject duplicate attendance, outsiders and pending policy (0.743932ms)
+✔ T08 cross station denied (0.19871ms)
+✔ T09 unauthenticated admin denied and staff denied (0.664393ms)
+✔ T10 closed or unapproved venue denied (0.428256ms)
+✔ T11 waiting calculation and missing/stale precedence (0.628007ms)
+✔ T14 CSV has 30 rows, units, timezone and sanitized cells (0.820908ms)
+✔ T15 reversal preserves immutable history and recomputes (0.322997ms)
+✔ T16 public response excludes private fields and medical detail (6.57674ms)
+✔ input formula/HTML injection, negative queues and locked station (0.465262ms)
+✔ seed has 30 unique exact IDs and safe defaults (0.671743ms)
+✔ honor policy not assumed at fifteen (0.187663ms)
+✖ pending policy cannot be set by event lead; admin changes audited (0.788469ms)
+✔ unapproved venue cannot open; measured capacity required (0.425852ms)
+✔ report interval excludes outside pass dates and rejects reversed range (1.190666ms)
+✔ FR41 only authorized team leader submits same-team draft without stamp (0.847508ms)
+✔ FR15 recommendations exclude unavailable stale and unapproved stations and sort safety announcements (0.685484ms)
+✔ FR43 event lead requests correction without mutating pass, admin reversal links and resolves request (0.382797ms)
+✔ dispatch only to active staff, internal text never enters public board (0.912636ms)
+✔ required stations affect honor and admin can assign same-team leader only (0.357479ms)
+✔ T07 atomic storage failure exposes zero team member passes, safe retry commits all (20.88325ms)
+✔ T12 response loss then same-key retry returns original with no duplicate (9.590557ms)
+✔ T08 denial audited and no stamp, client role/email forgery ignored (8.181862ms)
+✔ T04 lock contention does not write then duplicate check after lock (13.314815ms)
+✔ participant QR issued, no plaintext stored, private login/session and rotation revokes (10.817938ms)
+✔ empty Google identity denies staff APIs; PIN alone not enough (3.523564ms)
+✔ PIN bad attempts rate limited; audit has no PIN (11.934273ms)
+✔ disabled staff cannot use previous unlock (7.063775ms)
+✔ schema setup is idempotent, preserves existing participants and stations (6.893057ms)
+✔ QR issuing response loss is idempotent and stores no raw credential (6.114734ms)
+✔ Form submit accepts configured form only and retry is deduplicated (5.186434ms)
+✔ PIN rotation immediately invalidates old station unlock (6.508527ms)
+✔ corrupt persisted references fail closed before reads or writes, with no private error data (3.194223ms)
+✔ blank primary-key row is rejected instead of silently changing physical row positions (1.586774ms)
+✔ write-boundary integrity check rejects malformed after-state before Sheets request (2.10826ms)
+✔ v1 audit migration requires backup and admin, preserves rows, records unknown history and safely reruns (12.360936ms)
+✔ audit schema migration fails atomically without changing header or data (7.028421ms)
+✔ credential configuration audit contains before/after role but never emails or PINs (4.238113ms)
+✔ malformed JSON cell fails with sanitized integrity error and zero storage writes (1.039879ms)
+✔ QR issuance audit describes credential availability without plaintext or hashes (4.072153ms)
+✔ v1 migration expands a physically trimmed nine-column audit sheet (7.275925ms)
+✔ migration response loss is recovered by rerun without duplicate audit or stale confirmation (8.583287ms)
+✔ fresh sandbox setup creates exactly eleven schema tables and thirty closed seed stations (6.089106ms)
+✔ Google test runner refuses non-test data and is not callable without mode flag (5.528139ms)
+✔ test runner executes a full isolated flow in VM and persists a secret-free report (NOT Google evidence) (96.533393ms)
+✔ sandbox preparation refuses non-test names before writing properties or audit data (3.967604ms)
+✔ runner cannot report success when final closure fails (71.162013ms)
+✔ storage validator accepts full individual/team/draft/alert history (4.783295ms)
+✔ duplicate IDs, external IDs, token hashes and case-insensitive staff emails rejected (3.477266ms)
+✔ all foreign-key families reject orphans (7.779775ms)
+✔ invalid row types, station zone, unsafe open configuration and malformed queue rejected (1.535756ms)
+✔ effective pass uniqueness and reversal target checked (2.612311ms)
+✔ batch completeness, overlapping attendance and unsupported pending batches rejected (1.887457ms)
+✔ historical attendance snapshot survives later valid team membership change (0.740787ms)
+✔ schema, honor policy and station count reject unsupported data (1.914277ms)
+✔ audit stores detached before/after queue states and omits source secrets (0.495968ms)
+✔ zone lead dispatch is limited to own zone and eligible handlers, with audited transitions (1.860376ms)
+✔ zone lead cannot dispatch outside zone, to foreign staff, global broadcast or correction (1.144917ms)
+✔ creation and stamping audits point to concrete entity IDs, not empty targets (0.821589ms)
+✔ S29 waiting is derived from queues/durations/lanes, never a source congestion label (2.601564ms)
+✔ S29 mixed queues, rounding, unknown values, paused status and clock skew are explicit (0.734909ms)
+✖ event lead may configure coherent wait thresholds, and S29 respects the setting (2.110063ms)
+✔ malformed persisted thresholds are rejected, not treated as green (2.027168ms)
+✖ idempotent replay revalidates station permissions after staff scope changes (16.419708ms)
+✖ privileged command replay is denied after an administrator is downgraded (6.10668ms)
+✔ persisted batch facts must match their operator and request actor (0.88813ms)
+✔ event lead, zone lead, station master and admin follow the command permission matrix (3.223152ms)
+✔ individual pass request actor cannot be replaced by another existing staff member (0.886087ms)
+✔ batch operator snapshot must agree with each committed pass (0.938536ms)
+✔ registered and repeated check-in counts remain distinct from stamp totals (0.712485ms)
+✔ team progress only projects IDs/counts and never other members names or contacts (0.400424ms)
+✔ team size 7/8/10/11 follows approved min/max, including direct defensive checks (3.701564ms)
+✔ manual participant lookup needs identity confirmation and returns no credential hash (6.338231ms)
+✖ public announcement replay is denied after the publisher loses management capability (5.651434ms)
+ℹ tests 79
+ℹ suites 0
+ℹ pass 74
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 755.533065
+
+✖ failing tests:
+
+test at tests/core.test.cjs:26:1
+✖ pending policy cannot be set by event lead; admin changes audited (0.788469ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at error (/tmp/scout-mutations-mAui7y/replay_authorization/tests/core.test.cjs:8:28)
+      at TestContext.<anonymous> (/tmp/scout-mutations-mAui7y/replay_authorization/tests/core.test.cjs:26:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/next-stage.test.cjs:6:1
+✖ event lead may configure coherent wait thresholds, and S29 respects the setting (2.110063ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (/tmp/scout-mutations-mAui7y/replay_authorization/tests/next-stage.test.cjs:6:608)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/next-stage.test.cjs:8:1
+✖ idempotent replay revalidates station permissions after staff scope changes (16.419708ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'code')
+      at TestContext.<anonymous> (/tmp/scout-mutations-mAui7y/replay_authorization/tests/next-stage.test.cjs:8:415)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/next-stage.test.cjs:9:1
+✖ privileged command replay is denied after an administrator is downgraded (6.10668ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'code')
+      at TestContext.<anonymous> (/tmp/scout-mutations-mAui7y/replay_authorization/tests/next-stage.test.cjs:9:452)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/next-stage.test.cjs:24:1
+✖ public announcement replay is denied after the publisher loses management capability (5.651434ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'code')
+      at TestContext.<anonymous> (/tmp/scout-mutations-mAui7y/replay_authorization/tests/next-stage.test.cjs:24:534)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)

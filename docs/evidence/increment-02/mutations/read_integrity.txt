@@ -1,0 +1,112 @@
+✔ T01 personal projection limited to own record (2.518098ms)
+✔ T02/03/04 single pass, idempotency, competing duplicate (0.978876ms)
+✔ idempotency payload conflict (0.432893ms)
+✔ T05 full team produces eight individual facts and one team station (2.231546ms)
+✔ T06 absent member is not stamped and snapshot retained (0.347384ms)
+✔ team conflict does not partially mutate (0.283167ms)
+✔ reject duplicate attendance, outsiders and pending policy (0.487896ms)
+✔ T08 cross station denied (0.198049ms)
+✔ T09 unauthenticated admin denied and staff denied (0.5766ms)
+✔ T10 closed or unapproved venue denied (0.478853ms)
+✔ T11 waiting calculation and missing/stale precedence (0.468306ms)
+✔ T14 CSV has 30 rows, units, timezone and sanitized cells (0.694477ms)
+✔ T15 reversal preserves immutable history and recomputes (0.325121ms)
+✔ T16 public response excludes private fields and medical detail (7.106409ms)
+✔ input formula/HTML injection, negative queues and locked station (0.527726ms)
+✔ seed has 30 unique exact IDs and safe defaults (0.776271ms)
+✔ honor policy not assumed at fifteen (0.916342ms)
+✔ pending policy cannot be set by event lead; admin changes audited (0.497431ms)
+✔ unapproved venue cannot open; measured capacity required (0.571041ms)
+✔ report interval excludes outside pass dates and rejects reversed range (1.566002ms)
+✔ FR41 only authorized team leader submits same-team draft without stamp (0.591292ms)
+✔ FR15 recommendations exclude unavailable stale and unapproved stations and sort safety announcements (0.454516ms)
+✔ FR43 event lead requests correction without mutating pass, admin reversal links and resolves request (0.762641ms)
+✔ dispatch only to active staff, internal text never enters public board (0.753948ms)
+✔ required stations affect honor and admin can assign same-team leader only (0.359272ms)
+✔ T07 atomic storage failure exposes zero team member passes, safe retry commits all (21.62585ms)
+✔ T12 response loss then same-key retry returns original with no duplicate (9.909648ms)
+✔ T08 denial audited and no stamp, client role/email forgery ignored (7.855229ms)
+✔ T04 lock contention does not write then duplicate check after lock (7.553323ms)
+✔ participant QR issued, no plaintext stored, private login/session and rotation revokes (9.058335ms)
+✔ empty Google identity denies staff APIs; PIN alone not enough (2.586512ms)
+✔ PIN bad attempts rate limited; audit has no PIN (14.12848ms)
+✔ disabled staff cannot use previous unlock (8.177186ms)
+✔ schema setup is idempotent, preserves existing participants and stations (8.02218ms)
+✔ QR issuing response loss is idempotent and stores no raw credential (5.566557ms)
+✔ Form submit accepts configured form only and retry is deduplicated (8.595236ms)
+✔ PIN rotation immediately invalidates old station unlock (5.838647ms)
+✖ corrupt persisted references fail closed before reads or writes, with no private error data (3.867043ms)
+✔ blank primary-key row is rejected instead of silently changing physical row positions (2.006387ms)
+✔ write-boundary integrity check rejects malformed after-state before Sheets request (1.902159ms)
+✔ v1 audit migration requires backup and admin, preserves rows, records unknown history and safely reruns (11.015726ms)
+✔ audit schema migration fails atomically without changing header or data (6.559855ms)
+✔ credential configuration audit contains before/after role but never emails or PINs (3.605158ms)
+✔ malformed JSON cell fails with sanitized integrity error and zero storage writes (1.218678ms)
+✔ QR issuance audit describes credential availability without plaintext or hashes (3.487972ms)
+✔ v1 migration expands a physically trimmed nine-column audit sheet (7.059069ms)
+✔ migration response loss is recovered by rerun without duplicate audit or stale confirmation (8.371778ms)
+✔ fresh sandbox setup creates exactly eleven schema tables and thirty closed seed stations (8.476095ms)
+✔ Google test runner refuses non-test data and is not callable without mode flag (6.831685ms)
+✔ test runner executes a full isolated flow in VM and persists a secret-free report (NOT Google evidence) (95.403076ms)
+✔ sandbox preparation refuses non-test names before writing properties or audit data (3.3681ms)
+✔ runner cannot report success when final closure fails (79.73322ms)
+✔ storage validator accepts full individual/team/draft/alert history (4.64779ms)
+✔ duplicate IDs, external IDs, token hashes and case-insensitive staff emails rejected (3.145344ms)
+✔ all foreign-key families reject orphans (7.359751ms)
+✔ invalid row types, station zone, unsafe open configuration and malformed queue rejected (1.432031ms)
+✔ effective pass uniqueness and reversal target checked (2.39946ms)
+✔ batch completeness, overlapping attendance and unsupported pending batches rejected (1.403747ms)
+✔ historical attendance snapshot survives later valid team membership change (0.483569ms)
+✔ schema, honor policy and station count reject unsupported data (1.707515ms)
+✔ audit stores detached before/after queue states and omits source secrets (0.445231ms)
+✔ zone lead dispatch is limited to own zone and eligible handlers, with audited transitions (1.709829ms)
+✔ zone lead cannot dispatch outside zone, to foreign staff, global broadcast or correction (1.163855ms)
+✔ creation and stamping audits point to concrete entity IDs, not empty targets (0.862981ms)
+✔ S29 waiting is derived from queues/durations/lanes, never a source congestion label (2.761345ms)
+✔ S29 mixed queues, rounding, unknown values, paused status and clock skew are explicit (0.698043ms)
+✔ event lead may configure coherent wait thresholds, and S29 respects the setting (1.966085ms)
+✔ malformed persisted thresholds are rejected, not treated as green (1.997814ms)
+✔ idempotent replay revalidates station permissions after staff scope changes (18.899559ms)
+✔ privileged command replay is denied after an administrator is downgraded (5.822723ms)
+✔ persisted batch facts must match their operator and request actor (4.432025ms)
+✔ event lead, zone lead, station master and admin follow the command permission matrix (3.265486ms)
+✔ individual pass request actor cannot be replaced by another existing staff member (0.819697ms)
+✔ batch operator snapshot must agree with each committed pass (0.906167ms)
+✔ registered and repeated check-in counts remain distinct from stamp totals (0.571242ms)
+✔ team progress only projects IDs/counts and never other members names or contacts (0.376648ms)
+✔ team size 7/8/10/11 follows approved min/max, including direct defensive checks (4.037911ms)
+✔ manual participant lookup needs identity confirmation and returns no credential hash (7.442637ms)
+✔ public announcement replay is denied after the publisher loses management capability (6.33757ms)
+ℹ tests 79
+ℹ suites 0
+ℹ pass 78
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 820.76976
+
+✖ failing tests:
+
+test at tests/gas.test.cjs:19:1
+✖ corrupt persisted references fail closed before reads or writes, with no private error data (3.867043ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'FORBIDDEN'
+  - 'DATA_INTEGRITY'
+  
+      at TestContext.<anonymous> (/tmp/scout-mutations-mAui7y/read_integrity/tests/gas.test.cjs:19:268)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'FORBIDDEN',
+    expected: 'DATA_INTEGRITY',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

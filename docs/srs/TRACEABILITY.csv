@@ -1,0 +1,201 @@
+﻿需求,需求名稱,來源,主責Story,Epic,Story,Task,票,證據
+FR-01,表單匯入,NORTH_STAR.md §7;NORTH_STAR.md §9.2,S03,E02,S03,TSK-03A,TKT-007,docs/evidence/TKT-007/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-01,表單匯入,NORTH_STAR.md §7;NORTH_STAR.md §9.2,S03,E02,S03,TSK-03A,TKT-008,docs/evidence/TKT-008/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-01,表單匯入,NORTH_STAR.md §7;NORTH_STAR.md §9.2,S03,E02,S03,TSK-03B,TKT-009,docs/evidence/TKT-009/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-02,報名去重,NORTH_STAR.md §8.1;NORTH_STAR.md §9.2,S03,E02,S03,TSK-03A,TKT-007,docs/evidence/TKT-007/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-02,報名去重,NORTH_STAR.md §8.1;NORTH_STAR.md §9.2,S03,E02,S03,TSK-03A,TKT-008,docs/evidence/TKT-008/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-02,報名去重,NORTH_STAR.md §8.1;NORTH_STAR.md §9.2,S03,E02,S03,TSK-03B,TKT-009,docs/evidence/TKT-009/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-03,小隊名冊,NORTH_STAR.md §4.1;NORTH_STAR.md §8.2,S04,E02,S04,TSK-04A,TKT-010,docs/evidence/TKT-010/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-03,小隊名冊,NORTH_STAR.md §4.1;NORTH_STAR.md §8.2,S04,E02,S04,TSK-04A,TKT-011,docs/evidence/TKT-011/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-03,小隊名冊,NORTH_STAR.md §4.1;NORTH_STAR.md §8.2,S04,E02,S04,TSK-04B,TKT-012,docs/evidence/TKT-012/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-04,報到統計,NORTH_STAR.md §6.D,S03,E02,S03,TSK-03A,TKT-007,docs/evidence/TKT-007/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-04,報到統計,NORTH_STAR.md §6.D,S03,E02,S03,TSK-03A,TKT-008,docs/evidence/TKT-008/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-04,報到統計,NORTH_STAR.md §6.D,S03,E02,S03,TSK-03B,TKT-009,docs/evidence/TKT-009/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-05,私密QR發行,NORTH_STAR.md §3.1;NORTH_STAR.md §8.1,S05,E03,S05,TSK-05A,TKT-013,docs/evidence/TKT-013/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-05,私密QR發行,NORTH_STAR.md §3.1;NORTH_STAR.md §8.1,S05,E03,S05,TSK-05A,TKT-014,docs/evidence/TKT-014/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-05,私密QR發行,NORTH_STAR.md §3.1;NORTH_STAR.md §8.1,S05,E03,S05,TSK-05B,TKT-015,docs/evidence/TKT-015/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-06,本人登入與工作階段,NORTH_STAR.md §3.1;NORTH_STAR.md §6.A,S05,E03,S05,TSK-05A,TKT-013,docs/evidence/TKT-013/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-06,本人登入與工作階段,NORTH_STAR.md §3.1;NORTH_STAR.md §6.A,S05,E03,S05,TSK-05A,TKT-014,docs/evidence/TKT-014/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-06,本人登入與工作階段,NORTH_STAR.md §3.1;NORTH_STAR.md §6.A,S05,E03,S05,TSK-05B,TKT-015,docs/evidence/TKT-015/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-07,憑證撤銷重發,NORTH_STAR.md §3.1;NORTH_STAR.md §10,S05,E03,S05,TSK-05A,TKT-013,docs/evidence/TKT-013/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-07,憑證撤銷重發,NORTH_STAR.md §3.1;NORTH_STAR.md §10,S05,E03,S05,TSK-05A,TKT-014,docs/evidence/TKT-014/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-07,憑證撤銷重發,NORTH_STAR.md §3.1;NORTH_STAR.md §10,S05,E03,S05,TSK-05B,TKT-015,docs/evidence/TKT-015/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-08,個人通行證,NORTH_STAR.md §6.A,S07,E04,S07,TSK-07A,TKT-019,docs/evidence/TKT-019/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-08,個人通行證,NORTH_STAR.md §6.A,S07,E04,S07,TSK-07A,TKT-020,docs/evidence/TKT-020/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-08,個人通行證,NORTH_STAR.md §6.A,S07,E04,S07,TSK-07B,TKT-021,docs/evidence/TKT-021/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-08,個人通行證,NORTH_STAR.md §6.A,S07,E04,S07,TSK-07A,TKT-065,docs/evidence/TKT-065/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-09,小隊最少摘要,NORTH_STAR.md §3;NORTH_STAR.md §6.A,S07,E04,S07,TSK-07A,TKT-019,docs/evidence/TKT-019/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-09,小隊最少摘要,NORTH_STAR.md §3;NORTH_STAR.md §6.A,S07,E04,S07,TSK-07A,TKT-020,docs/evidence/TKT-020/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-09,小隊最少摘要,NORTH_STAR.md §3;NORTH_STAR.md §6.A,S07,E04,S07,TSK-07B,TKT-021,docs/evidence/TKT-021/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-10,徽章與榮譽,NORTH_STAR.md §4.2;NORTH_STAR.md §6.A,S07,E04,S07,TSK-07A,TKT-019,docs/evidence/TKT-019/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-10,徽章與榮譽,NORTH_STAR.md §4.2;NORTH_STAR.md §6.A,S07,E04,S07,TSK-07A,TKT-020,docs/evidence/TKT-020/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-10,徽章與榮譽,NORTH_STAR.md §4.2;NORTH_STAR.md §6.A,S07,E04,S07,TSK-07B,TKT-021,docs/evidence/TKT-021/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-11,完整30站地圖,NORTH_STAR.md §5;NORTH_STAR.md §6.B,S08,E04,S08,TSK-08A,TKT-022,docs/evidence/TKT-022/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-11,完整30站地圖,NORTH_STAR.md §5;NORTH_STAR.md §6.B,S08,E04,S08,TSK-08A,TKT-023,docs/evidence/TKT-023/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-11,完整30站地圖,NORTH_STAR.md §5;NORTH_STAR.md §6.B,S08,E04,S08,TSK-08B,TKT-024,docs/evidence/TKT-024/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-12,站點搜尋篩選,NORTH_STAR.md §6.B;NORTH_STAR.md §6.D,S08,E04,S08,TSK-08A,TKT-022,docs/evidence/TKT-022/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-12,站點搜尋篩選,NORTH_STAR.md §6.B;NORTH_STAR.md §6.D,S08,E04,S08,TSK-08A,TKT-023,docs/evidence/TKT-023/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-12,站點搜尋篩選,NORTH_STAR.md §6.B;NORTH_STAR.md §6.D,S08,E04,S08,TSK-08B,TKT-024,docs/evidence/TKT-024/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-13,站況與過期,NORTH_STAR.md §4.3;NORTH_STAR.md §6.B,S09,E05,S09,TSK-09A,TKT-025,docs/evidence/TKT-025/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-13,站況與過期,NORTH_STAR.md §4.3;NORTH_STAR.md §6.B,S09,E05,S09,TSK-09A,TKT-026,docs/evidence/TKT-026/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-13,站況與過期,NORTH_STAR.md §4.3;NORTH_STAR.md §6.B,S09,E05,S09,TSK-09B,TKT-027,docs/evidence/TKT-027/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-14,等候估算,NORTH_STAR.md §4.3,S09,E05,S09,TSK-09A,TKT-025,docs/evidence/TKT-025/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-14,等候估算,NORTH_STAR.md §4.3,S09,E05,S09,TSK-09A,TKT-026,docs/evidence/TKT-026/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-14,等候估算,NORTH_STAR.md §4.3,S09,E05,S09,TSK-09B,TKT-027,docs/evidence/TKT-027/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-15,安全分流,NORTH_STAR.md §1.1;NORTH_STAR.md §5;NORTH_STAR.md §6.B,S08,E04,S08,TSK-08A,TKT-022,docs/evidence/TKT-022/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-15,安全分流,NORTH_STAR.md §1.1;NORTH_STAR.md §5;NORTH_STAR.md §6.B,S08,E04,S08,TSK-08A,TKT-023,docs/evidence/TKT-023/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-15,安全分流,NORTH_STAR.md §1.1;NORTH_STAR.md §5;NORTH_STAR.md §6.B,S08,E04,S08,TSK-08B,TKT-024,docs/evidence/TKT-024/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-16,工作人員身分,NORTH_STAR.md §3;NORTH_STAR.md §7,S06,E03,S06,TSK-06A,TKT-016,docs/evidence/TKT-016/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-16,工作人員身分,NORTH_STAR.md §3;NORTH_STAR.md §7,S06,E03,S06,TSK-06A,TKT-017,docs/evidence/TKT-017/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-16,工作人員身分,NORTH_STAR.md §3;NORTH_STAR.md §7,S06,E03,S06,TSK-06B,TKT-018,docs/evidence/TKT-018/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-17,本站PIN解鎖,NORTH_STAR.md §3,S06,E03,S06,TSK-06A,TKT-016,docs/evidence/TKT-016/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-17,本站PIN解鎖,NORTH_STAR.md §3,S06,E03,S06,TSK-06A,TKT-017,docs/evidence/TKT-017/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-17,本站PIN解鎖,NORTH_STAR.md §3,S06,E03,S06,TSK-06B,TKT-018,docs/evidence/TKT-018/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-18,角色與站點權限,NORTH_STAR.md §3;NORTH_STAR.md §9,S06,E03,S06,TSK-06A,TKT-016,docs/evidence/TKT-016/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-18,角色與站點權限,NORTH_STAR.md §3;NORTH_STAR.md §9,S06,E03,S06,TSK-06A,TKT-017,docs/evidence/TKT-017/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-18,角色與站點權限,NORTH_STAR.md §3;NORTH_STAR.md §9,S06,E03,S06,TSK-06B,TKT-018,docs/evidence/TKT-018/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-19,相機QR掃描,NORTH_STAR.md §6.C,S11,E06,S11,TSK-11A,TKT-031,docs/evidence/TKT-031/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-19,相機QR掃描,NORTH_STAR.md §6.C,S11,E06,S11,TSK-11A,TKT-032,docs/evidence/TKT-032/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-19,相機QR掃描,NORTH_STAR.md §6.C,S11,E06,S11,TSK-11B,TKT-033,docs/evidence/TKT-033/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-20,手動查詢核身,NORTH_STAR.md §6.C,S11,E06,S11,TSK-11A,TKT-031,docs/evidence/TKT-031/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-20,手動查詢核身,NORTH_STAR.md §6.C,S11,E06,S11,TSK-11A,TKT-032,docs/evidence/TKT-032/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-20,手動查詢核身,NORTH_STAR.md §6.C,S11,E06,S11,TSK-11B,TKT-033,docs/evidence/TKT-033/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-21,個人核章,NORTH_STAR.md §9.2,S11,E06,S11,TSK-11A,TKT-031,docs/evidence/TKT-031/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-21,個人核章,NORTH_STAR.md §9.2,S11,E06,S11,TSK-11A,TKT-032,docs/evidence/TKT-032/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-21,個人核章,NORTH_STAR.md §9.2,S11,E06,S11,TSK-11B,TKT-033,docs/evidence/TKT-033/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-22,小隊實到核章,NORTH_STAR.md §4.1;NORTH_STAR.md §9.2,S12,E06,S12,TSK-12A,TKT-034,docs/evidence/TKT-034/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-22,小隊實到核章,NORTH_STAR.md §4.1;NORTH_STAR.md §9.2,S12,E06,S12,TSK-12A,TKT-035,docs/evidence/TKT-035/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-22,小隊實到核章,NORTH_STAR.md §4.1;NORTH_STAR.md §9.2,S12,E06,S12,TSK-12B,TKT-036,docs/evidence/TKT-036/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-22,小隊實到核章,NORTH_STAR.md §4.1;NORTH_STAR.md §9.2,S12,E06,S12,TSK-12B,TKT-037,docs/evidence/TKT-037/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-22,小隊實到核章,NORTH_STAR.md §4.1;NORTH_STAR.md §9.2,S12,E06,S12,TSK-12B,TKT-038,docs/evidence/TKT-038/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-23,小隊完成口徑,NORTH_STAR.md §4.1;NORTH_STAR.md §6.D,S12,E06,S12,TSK-12A,TKT-034,docs/evidence/TKT-034/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-23,小隊完成口徑,NORTH_STAR.md §4.1;NORTH_STAR.md §6.D,S12,E06,S12,TSK-12A,TKT-035,docs/evidence/TKT-035/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-23,小隊完成口徑,NORTH_STAR.md §4.1;NORTH_STAR.md §6.D,S12,E06,S12,TSK-12B,TKT-036,docs/evidence/TKT-036/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-23,小隊完成口徑,NORTH_STAR.md §4.1;NORTH_STAR.md §6.D,S12,E06,S12,TSK-12B,TKT-037,docs/evidence/TKT-037/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-23,小隊完成口徑,NORTH_STAR.md §4.1;NORTH_STAR.md §6.D,S12,E06,S12,TSK-12B,TKT-038,docs/evidence/TKT-038/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E06,S11,TSK-11A,TKT-031,docs/evidence/TKT-031/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E06,S11,TSK-11A,TKT-032,docs/evidence/TKT-032/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E06,S11,TSK-11B,TKT-033,docs/evidence/TKT-033/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E07,S13,TSK-13A,TKT-039,docs/evidence/TKT-039/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E07,S13,TSK-13A,TKT-040,docs/evidence/TKT-040/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E07,S13,TSK-13B,TKT-041,docs/evidence/TKT-041/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E07,S13,TSK-13B,TKT-042,docs/evidence/TKT-042/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-24,命令冪等,NORTH_STAR.md §9.2;NORTH_STAR.md §10,S11,E07,S13,TSK-13B,TKT-043,docs/evidence/TKT-043/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-25,並行唯一性,NORTH_STAR.md §8.4;NORTH_STAR.md §10,S13,E07,S13,TSK-13A,TKT-039,docs/evidence/TKT-039/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-25,並行唯一性,NORTH_STAR.md §8.4;NORTH_STAR.md §10,S13,E07,S13,TSK-13A,TKT-040,docs/evidence/TKT-040/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-25,並行唯一性,NORTH_STAR.md §8.4;NORTH_STAR.md §10,S13,E07,S13,TSK-13B,TKT-041,docs/evidence/TKT-041/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-25,並行唯一性,NORTH_STAR.md §8.4;NORTH_STAR.md §10,S13,E07,S13,TSK-13B,TKT-042,docs/evidence/TKT-042/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-25,並行唯一性,NORTH_STAR.md §8.4;NORTH_STAR.md §10,S13,E07,S13,TSK-13B,TKT-043,docs/evidence/TKT-043/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-26,批次失敗恢復,NORTH_STAR.md §9.3,S13,E07,S13,TSK-13A,TKT-039,docs/evidence/TKT-039/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-26,批次失敗恢復,NORTH_STAR.md §9.3,S13,E07,S13,TSK-13A,TKT-040,docs/evidence/TKT-040/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-26,批次失敗恢復,NORTH_STAR.md §9.3,S13,E07,S13,TSK-13B,TKT-041,docs/evidence/TKT-041/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-26,批次失敗恢復,NORTH_STAR.md §9.3,S13,E07,S13,TSK-13B,TKT-042,docs/evidence/TKT-042/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-26,批次失敗恢復,NORTH_STAR.md §9.3,S13,E07,S13,TSK-13B,TKT-043,docs/evidence/TKT-043/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-27,撤銷補償,NORTH_STAR.md §8.4;NORTH_STAR.md §9.2,S14,E07,S14,TSK-14A,TKT-044,docs/evidence/TKT-044/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-27,撤銷補償,NORTH_STAR.md §8.4;NORTH_STAR.md §9.2,S14,E07,S14,TSK-14A,TKT-045,docs/evidence/TKT-045/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-27,撤銷補償,NORTH_STAR.md §8.4;NORTH_STAR.md §9.2,S14,E07,S14,TSK-14B,TKT-046,docs/evidence/TKT-046/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-28,排隊回報,NORTH_STAR.md §4.3;NORTH_STAR.md §9.2,S09,E05,S09,TSK-09A,TKT-025,docs/evidence/TKT-025/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-28,排隊回報,NORTH_STAR.md §4.3;NORTH_STAR.md §9.2,S09,E05,S09,TSK-09A,TKT-026,docs/evidence/TKT-026/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-28,排隊回報,NORTH_STAR.md §4.3;NORTH_STAR.md §9.2,S09,E05,S09,TSK-09B,TKT-027,docs/evidence/TKT-027/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-29,站點維護,NORTH_STAR.md §5;NORTH_STAR.md §8.3,S10,E05,S10,TSK-10A,TKT-028,docs/evidence/TKT-028/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-29,站點維護,NORTH_STAR.md §5;NORTH_STAR.md §8.3,S10,E05,S10,TSK-10A,TKT-029,docs/evidence/TKT-029/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-29,站點維護,NORTH_STAR.md §5;NORTH_STAR.md §8.3,S10,E05,S10,TSK-10B,TKT-030,docs/evidence/TKT-030/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-30,活動組長戰情,NORTH_STAR.md §6.D,S15,E08,S15,TSK-15A,TKT-047,docs/evidence/TKT-047/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-30,活動組長戰情,NORTH_STAR.md §6.D,S15,E08,S15,TSK-15A,TKT-048,docs/evidence/TKT-048/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-30,活動組長戰情,NORTH_STAR.md §6.D,S15,E08,S15,TSK-15B,TKT-049,docs/evidence/TKT-049/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-31,異常建立,NORTH_STAR.md §8.5;NORTH_STAR.md §9.2,S16,E08,S16,TSK-16A,TKT-050,docs/evidence/TKT-050/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-31,異常建立,NORTH_STAR.md §8.5;NORTH_STAR.md §9.2,S16,E08,S16,TSK-16A,TKT-051,docs/evidence/TKT-051/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-31,異常建立,NORTH_STAR.md §8.5;NORTH_STAR.md §9.2,S16,E08,S16,TSK-16B,TKT-052,docs/evidence/TKT-052/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-32,派工與結案,NORTH_STAR.md §6.D;NORTH_STAR.md §8.5,S16,E08,S16,TSK-16A,TKT-050,docs/evidence/TKT-050/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-32,派工與結案,NORTH_STAR.md §6.D;NORTH_STAR.md §8.5,S16,E08,S16,TSK-16A,TKT-051,docs/evidence/TKT-051/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-32,派工與結案,NORTH_STAR.md §6.D;NORTH_STAR.md §8.5,S16,E08,S16,TSK-16B,TKT-052,docs/evidence/TKT-052/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-33,公開安全公告,NORTH_STAR.md §6.B;NORTH_STAR.md §6.D,S16,E08,S16,TSK-16A,TKT-050,docs/evidence/TKT-050/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-33,公開安全公告,NORTH_STAR.md §6.B;NORTH_STAR.md §6.D,S16,E08,S16,TSK-16A,TKT-051,docs/evidence/TKT-051/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-33,公開安全公告,NORTH_STAR.md §6.B;NORTH_STAR.md §6.D,S16,E08,S16,TSK-16B,TKT-052,docs/evidence/TKT-052/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-34,受控CSV報表,NORTH_STAR.md §6.D;NORTH_STAR.md §9.1,S17,E09,S17,TSK-17A,TKT-053,docs/evidence/TKT-053/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-34,受控CSV報表,NORTH_STAR.md §6.D;NORTH_STAR.md §9.1,S17,E09,S17,TSK-17A,TKT-054,docs/evidence/TKT-054/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-34,受控CSV報表,NORTH_STAR.md §6.D;NORTH_STAR.md §9.1,S17,E09,S17,TSK-17B,TKT-055,docs/evidence/TKT-055/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-35,同步與退避,NORTH_STAR.md §1.2;NORTH_STAR.md §6.D,S15,E08,S15,TSK-15A,TKT-047,docs/evidence/TKT-047/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-35,同步與退避,NORTH_STAR.md §1.2;NORTH_STAR.md §6.D,S15,E08,S15,TSK-15A,TKT-048,docs/evidence/TKT-048/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-35,同步與退避,NORTH_STAR.md §1.2;NORTH_STAR.md §6.D,S15,E08,S15,TSK-15B,TKT-049,docs/evidence/TKT-049/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-36,離線保護,NORTH_STAR.md §10,S18,E09,S18,TSK-18A,TKT-056,docs/evidence/TKT-056/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-36,離線保護,NORTH_STAR.md §10,S18,E09,S18,TSK-18A,TKT-057,docs/evidence/TKT-057/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-36,離線保護,NORTH_STAR.md §10,S18,E09,S18,TSK-18B,TKT-058,docs/evidence/TKT-058/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-37,資料表與種子遷移,NORTH_STAR.md §8;NORTH_STAR.md §12,S02,E01,S02,TSK-02A,TKT-004,docs/evidence/TKT-004/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-37,資料表與種子遷移,NORTH_STAR.md §8;NORTH_STAR.md §12,S02,E01,S02,TSK-02A,TKT-005,docs/evidence/TKT-005/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-37,資料表與種子遷移,NORTH_STAR.md §8;NORTH_STAR.md §12,S02,E01,S02,TSK-02B,TKT-006,docs/evidence/TKT-006/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-38,稽核追溯,NORTH_STAR.md §1.1;NORTH_STAR.md §8.7,S14,E07,S14,TSK-14A,TKT-044,docs/evidence/TKT-044/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-38,稽核追溯,NORTH_STAR.md §1.1;NORTH_STAR.md §8.7,S14,E07,S14,TSK-14A,TKT-045,docs/evidence/TKT-045/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-38,稽核追溯,NORTH_STAR.md §1.1;NORTH_STAR.md §8.7,S14,E07,S14,TSK-14B,TKT-046,docs/evidence/TKT-046/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-39,輸入與輸出防護,NORTH_STAR.md §8.8;NORTH_STAR.md §10,S19,E10,S19,TSK-19A,TKT-059,docs/evidence/TKT-059/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-39,輸入與輸出防護,NORTH_STAR.md §8.8;NORTH_STAR.md §10,S19,E10,S19,TSK-19A,TKT-060,docs/evidence/TKT-060/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-39,輸入與輸出防護,NORTH_STAR.md §8.8;NORTH_STAR.md §10,S19,E10,S19,TSK-19B,TKT-061,docs/evidence/TKT-061/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-40,備份還原與封存,NORTH_STAR.md §12;NORTH_STAR.md §14,S20,E10,S20,TSK-20A,TKT-062,docs/evidence/TKT-062/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-40,備份還原與封存,NORTH_STAR.md §12;NORTH_STAR.md §14,S20,E10,S20,TSK-20A,TKT-063,docs/evidence/TKT-063/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-40,備份還原與封存,NORTH_STAR.md §12;NORTH_STAR.md §14,S20,E10,S20,TSK-20B,TKT-064,docs/evidence/TKT-064/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-41,小隊長實到草稿,NORTH_STAR.md §3,S04,E02,S04,TSK-04A,TKT-010,docs/evidence/TKT-010/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-41,小隊長實到草稿,NORTH_STAR.md §3,S04,E02,S04,TSK-04A,TKT-011,docs/evidence/TKT-011/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-41,小隊長實到草稿,NORTH_STAR.md §3,S04,E02,S04,TSK-04B,TKT-012,docs/evidence/TKT-012/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-42,活動政策設定,NORTH_STAR.md §4.2;NORTH_STAR.md §13,S01,E01,S01,TSK-01A,TKT-001,docs/evidence/TKT-001/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-42,活動政策設定,NORTH_STAR.md §4.2;NORTH_STAR.md §13,S01,E01,S01,TSK-01A,TKT-002,docs/evidence/TKT-002/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-42,活動政策設定,NORTH_STAR.md §4.2;NORTH_STAR.md §13,S01,E01,S01,TSK-01B,TKT-003,docs/evidence/TKT-003/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-42,活動政策設定,NORTH_STAR.md §4.2;NORTH_STAR.md §13,S01,E05,S10,TSK-10A,TKT-028,docs/evidence/TKT-028/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-42,活動政策設定,NORTH_STAR.md §4.2;NORTH_STAR.md §13,S01,E05,S10,TSK-10A,TKT-029,docs/evidence/TKT-029/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-42,活動政策設定,NORTH_STAR.md §4.2;NORTH_STAR.md §13,S01,E05,S10,TSK-10B,TKT-030,docs/evidence/TKT-030/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-43,受控更正申請,NORTH_STAR.md §3;NORTH_STAR.md §6.D,S14,E07,S14,TSK-14A,TKT-044,docs/evidence/TKT-044/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-43,受控更正申請,NORTH_STAR.md §3;NORTH_STAR.md §6.D,S14,E07,S14,TSK-14A,TKT-045,docs/evidence/TKT-045/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-43,受控更正申請,NORTH_STAR.md §3;NORTH_STAR.md §6.D,S14,E07,S14,TSK-14B,TKT-046,docs/evidence/TKT-046/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-44,系統運作告警,NORTH_STAR.md §10,S15,E08,S15,TSK-15A,TKT-047,docs/evidence/TKT-047/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-44,系統運作告警,NORTH_STAR.md §10,S15,E08,S15,TSK-15A,TKT-048,docs/evidence/TKT-048/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+FR-44,系統運作告警,NORTH_STAR.md §10,S15,E08,S15,TSK-15B,TKT-049,docs/evidence/TKT-049/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-01,戶外可用性,NORTH_STAR.md §1.1;NORTH_STAR.md §11,S07,E04,S07,TSK-07A,TKT-019,docs/evidence/TKT-019/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-01,戶外可用性,NORTH_STAR.md §1.1;NORTH_STAR.md §11,S07,E04,S07,TSK-07A,TKT-020,docs/evidence/TKT-020/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-01,戶外可用性,NORTH_STAR.md §1.1;NORTH_STAR.md §11,S07,E04,S07,TSK-07B,TKT-021,docs/evidence/TKT-021/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-01,戶外可用性,NORTH_STAR.md §1.1;NORTH_STAR.md §11,S07,E04,S08,TSK-08A,TKT-022,docs/evidence/TKT-022/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-01,戶外可用性,NORTH_STAR.md §1.1;NORTH_STAR.md §11,S07,E04,S08,TSK-08A,TKT-023,docs/evidence/TKT-023/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-01,戶外可用性,NORTH_STAR.md §1.1;NORTH_STAR.md §11,S07,E04,S08,TSK-08B,TKT-024,docs/evidence/TKT-024/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-01,戶外可用性,NORTH_STAR.md §1.1;NORTH_STAR.md §11,S07,E04,S07,TSK-07A,TKT-065,docs/evidence/TKT-065/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-02,憑證生命週期,NORTH_STAR.md §3.1;NORTH_STAR.md §10,S05,E03,S05,TSK-05A,TKT-013,docs/evidence/TKT-013/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-02,憑證生命週期,NORTH_STAR.md §3.1;NORTH_STAR.md §10,S05,E03,S05,TSK-05A,TKT-014,docs/evidence/TKT-014/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-02,憑證生命週期,NORTH_STAR.md §3.1;NORTH_STAR.md §10,S05,E03,S05,TSK-05B,TKT-015,docs/evidence/TKT-015/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-03,最小權限,NORTH_STAR.md §3;NORTH_STAR.md §9,S06,E03,S06,TSK-06A,TKT-016,docs/evidence/TKT-016/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-03,最小權限,NORTH_STAR.md §3;NORTH_STAR.md §9,S06,E03,S06,TSK-06A,TKT-017,docs/evidence/TKT-017/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-03,最小權限,NORTH_STAR.md §3;NORTH_STAR.md §9,S06,E03,S06,TSK-06B,TKT-018,docs/evidence/TKT-018/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-04,一致性與復原,NORTH_STAR.md §1.2;NORTH_STAR.md §8.4;NORTH_STAR.md §9.3,S13,E07,S13,TSK-13A,TKT-039,docs/evidence/TKT-039/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-04,一致性與復原,NORTH_STAR.md §1.2;NORTH_STAR.md §8.4;NORTH_STAR.md §9.3,S13,E07,S13,TSK-13A,TKT-040,docs/evidence/TKT-040/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-04,一致性與復原,NORTH_STAR.md §1.2;NORTH_STAR.md §8.4;NORTH_STAR.md §9.3,S13,E07,S13,TSK-13B,TKT-041,docs/evidence/TKT-041/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-04,一致性與復原,NORTH_STAR.md §1.2;NORTH_STAR.md §8.4;NORTH_STAR.md §9.3,S13,E07,S13,TSK-13B,TKT-042,docs/evidence/TKT-042/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-04,一致性與復原,NORTH_STAR.md §1.2;NORTH_STAR.md §8.4;NORTH_STAR.md §9.3,S13,E07,S13,TSK-13B,TKT-043,docs/evidence/TKT-043/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-05,容量與效能,NORTH_STAR.md §1.2;NORTH_STAR.md §7;NORTH_STAR.md §12,S15,E08,S15,TSK-15A,TKT-047,docs/evidence/TKT-047/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-05,容量與效能,NORTH_STAR.md §1.2;NORTH_STAR.md §7;NORTH_STAR.md §12,S15,E08,S15,TSK-15A,TKT-048,docs/evidence/TKT-048/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-05,容量與效能,NORTH_STAR.md §1.2;NORTH_STAR.md §7;NORTH_STAR.md §12,S15,E08,S15,TSK-15B,TKT-049,docs/evidence/TKT-049/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-06,弱網與錯誤可理解性,NORTH_STAR.md §6;NORTH_STAR.md §10,S18,E09,S18,TSK-18A,TKT-056,docs/evidence/TKT-056/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-06,弱網與錯誤可理解性,NORTH_STAR.md §6;NORTH_STAR.md §10,S18,E09,S18,TSK-18A,TKT-057,docs/evidence/TKT-057/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-06,弱網與錯誤可理解性,NORTH_STAR.md §6;NORTH_STAR.md §10,S18,E09,S18,TSK-18B,TKT-058,docs/evidence/TKT-058/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-07,統計與報表正確性,NORTH_STAR.md §6.D;NORTH_STAR.md §8.4,S17,E09,S17,TSK-17A,TKT-053,docs/evidence/TKT-053/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-07,統計與報表正確性,NORTH_STAR.md §6.D;NORTH_STAR.md §8.4,S17,E09,S17,TSK-17A,TKT-054,docs/evidence/TKT-054/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-07,統計與報表正確性,NORTH_STAR.md §6.D;NORTH_STAR.md §8.4,S17,E09,S17,TSK-17B,TKT-055,docs/evidence/TKT-055/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-08,資料完整性與可遷移性,NORTH_STAR.md §7;NORTH_STAR.md §8.8,S02,E01,S02,TSK-02A,TKT-004,docs/evidence/TKT-004/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-08,資料完整性與可遷移性,NORTH_STAR.md §7;NORTH_STAR.md §8.8,S02,E01,S02,TSK-02A,TKT-005,docs/evidence/TKT-005/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-08,資料完整性與可遷移性,NORTH_STAR.md §7;NORTH_STAR.md §8.8,S02,E01,S02,TSK-02B,TKT-006,docs/evidence/TKT-006/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-09,兒少隱私與注入防護,NORTH_STAR.md §0 第6項;NORTH_STAR.md §8.8;NORTH_STAR.md §10,S19,E10,S19,TSK-19A,TKT-059,docs/evidence/TKT-059/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-09,兒少隱私與注入防護,NORTH_STAR.md §0 第6項;NORTH_STAR.md §8.8;NORTH_STAR.md §10,S19,E10,S19,TSK-19A,TKT-060,docs/evidence/TKT-060/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-09,兒少隱私與注入防護,NORTH_STAR.md §0 第6項;NORTH_STAR.md §8.8;NORTH_STAR.md §10,S19,E10,S19,TSK-19B,TKT-061,docs/evidence/TKT-061/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-10,證據與可追溯性,NORTH_STAR.md §0 第7項;NORTH_STAR.md §8.7;NORTH_STAR.md §12,S14,E07,S14,TSK-14A,TKT-044,docs/evidence/TKT-044/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-10,證據與可追溯性,NORTH_STAR.md §0 第7項;NORTH_STAR.md §8.7;NORTH_STAR.md §12,S14,E07,S14,TSK-14A,TKT-045,docs/evidence/TKT-045/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-10,證據與可追溯性,NORTH_STAR.md §0 第7項;NORTH_STAR.md §8.7;NORTH_STAR.md §12,S14,E07,S14,TSK-14B,TKT-046,docs/evidence/TKT-046/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-10,證據與可追溯性,NORTH_STAR.md §0 第7項;NORTH_STAR.md §8.7;NORTH_STAR.md §12,S14,E10,S19,TSK-19A,TKT-059,docs/evidence/TKT-059/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-10,證據與可追溯性,NORTH_STAR.md §0 第7項;NORTH_STAR.md §8.7;NORTH_STAR.md §12,S14,E10,S19,TSK-19A,TKT-060,docs/evidence/TKT-060/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-10,證據與可追溯性,NORTH_STAR.md §0 第7項;NORTH_STAR.md §8.7;NORTH_STAR.md §12,S14,E10,S19,TSK-19B,TKT-061,docs/evidence/TKT-061/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-11,可維運與資料留存,NORTH_STAR.md §10;NORTH_STAR.md §12;NORTH_STAR.md §13,S20,E10,S20,TSK-20A,TKT-062,docs/evidence/TKT-062/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-11,可維運與資料留存,NORTH_STAR.md §10;NORTH_STAR.md §12;NORTH_STAR.md §13,S20,E10,S20,TSK-20A,TKT-063,docs/evidence/TKT-063/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-11,可維運與資料留存,NORTH_STAR.md §10;NORTH_STAR.md §12;NORTH_STAR.md §13,S20,E10,S20,TSK-20B,TKT-064,docs/evidence/TKT-064/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-12,部署可重現性,NORTH_STAR.md §7;NORTH_STAR.md §12;NORTH_STAR.md §14,S20,E10,S20,TSK-20A,TKT-062,docs/evidence/TKT-062/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-12,部署可重現性,NORTH_STAR.md §7;NORTH_STAR.md §12;NORTH_STAR.md §14,S20,E10,S20,TSK-20A,TKT-063,docs/evidence/TKT-063/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+NFR-12,部署可重現性,NORTH_STAR.md §7;NORTH_STAR.md §12;NORTH_STAR.md §14,S20,E10,S20,TSK-20B,TKT-064,docs/evidence/TKT-064/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+PR-01,規格與來源基線,NORTH_STAR.md §0;NORTH_STAR.md §12 Phase 0,S01,E01,S01,TSK-01A,TKT-001,docs/evidence/TKT-001/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+PR-01,規格與來源基線,NORTH_STAR.md §0;NORTH_STAR.md §12 Phase 0,S01,E01,S01,TSK-01A,TKT-002,docs/evidence/TKT-002/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+PR-01,規格與來源基線,NORTH_STAR.md §0;NORTH_STAR.md §12 Phase 0,S01,E01,S01,TSK-01B,TKT-003,docs/evidence/TKT-003/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+PR-02,拆解與就緒管理,NORTH_STAR.md §0 第7項;NORTH_STAR.md §12,S01,E01,S01,TSK-01A,TKT-001,docs/evidence/TKT-001/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+PR-02,拆解與就緒管理,NORTH_STAR.md §0 第7項;NORTH_STAR.md §12,S01,E01,S01,TSK-01A,TKT-002,docs/evidence/TKT-002/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）
+PR-02,拆解與就緒管理,NORTH_STAR.md §0 第7項;NORTH_STAR.md §12,S01,E01,S01,TSK-01B,TKT-003,docs/evidence/TKT-003/（票級正式證據待補；共享本機證據另列，不冒稱票驗收完成）

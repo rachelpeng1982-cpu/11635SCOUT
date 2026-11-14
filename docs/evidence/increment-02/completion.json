@@ -1,0 +1,10 @@
+{
+  "denominator": "44 FR equal weight; LOCAL_PASS scoped only, partial not counted",
+  "localPass": 26,
+  "functionalRequirements": 44,
+  "localPassPercent": 59.1,
+  "formalAccepted": 0,
+  "formalTicketsDone": 0,
+  "tickets": 65,
+  "realAppsScriptCasesExecuted": 0
+}

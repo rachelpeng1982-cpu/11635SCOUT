@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-11-14T10:43:46.279983+00:00",
+  "files": {
+    "src/core.js": "1cab4f08774c9c89a617b1b701110d2f8f0bced1b278f97df96847ad9129f84c",
+    "js/app.js": "cf040aa0cb7e083434605c8d27f4b38baed08bbbcd5c14639b0a673d0c90a9cd",
+    "js/api.js": "74f8f6c9708a8292b7a0043ff261b4f1a496501670f5a593f509a9ac5636a59f",
+    "css/scout-theme.css": "135529ba1b71d1e6068ae0cf5fb0ed48a8f0809d724ffc3bd4599a93571cb000",
+    "css/design-tokens.css": "76950f2aa913086ac4e40a025bbc96890e3aa38e775d8dc107f455ad1cba9ecc",
+    "backend-gas/Seed.gs": "d21c7690ea901953e03708e07612adf4909b055512d9f3025af481d2ccba34fe",
+    "backend-gas/AppSheetSchema.json": "181c34ca9c16e13793a2f602b4d8cc2f04501aa8bf3e54a813886eb07d0eff87",
+    "backend-gas/Index.html": "0f36ba875a8f00b318cf95115c98337541ac3890d13300941347ef7d14ba8e4f",
+    "backend-gas/Code.gs": "bf52f619d7c35b7678169a6d716d3cbb6b2a0fed57dadc8974048efa542655c7",
+    "backend-gas/Domain.gs": "1cab4f08774c9c89a617b1b701110d2f8f0bced1b278f97df96847ad9129f84c",
+    "backend-gas/appsscript.json": "9e42e4d6012a1490b6fdcaa789e069a63d72290ba0cb958ee576aaa9c8c97b75",
+    "tests/browser.cjs": "890b777f5dbe44bbf109a1a2144d82718bae7997de359be9c94de4945bbc2ac6",
+    "tests/core.test.cjs": "78109b6f31cbbbfe521a9be899204d27bff3d4434f84a45d23874aa3005c9c20",
+    "tests/gas.test.cjs": "e3e214721513eb4a3ddd8d70491d5cd9fc47b316db367acf42a4df6911e25825",
+    "data/stations.json": "91c2ecd91cd1f1830f7e48454d87fcc4ca44d49615815bb107ab53ef18ea2dea",
+    "data/stations_seed.csv": "b74351a2ec93182ef544fb3c1028409f8e93c3f0eff926bf16f64c185422d1d2",
+    "tools/import_seed.py": "068281ef9e186c91d90f8a83fa9a41eb1e13c6f70a2f35ee24b6c649689729d2",
+    "tools/build.cjs": "2aeb06e0cadfa614d7da058fc8fd9bc6bead717d1626f67eeea37a79b0843108",
+    "tools/validate_backlog.py": "bb4abcf9842370846235f940145073f3ce692a1eaa6860db617c70c1e574f8f0",
+    "tools/render_backlog.py": "f392515f6adb3d69302a00f79ffd14a509205dd04826f0a15db50bd8dda8b706"
+  }
+}
